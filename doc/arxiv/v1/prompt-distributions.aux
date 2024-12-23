@@ -1,0 +1,163 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\zref@newlabel[2]{}
+\providecommand\babel@aux[2]{}
+\@nameuse{bbl@beforestart}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{shen2023looselipssinkships,park2024disentanglinglengthqualitydirect,singhal2024longwaygoinvestigating}
+\citation{feder2022causalinferencenaturallanguage,grimmer2022text,jin-etal-2022-causalnlp,chen2023causal,gui2023causalestimationtextdata}
+\providecommand \oddpage@label [2]{}
+\providecommand\@newglossary[4]{}
+\@newglossary{main}{glg}{gls}{glo}
+\@newglossary{acronym}{alg}{acr}{acn}
+\babel@aux{english}{}
+\newlabel{sec:introduction}{{1}{1}{Introduction}{section.1}{}}
+\newlabel{sec:introduction@cref}{{[section][1][]1}{[1][1][]1}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:compare}{{1}{2}{Correlations in our dataset may prevent us from isolating the effect of helpfulness on the reward model. For instance, helpful responses may tend to be longer.\relax }{figure.caption.2}{}}
+\newlabel{fig:compare@cref}{{[figure][1][]1}{[1][2][]2}}
+\newlabel{sec:setup}{{2}{2}{Setup}{section.2}{}}
+\newlabel{sec:setup@cref}{{[section][2][]2}{[1][2][]2}}
+\citation{kahneman2013prospect}
+\newlabel{tab:rewrites}{{1}{3}{GPT-4o qualitatively does well at rewriting IMDB responses to change sentiment from negative (W = 0) to positive (W = 1). The first example was selected for illustrative purposes, the latter two were randomly selected from the dataset.\relax }{table.caption.4}{}}
+\newlabel{tab:rewrites@cref}{{[table][1][]1}{[1][3][]3}}
+\citation{hernan2016does}
+\newlabel{tab:rewrite_prompts}{{2}{4}{Example rewrite prompts from experiments with sentiment and length as the target attribute. For the ELI5 dataset, some of the responses were phrased as questions, so we instructed the LLM \emph {not} to answer the question and instead rewrite it.\relax }{table.caption.8}{}}
+\newlabel{tab:rewrite_prompts@cref}{{[table][2][]2}{[1][4][]4}}
+\newlabel{sec:rate}{{3}{4}{RATE: Rewrite-based Attribute Treatment Estimators}{section.3}{}}
+\newlabel{sec:rate@cref}{{[section][3][]3}{[1][3][]4}}
+\newlabel{tab:formatting_v2}{{3}{5}{Excerpt from rewriting IMDB responses to change length from long $(W = 1)$ to short $(W = 0)$. HTML tags (an off-target attribute) are removed in the rewrite.\relax }{table.caption.10}{}}
+\newlabel{tab:formatting_v2@cref}{{[table][3][]3}{[1][4][]5}}
+\newlabel{tab:rewrites-rewrites}{{4}{5}{Whether for a rewrite or a rewrite-of-a-rewrite, GPT-4o uses well-formatted text and a slightly formal tone. Here, W is length; samples are drawn from the ELI5 dataset, scored using ArmoRM, and truncated to 100 characters for display. The first was selected for illustrative purposes, the latter two were randomly selected from the dataset.\relax }{table.caption.11}{}}
+\newlabel{tab:rewrites-rewrites@cref}{{[table][4][]4}{[1][5][]5}}
+\newlabel{alg:rate}{{1}{6}{RATE: Rewrite-based Attribute Treatment Estimators\relax }{algorithm.1}{}}
+\newlabel{alg:rate@cref}{{[algorithm][1][]1}{[1][5][]6}}
+\newlabel{sec:theory}{{4}{6}{Theoretical Analysis of RATE}{section.4}{}}
+\newlabel{sec:theory@cref}{{[section][4][]4}{[1][6][]6}}
+\citation{faraone2008interpreting}
+\citation{faraone2008interpreting}
+\citation{lambert2024rewardbenchevaluatingrewardmodels}
+\citation{maas-EtAl:2011:ACL-HLT2011}
+\citation{eli5_lfqa}
+\citation{wang2023helpsteer}
+\newlabel{fig:naive}{{2}{7}{An attribute's reported effect on a reward model differs substantially between the naive (non-causal) estimate compared to the RATE (causal) estimate. The naive estimator overstates the length bias of FsfairX-LLaMA3-RM-v0.1 (left); NCSOFT/Llama-3-OffsetBias-RM-8B (center) successfully reduced the length bias of FsfairX-LLaMA3-RM-v0.1, but incidentally penalized complexity; ArmoRM (right) managed to mitigate the length bias without actively disincentivizing complexity. Effect sizes are reported as standardized mean differences, using Cohen's \emph {d} to compare average treatment effects that are normalized \citep {faraone2008interpreting}. Bars represent a 95\% confidence interval.\relax }{figure.caption.15}{}}
+\newlabel{fig:naive@cref}{{[figure][2][]2}{[1][7][]7}}
+\newlabel{thmt@@mainthm@data}{{\def \theequation {4.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )4.\@arabic {\c@equation }}\setcounter {equation}{0}}{7}{Unbiasedness and Consistency of RATE}{Item.9}{}}
+\newlabel{thmt@@mainthm@data@cref}{{[section][4][]4}{[1][7][]7}}
+\newlabel{thmt@@mainthm}{{1}{7}{Unbiasedness and Consistency}{theorem.1}{}}
+\newlabel{thmt@@mainthm@cref}{{[theorem][1][]1}{[1][7][]7}}
+\newlabel{thm:mainthm}{{1}{7}{Unbiasedness and Consistency}{theorem.1}{}}
+\newlabel{thm:mainthm@cref}{{[theorem][1][]1}{[1][7][]7}}
+\newlabel{sec:experiments}{{5}{7}{Experiments}{section.5}{}}
+\newlabel{sec:experiments@cref}{{[section][5][]5}{[1][7][]7}}
+\citation{dong2023raft}
+\citation{park2024offsetbias}
+\citation{socher-etal-2013-recursive,sanh2020distilbertdistilledversionbert}
+\citation{ArmoRM}
+\newlabel{fig:synthetic_combo}{{3}{8}{The RATE estimator is robust to distributional shift and better approximates the (assumed) near-zero ATE of length on DistilBERT. Sample size = 9374 for all levels of correlation for the IMDB experiment, and 5148 for the HelpSteer experiment. 95\% confidence intervals are shown.\relax }{figure.caption.18}{}}
+\newlabel{fig:synthetic_combo@cref}{{[figure][3][]3}{[1][8][]8}}
+\newlabel{sec:synthetic}{{5}{8}{Synthetic Experiments}{section*.17}{}}
+\newlabel{sec:synthetic@cref}{{[section][5][]5}{[1][8][]8}}
+\newlabel{tab:strange-syntax}{{5}{9}{For some text, our target attribute (W = Sentiment) is not well-defined. Rewrites add strange syntax: \enquote {annoyingly the same size} and \enquote {frustratingly square}. Data from the HH-RLHF dataset.\relax }{table.caption.20}{}}
+\newlabel{tab:strange-syntax@cref}{{[table][5][]5}{[1][9][]9}}
+\newlabel{fig:kde}{{4}{9}{The distributions of reward scores for original responses and rewrites of rewrites differ. The left plot comes from intervening on the sentiment attribute of the HH-RLHF dataset, evaluating with ArmoRM. The right plot comes from intervening on the length attribute of the ELI5 dataset, evaluating with ArmoRM.\relax }{figure.caption.21}{}}
+\newlabel{fig:kde@cref}{{[figure][4][]4}{[1][9][]9}}
+\citation{saxon2024benchmarksmicroscopesmodelmetrology}
+\citation{wang2024selftaughtevaluators}
+\newlabel{fig:bias}{{5}{10}{Treatment effect estimates differ substantially between the single rewrite and double rewrite methods. Bars represent a 95\% confidence interval.\relax }{figure.caption.22}{}}
+\newlabel{fig:bias@cref}{{[figure][5][]5}{[1][9][]10}}
+\newlabel{sec:discussion}{{6}{10}{Discussion}{section.6}{}}
+\newlabel{sec:discussion@cref}{{[section][6][]6}{[1][10][]10}}
+\citation{lambert2024rewardbenchevaluatingrewardmodels}
+\citation{casper2023openproblemsfundamentallimitations}
+\citation{gleave2021quantifyingdifferencesrewardfunctions}
+\citation{eisenstein2022informativenessinvarianceperspectivesspurious}
+\citation{kaushik2020learningdifferencemakesdifference}
+\citation{joshi-etal-2022-spurious}
+\citation{Feder_2021}
+\citation{abraham2022cebab}
+\citation{wang2024surveynaturallanguagecounterfactual}
+\citation{gat2023faithfulexplanationsblackboxnlp}
+\citation{butcher2024aligninglargelanguagemodels}
+\citation{wu2021polyjuicegeneratingcounterfactualsexplaining}
+\citation{fryer2022flexibletextgenerationcounterfactual}
+\newlabel{sec:related_work}{{7}{11}{Related Work}{section.7}{}}
+\newlabel{sec:related_work@cref}{{[section][7][]7}{[1][11][]11}}
+\bibdata{bibs/interpretability.bib,bibs/alignment.bib,bibs/counterfactual_samples.bib,bibs/treatment_effects.bib,bibs/length.bib,bibs/misc.bib}
+\bibcite{abraham2022cebab}{{1}{2022}{{Abraham et~al.}}{{Abraham, D'Oosterlinck, Feder, Gat, Geiger, Potts, Reichart, and Wu}}}
+\bibcite{butcher2024aligninglargelanguagemodels}{{2}{2024}{{Butcher}}{{}}}
+\bibcite{casper2023openproblemsfundamentallimitations}{{3}{2023}{{Casper et~al.}}{{Casper, Davies, Shi, Gilbert, Scheurer, Rando, Freedman, Korbak, Lindner, Freire, Wang, Marks, Segerie, Carroll, Peng, Christoffersen, Damani, Slocum, Anwar, Siththaranjan, Nadeau, Michaud, Pfau, Krasheninnikov, Chen, Langosco, Hase, Bıyık, Dragan, Krueger, Sadigh, and Hadfield-Menell}}}
+\bibcite{chen2023causal}{{4}{2023}{{Chen \& Chu}}{{Chen and Chu}}}
+\bibcite{dong2023raft}{{5}{2023}{{Dong et~al.}}{{Dong, Xiong, Goyal, Pan, Diao, Zhang, Shum, and Zhang}}}
+\bibcite{eisenstein2022informativenessinvarianceperspectivesspurious}{{6}{2022}{{Eisenstein}}{{}}}
+\bibcite{eli5_lfqa}{{7}{2019}{{Fan et~al.}}{{Fan, Jernite, Perez, Grangier, Weston, and Auli}}}
+\bibcite{faraone2008interpreting}{{8}{2008}{{Faraone}}{{}}}
+\bibcite{Feder_2021}{{9}{2021}{{Feder et~al.}}{{Feder, Oved, Shalit, and Reichart}}}
+\bibcite{feder2022causalinferencenaturallanguage}{{10}{2022}{{Feder et~al.}}{{Feder, Keith, Manzoor, Pryzant, Sridhar, Wood-Doughty, Eisenstein, Grimmer, Reichart, Roberts, Stewart, Veitch, and Yang}}}
+\bibcite{fryer2022flexibletextgenerationcounterfactual}{{11}{2022}{{Fryer et~al.}}{{Fryer, Axelrod, Packer, Beutel, Chen, and Webster}}}
+\bibcite{gat2023faithfulexplanationsblackboxnlp}{{12}{2023}{{Gat et~al.}}{{Gat, Calderon, Feder, Chapanin, Sharma, and Reichart}}}
+\bibcite{gleave2021quantifyingdifferencesrewardfunctions}{{13}{2021}{{Gleave et~al.}}{{Gleave, Dennis, Legg, Russell, and Leike}}}
+\bibcite{grimmer2022text}{{14}{2022}{{Grimmer et~al.}}{{Grimmer, Roberts, and Stewart}}}
+\bibcite{gui2023causalestimationtextdata}{{15}{2023}{{Gui \& Veitch}}{{Gui and Veitch}}}
+\bibcite{hernan2016does}{{16}{2016}{{Hern{\'a}n}}{{}}}
+\bibcite{jin-etal-2022-causalnlp}{{17}{2022}{{Jin et~al.}}{{Jin, Feder, and Zhang}}}
+\bibcite{joshi-etal-2022-spurious}{{18}{2022}{{Joshi et~al.}}{{Joshi, Pan, and He}}}
+\bibcite{kahneman2013prospect}{{19}{2013}{{Kahneman \& Tversky}}{{Kahneman and Tversky}}}
+\bibcite{kaushik2020learningdifferencemakesdifference}{{20}{2020}{{Kaushik et~al.}}{{Kaushik, Hovy, and Lipton}}}
+\bibcite{lambert2024rewardbenchevaluatingrewardmodels}{{21}{2024}{{Lambert et~al.}}{{Lambert, Pyatkin, Morrison, Miranda, Lin, Chandu, Dziri, Kumar, Zick, Choi, Smith, and Hajishirzi}}}
+\bibcite{maas-EtAl:2011:ACL-HLT2011}{{22}{2011}{{Maas et~al.}}{{Maas, Daly, Pham, Huang, Ng, and Potts}}}
+\bibcite{park2024offsetbias}{{23}{2024{a}}{{Park et~al.}}{{Park, Jwa, Ren, Kim, and Choi}}}
+\bibcite{park2024disentanglinglengthqualitydirect}{{24}{2024{b}}{{Park et~al.}}{{Park, Rafailov, Ermon, and Finn}}}
+\bibcite{sanh2020distilbertdistilledversionbert}{{25}{2020}{{Sanh et~al.}}{{Sanh, Debut, Chaumond, and Wolf}}}
+\bibcite{saxon2024benchmarksmicroscopesmodelmetrology}{{26}{2024}{{Saxon et~al.}}{{Saxon, Holtzman, West, Wang, and Saphra}}}
+\bibcite{shen2023looselipssinkships}{{27}{2023}{{Shen et~al.}}{{Shen, Zheng, Zhan, Zhao, Dou, Gui, Zhang, and Huang}}}
+\bibcite{singhal2024longwaygoinvestigating}{{28}{2024}{{Singhal et~al.}}{{Singhal, Goyal, Xu, and Durrett}}}
+\bibcite{socher-etal-2013-recursive}{{29}{2013}{{Socher et~al.}}{{Socher, Perelygin, Wu, Chuang, Manning, Ng, and Potts}}}
+\bibcite{ArmoRM}{{30}{2024{a}}{{Wang et~al.}}{{Wang, Xiong, Xie, Zhao, and Zhang}}}
+\bibcite{wang2024selftaughtevaluators}{{31}{2024{b}}{{Wang et~al.}}{{Wang, Kulikov, Golovneva, Yu, Yuan, Dwivedi-Yu, Pang, Fazel-Zarandi, Weston, and Li}}}
+\bibcite{wang2024surveynaturallanguagecounterfactual}{{32}{2024{c}}{{Wang et~al.}}{{Wang, Qiu, Yue, Guo, Zeng, Feng, and Shen}}}
+\bibcite{wang2023helpsteer}{{33}{2023}{{Wang et~al.}}{{Wang, Dong, Zeng, Adams, Sreedhar, Egert, Delalleau, Scowcroft, Kant, Swope, and Kuchaiev}}}
+\bibcite{wu2021polyjuicegeneratingcounterfactualsexplaining}{{34}{2021}{{Wu et~al.}}{{Wu, Ribeiro, Heer, and Weld}}}
+\bibstyle{bibs/iclr2025_conference}
+\newlabel{sec:proofs}{{A}{14}{Proofs}{appendix.A}{}}
+\newlabel{sec:proofs@cref}{{[appendix][1][2147483647]A}{[1][14][]14}}
+\newlabel{sec:experiment-details}{{B}{16}{Experimental Details}{appendix.B}{}}
+\newlabel{sec:experiment-details@cref}{{[appendix][2][2147483647]B}{[1][16][]16}}
+\newlabel{sec:synthetic-details}{{B}{16}{Synthetic Experiments}{section*.34}{}}
+\newlabel{sec:synthetic-details@cref}{{[appendix][2][2147483647]B}{[1][16][]16}}
+\newlabel{tab:combined_table}{{6}{16}{Adjusted counts and conditional probabilities for the synthetic experiment in \Cref {fig:synthetic_combo}, after dropping reviews whose original or rewritten text exceeds a context length of 512 tokens. Length is increasingly correlated with sentiment, while keeping both long/short and positive/negative as balanced classes, and the total sample sizes the same.\relax }{table.caption.35}{}}
+\newlabel{tab:combined_table@cref}{{[table][6][2147483647]6}{[1][16][]16}}
+\newlabel{tab:combined_table2}{{7}{16}{Adjusted counts and conditional probabilities for the synthetic experiment in \Cref {fig:synthetic_combo}. Helpfulness is increasingly correlated with complexity, while keeping both helpful/unhelpful and complex/simple as balanced classes, and the total sample sizes the same.\relax }{table.caption.36}{}}
+\newlabel{tab:combined_table2@cref}{{[table][7][2147483647]7}{[1][16][]16}}
+\newlabel{appendix:rewrite_examples}{{B}{17}{Example Rewrites}{section*.37}{}}
+\newlabel{appendix:rewrite_examples@cref}{{[appendix][2][2147483647]B}{[1][17][]17}}
+\newlabel{appendix:rewrites_of_rewrites}{{B}{22}{Rewrites of Rewrites are Different from Rewrites Alone}{section*.43}{}}
+\newlabel{appendix:rewrites_of_rewrites@cref}{{[appendix][2][2147483647]B}{[1][22][]22}}
+\newlabel{fig:Helpfulness-Helpsteer}{{6}{22}{Using RATE (rewrites of rewrites) rather than just rewrites changes the estimated treatment effects.\relax }{figure.caption.44}{}}
+\newlabel{fig:Helpfulness-Helpsteer@cref}{{[figure][6][2147483647]6}{[1][22][]22}}
+\newlabel{fig:Complexity-Helpsteer}{{7}{22}{Using RATE (rewrites of rewrites) rather than just rewrites changes the estimated treatment effects.\relax }{figure.caption.45}{}}
+\newlabel{fig:Complexity-Helpsteer@cref}{{[figure][7][2147483647]7}{[1][22][]22}}
+\newlabel{fig:Length-ELI5}{{8}{22}{Using RATE (rewrites of rewrites) rather than just rewrites changes the estimated treatment effects.\relax }{figure.caption.46}{}}
+\newlabel{fig:Length-ELI5@cref}{{[figure][8][2147483647]8}{[1][22][]22}}
+\newlabel{fig:Length-IMDB}{{9}{23}{Using RATE (rewrites of rewrites) rather than just rewrites changes the estimated treatment effects.\relax }{figure.caption.47}{}}
+\newlabel{fig:Length-IMDB@cref}{{[figure][9][2147483647]9}{[1][22][]23}}
+\newlabel{fig:Sentiment-HHRLHF}{{10}{23}{Using RATE (rewrites of rewrites) rather than just rewrites changes the estimated treatment effects.\relax }{figure.caption.48}{}}
+\newlabel{fig:Sentiment-HHRLHF@cref}{{[figure][10][2147483647]10}{[1][22][]23}}
+\newlabel{fig:Sentiment-IMDB}{{11}{23}{Using RATE (rewrites of rewrites) rather than just rewrites changes the estimated treatment effects.\relax }{figure.caption.49}{}}
+\newlabel{fig:Sentiment-IMDB@cref}{{[figure][11][2147483647]11}{[1][23][]23}}
+\gdef \@abspage@last{23}

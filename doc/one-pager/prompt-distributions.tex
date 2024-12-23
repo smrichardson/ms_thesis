@@ -1,0 +1,198 @@
+\pdfoutput=1
+\documentclass{article}
+
+%************************** Victor template ***************************
+
+% alptex + small aesthetic tweaks + some extra math defs
+\input{preamble/preamble.tex}
+\input{preamble/preamble_math}
+\input{preamble/definitions_basic}
+
+%************************** ICLR 2025 template ***************************
+
+\usepackage{preamble/iclr2025_conference,times}
+
+% Optional math commands from https://github.com/goodfeli/dlbook_notation.
+\input{preamble/math_commands.tex}
+
+\usepackage{hyperref}
+\usepackage{url}
+
+%*************************** custom imports ***********************
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{csquotes}
+
+\def\mathunderline#1#2{\color{#1}\underline{{\color{black}#2}}\color{black}}
+
+% ***************** Kho's template **********************
+\usepackage{verbatim}
+\usepackage[nameinlink]{cleveref}
+% \usepackage{subcaption}
+\usepackage{enumitem}
+
+
+%*************************** Victor template again **********************
+
+% bibtex import + some code to strip away useless bib info (volume number, isbn, and the ilk), and to standardize capitalization
+% warning: the arxiv uses an outdated bibtex, which causes cryptic and frustrating upload errors 
+% easiest solution: install whatever current arxiv texlive is from ftp://tug.org/historic/systems/texlive/ (download the ISO) and compile using this versions pdflatex and bibtex
+% alternatively, look upon https://github.com/plk/biblatex/wiki/biblatex-and-the-arXiv and despair. 
+
+% \input{preamble/minimalist_biblatex}
+
+% *************************** theorems ***************************
+
+\crefformat{equation}{(#2#1#3)}
+\crefformat{figure}{Figure~#2#1#3}
+\crefname{example}{Example}{Examples}
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{cor}{Corollary}{Corollaries}
+\crefname{theorem}{Theorem}{Theorems}
+\crefname{assumption}{Assumption}{Assumptions}
+
+%************************* Still Victor Template *******************
+
+\usepackage{enumitem} % tight enumerates
+\usepackage[separate-uncertainty=true,multi-part-units=single]{siunitx} % better table control
+
+\newcommand{\maxf}[1]{{\cellcolor[gray]{0.8}} #1}
+\global\long\def\embedding{\lambda}
+
+% Peter's grey box
+\declaretheoremstyle[
+%    postheadspace=\newline,
+spacebelow=\parsep,
+    spaceabove=\parsep,
+  mdframed={
+    backgroundcolor=gray!10!white,     % vv: weird spacing issue, so leaving transpartent for now
+    hidealllines=true, 
+    innertopmargin=8pt, 
+    innerbottommargin=4pt, 
+    skipabove=8pt,
+    skipbelow=10pt,
+    nobreak=true
+}
+]{grayboxed}
+\declaretheorem[style=grayboxed,name=Assumption]{gassumption}
+% \declaretheorem[style=plain]{auxtheorem}
+% \declaretheorem[style=grayboxed,sibling=auxtheorem]{algorithm}
+% \declaretheorem[style=grayboxed,name=Algorithm]{nalgorithm}
+\crefname{gassumption}{Assumption}{Assumptions}
+
+\usepackage{thm-restate}
+
+%************* Victor Template: Dan Roy's commenting code ***********
+
+\usepackage{xcolor}
+\input{preamble/commenting.tex}
+%\input{preamble/myvruler.tex}
+%For submission, uncomment these lines to make all annotations render as blank.
+% \renewcommand{\LATER}[1]{}
+% \renewcommand{\fLATER}[1]{}
+% \renewcommand{\TBD}[1]{}
+% \renewcommand{\fTBD}[1]{}
+% \renewcommand{\PROBLEM}[1]{}
+% \renewcommand{\fPROBLEM}[1]{}
+% \renewcommand{\NA}[1]{#1}  %% Note, NA's pass through!
+
+%************* Victor Template: Authorship ***********
+% This conflicts with the NeurIPS template, so I'm commenting it out for now. We can decide later which to use.
+% \usepackage[affil-it]{authblk}
+
+% *************** ICLR 2025 template: Title, Authorship ***************
+
+\title{RATE: Score Reward Models with Imperfect Rewrites of Rewrites (summarized)}
+
+% Authors must not appear in the submitted version. They should be hidden
+% as long as the \iclrfinalcopy macro remains commented out below.
+% Non-anonymous submissions will be rejected without review.
+
+% \author{Antiquus S.~Hippocampus, Natalia Cerebro \& Amelie P. Amygdale \thanks{ Use footnote for providing further information
+% about author (webpage, alternative address)---\emph{not} for acknowledging
+% funding agencies.  Funding acknowledgements go at the end of the paper.} \\
+% Department of Computer Science\\
+% Cranberry-Lemon University\\
+% Pittsburgh, PA 15213, USA \\
+% \texttt{\{hippo,brain,jen\}@cs.cranberry-lemon.edu} \\
+% \And
+% Ji Q. Ren \& Yevgeny LeNet \\
+% Department of Computational Neuroscience \\
+% University of the Witwatersrand \\
+% Joburg, South Africa \\
+% \texttt{\{robot,net\}@wits.ac.za} \\
+% \AND
+% Coauthor \\
+% Affiliation \\
+% Address \\
+% \texttt{email}
+% }
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+
+% ********** Alternative Authorship if follow Victor template ************
+% \date{}
+% \author[1]{Albert Einstein}
+% \author[1,2]{Pierre Laplace}
+% \affil[1]{Physical Insitute of the Beyond}
+% \affil[2]{Ouija Statistical Institute}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+%  ****************** If final copy, uncomment ******************
+
+\iclrfinalcopy % Uncomment for camera-ready version, but NOT for submission.
+
+
+% ********************************* Main Content ***************************
+\begin{document}
+\maketitle
+
+\vspace{-2cm}
+\section{Introduction}
+
+Reward models are used to fine-tune LLMs, but what are they actually incentivizing? Reward models are black-box proxies for actual preferences, and there's frequent claims that rewarding helpfulness instead incentivizes longer responses. 
+We develop an evaluation method, RATE (Rewrite-based Attribute Treatment Estimators), that measures the \emph{causal} effect of a given attribute of a response (e.g., length) on the reward assigned to that response.
+The core idea is to use large language models to rewrite responses to produce imperfect counterfactuals, and to adjust for rewriting error by rewriting \emph{twice}. We show that the RATE estimator is consistent under reasonable assumptions. RATE outperforms naive estimates on synthetic and real-world data, and tells a very different story about what reward models are actually incentivizing.
+
+\section{Methodology}
+
+The RATE method uses LLMs to rewrite responses, changing a specific attribute while keeping others constant. For example, to assess how length affects a reward model, long responses are rewritten shorter (and vice versa) while preserving e.g. helpfulness. These rewrites estimate the Average Treatment Effect of the attribute on the reward model: $\mathbb{E}[R(x, y(1)) - R(x, y(0))]$, where $R$ is the reward model, $x$ is the prompt, and $y(w)$ is the response with the attribute set to $w$.
+
+However, rewrites are imperfect, unintentionally changing aspects like tone or grammar. Surprisingly, the solution is to introduce \emph{more noise}. Rather than selecting (original, rewrite) pairs:
+\[\begin{cases}
+  R(x, y) - R(x, \text{Re}(y, 1)), & \text{if } w = 1 \\
+  R(x, \text{Re}(y, 0)) - R(x, y), & \text{if } w = 0
+\end{cases}\]
+we compare the (rewrites, rewrites of rewrites) pairs:
+\[\begin{cases}
+  R(x, \text{Re}(\text{Re}(y, 0), 1)) - R(x, \text{Re}(y, 0)), & \text{if } w = 1 \\
+  R(x, \text{Re}(y, 1)) - R(x, \text{Re}(\text{Re}(y, 1), 0)), & \text{if } w = 0
+\end{cases}\]
+where $y$ is the original response, and $\text{Re}(y, w)$ is rewrite of $y$ with $W$ set to $w$.
+
+
+\section{Experimental Results}
+RATE is more robust to distributional shift than naive estimation methods, as it should be.
+
+In \Cref{fig:naive}, an attribute's reported effect on a reward model differs substantially between the naive (non-causal) estimate compared to the RATE (causal) estimate. The naive estimator overstates the length bias of FsfairX (left); NCSOFT (center) successfully reduced the length bias of FsfairX, but incidentally penalized complexity; ArmoRM (right) managed to mitigate the length bias without actively disincentivizing complexity.
+
+\vspace{-0.5cm}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/naive.png}
+    \caption{RATE better captures what attributes reward models are incentivizing.}
+    \label{fig:naive}
+\end{figure}
+
+\end{document}

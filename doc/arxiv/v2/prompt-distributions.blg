@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2021)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: prompt-distributions.aux
+The style file: bibs/iclr2025_conference.bst
+Database file #1: bibs/interpretability.bib
+Database file #2: bibs/alignment.bib
+Database file #3: bibs/counterfactual_samples.bib
+Database file #4: bibs/treatment_effects.bib
+Database file #5: bibs/length.bib
+Database file #6: bibs/misc.bib
+You've used 34 entries,
+            2773 wiz_defined-function locations,
+            785 strings with 14039 characters,
+and the built_in function-call counts, 21328 in all, are:
+= -- 1741
+> -- 1942
+< -- 15
++ -- 651
+- -- 614
+* -- 1916
+:= -- 3350
+add.period$ -- 118
+call.type$ -- 34
+change.case$ -- 303
+chr.to.int$ -- 31
+cite$ -- 68
+duplicate$ -- 710
+empty$ -- 1298
+format.name$ -- 654
+if$ -- 4388
+int.to.chr$ -- 4
+int.to.str$ -- 1
+missing$ -- 15
+newline$ -- 187
+num.names$ -- 142
+pop$ -- 678
+preamble$ -- 1
+purify$ -- 270
+quote$ -- 0
+skip$ -- 723
+stack$ -- 0
+substring$ -- 386
+swap$ -- 124
+text.length$ -- 8
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 369
+warning$ -- 0
+while$ -- 132
+width$ -- 0
+write$ -- 455

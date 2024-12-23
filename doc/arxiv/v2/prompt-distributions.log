@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.9.7)  22 DEC 2024 22:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.9.7)  22 DEC 2024 23:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/prompt-distributions.tex
-(/Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/prompt-distributions.tex
+**/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.tex
+(/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.tex
 LaTeX2e <2020-10-01> patch level 4
 L3 programming layer <2021-02-18> (/usr/local/texlive/2021/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
@@ -22,7 +22,7 @@ File: size10.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
-) (/Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/preamble/preamble.tex (/usr/local/texlive/2021/texmf-dist/tex/latex/base/inputenc.sty
+) (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/preamble/preamble.tex (/usr/local/texlive/2021/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2020/08/01 v1.3d Input encoding file
 \inpenc@prehook=\toks15
 \inpenc@posthook=\toks16
@@ -892,7 +892,7 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Cskip=\skip110
 )
 \c@@todonotes@numberoftodonotes=\count376
-) (/Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/preamble/preamble_math.tex (/usr/local/texlive/2021/texmf-dist/tex/latex/amscls/amsthm.sty
+) (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/preamble/preamble_math.tex (/usr/local/texlive/2021/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2020/05/29 v2.20.6
 \thm@style=\toks53
 \thm@bodyfont=\toks54
@@ -979,7 +979,7 @@ Package: arydshln 2019/02/21 v1.76
 )
 \c@theorem=\count389
 \c@assumption=\count390
-) (/Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/preamble/definitions_basic.tex) (/Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/preamble/iclr2025_conference.sty (/usr/local/texlive/2021/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+) (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/preamble/definitions_basic.tex) (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/preamble/iclr2025_conference.sty (/usr/local/texlive/2021/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 Package: eso-pic 2020/10/14 v3.0a eso-pic (RN)
 \ESO@tempdima=\dimen344
 \ESO@tempdimb=\dimen345
@@ -1013,7 +1013,7 @@ LaTeX Info: Redefining \cite on input line 694.
 \cv@tmpc=\count396
 ) (/usr/local/texlive/2021/texmf-dist/tex/latex/psnfss/times.sty
 Package: times 2020/03/25 PSNFSS-v9.3 (SPQR) 
-) (/Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/preamble/math_commands.tex (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+) (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/preamble/math_commands.tex (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
@@ -1252,37 +1252,37 @@ File: md-frame-0.mdf 2013/07/01\ 1.9b: md-frame-0
 \c@mdf@env@ii=\count438
 \c@mdf@zref@counter=\count439
 Package zref Info: New property: mdf@pagevalue on input line 895.
-) (/Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/preamble/commenting.tex
+) (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/preamble/commenting.tex
 \c@margincounter=\count440
 )
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'english'.
-LaTeX Font Info:    Trying to load font information for T1+ptm on input line 170.
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 163.
  (/usr/local/texlive/2021/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
-) (/Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/prompt-distributions.aux)
+) (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.aux)
 \openout1 = `prompt-distributions.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
  (/usr/local/texlive/2021/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count441
@@ -1302,21 +1302,21 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/local/texlive/2021/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Info: Redefining \microtypecontext on input line 170.
+LaTeX Info: Redefining \microtypecontext on input line 163.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using expansion set `alltext'.
-LaTeX Info: Redefining \showhyphens on input line 170.
+LaTeX Info: Redefining \showhyphens on input line 163.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
  (/usr/local/texlive/2021/texmf-dist/tex/latex/microtype/mt-ptm.cfg
 File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 ) ABD: EverySelectfont initializing macros
-LaTeX Info: Redefining \selectfont on input line 170.
+LaTeX Info: Redefining \selectfont on input line 163.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
@@ -1329,7 +1329,7 @@ Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
 Package caption Info: supertabular package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count447
-Package hyperref Info: Link coloring ON on input line 170.
+Package hyperref Info: Link coloring ON on input line 163.
  (/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/local/texlive/2021/texmf-dist/tex/latex/refcount/refcount.sty
@@ -1339,10 +1339,10 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count448
 )
-LaTeX Info: Redefining \ref on input line 170.
-LaTeX Info: Redefining \pageref on input line 170.
-LaTeX Info: Redefining \nameref on input line 170.
- (/Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/prompt-distributions.out) (/Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/prompt-distributions.out)
+LaTeX Info: Redefining \ref on input line 163.
+LaTeX Info: Redefining \pageref on input line 163.
+LaTeX Info: Redefining \nameref on input line 163.
+ (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.out) (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.out)
 \@outlinefile=\write5
 \openout5 = `prompt-distributions.out'.
 
@@ -1350,20 +1350,20 @@ LaTeX Info: Redefining \nameref on input line 170.
 Dictionary: translator-basic-dictionary, Language: English 
 )
 
-Package todonotes Warning: The length marginparwidth is less than 2cm and will most likely cause issues with the appearance of inserted todonotes. The issue can be solved by adding a line like \setlength {\marginparwidth }{2cm} prior to loading the todonotes package. on input line 170.
+Package todonotes Warning: The length marginparwidth is less than 2cm and will most likely cause issues with the appearance of inserted todonotes. The issue can be solved by adding a line like \setlength {\marginparwidth }{2cm} prior to loading the todonotes package. on input line 163.
 
 (/usr/local/texlive/2021/texmf-dist/tex/latex/siunitx/siunitx-abbreviations.cfg
 File: siunitx-abbreviations.cfg 2017/11/26 v2.7k siunitx: Abbreviated units
 ) (/usr/local/texlive/2021/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 170.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 163.
  (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/local/texlive/2021/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 170.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 163.
  (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/local/texlive/2021/texmf-dist/tex/latex/microtype/mt-msb.cfg
@@ -1378,57 +1378,61 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Underfull \vbox (badness 5696) has occurred while \output is active []
 
- [1{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+LaTeX Warning: No \author given.
 
-]
-<figures/compare.png, id=68, 1923.185pt x 536.0025pt>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1
+
+{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+<figures/compare.png, id=66, 1923.185pt x 536.0025pt>
 File: figures/compare.png Graphic file (type png)
 <use figures/compare.png>
-Package pdftex.def Info: figures/compare.png  used on input line 227.
+Package pdftex.def Info: figures/compare.png  used on input line 220.
 (pdftex.def)             Requested size: 397.48499pt x 110.78088pt.
- [2 </Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/figures/compare.png>] [3] [4]
+ [2 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/compare.png>] [3] [4]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [5]
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 461.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 454.
  (/usr/local/texlive/2021/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [6]
-<figures/naive.png, id=143, 1140.4206pt x 536.9661pt>
+<figures/naive.png, id=142, 1140.4206pt x 536.9661pt>
 File: figures/naive.png Graphic file (type png)
 <use figures/naive.png>
-Package pdftex.def Info: figures/naive.png  used on input line 514.
+Package pdftex.def Info: figures/naive.png  used on input line 507.
 (pdftex.def)             Requested size: 397.48499pt x 187.15437pt.
- [7 </Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/figures/naive.png>]
-<figures/synthetic_combo.png, id=192, 851.3406pt x 273.1806pt>
+ [7 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/naive.png>]
+<figures/synthetic_combo.png, id=191, 851.3406pt x 273.1806pt>
 File: figures/synthetic_combo.png Graphic file (type png)
 <use figures/synthetic_combo.png>
-Package pdftex.def Info: figures/synthetic_combo.png  used on input line 537.
+Package pdftex.def Info: figures/synthetic_combo.png  used on input line 530.
 (pdftex.def)             Requested size: 397.48499pt x 127.5487pt.
 
-Underfull \hbox (badness 1681) in paragraph at lines 555--555
+Underfull \hbox (badness 1681) in paragraph at lines 548--548
 \T1/ptm/m/n/9 (+20) size, or so they're per-fectly
  []
 
 
-Underfull \hbox (badness 1661) in paragraph at lines 555--556
+Underfull \hbox (badness 1661) in paragraph at lines 548--549
 \T1/ptm/m/n/9 (+20) they're an-noy-ingly the same
  []
 
-[8 </Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/figures/synthetic_combo.png>]
-<figures/kde.png, id=216, 1144.7568pt x 277.5168pt>
+[8 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/synthetic_combo.png>]
+<figures/kde.png, id=215, 1144.7568pt x 277.5168pt>
 File: figures/kde.png Graphic file (type png)
 <use figures/kde.png>
-Package pdftex.def Info: figures/kde.png  used on input line 566.
+Package pdftex.def Info: figures/kde.png  used on input line 559.
 (pdftex.def)             Requested size: 397.48499pt x 96.3574pt.
-<figures/comp3.png, id=217, 4745.73pt x 1767.60374pt>
+<figures/comp3.png, id=216, 4745.73pt x 1767.60374pt>
 File: figures/comp3.png Graphic file (type png)
 <use figures/comp3.png>
-Package pdftex.def Info: figures/comp3.png  used on input line 573.
+Package pdftex.def Info: figures/comp3.png  used on input line 566.
 (pdftex.def)             Requested size: 397.48499pt x 148.04616pt.
- [9 </Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/figures/kde.png>] [10 </Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/figures/comp3.png>] [11] (/Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/prompt-distributions.bbl
+ [9 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/kde.png>] [10 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/comp3.png>] [11] (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.bbl
 LaTeX Font Info:    Trying to load font information for T1+pcr on input line 20.
  (/usr/local/texlive/2021/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
@@ -1442,17 +1446,17 @@ Underfull \hbox (badness 1694) in paragraph at lines 251--256
 []\T1/ptm/m/n/10 (+20) Tianlu Wang, Ilia Ku-likov, Olga Golovneva, Ping Yu, Weizhe Yuan, Jane Dwivedi-Yu,
  []
 
-)
+) [14]
 Overfull \hbox (66.11719pt too wide) detected at line 667
 []
  []
 
-[14]
+
 Overfull \hbox (66.11719pt too wide) detected at line 683
 []
  []
 
-[15]
+[15] [16]
 Underfull \hbox (badness 10000) in paragraph at lines 773--773
 []|\T1/ptm/m/n/9 (+20) (0.11672, 0.15462,
  []
@@ -1550,7 +1554,7 @@ Overfull \hbox (2.30368pt too wide) in paragraph at lines 771--786
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [16]
+ [17]
 Underfull \hbox (badness 7186) in paragraph at lines 794--794
 []|\T1/ptm/m/n/9 (+20) Open burn-ing means
  []
@@ -1718,7 +1722,7 @@ Overfull \hbox (2.30368pt too wide) in paragraph at lines 792--853
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [17]
+ [18]
 Underfull \hbox (badness 10000) in paragraph at lines 861--861
 []|\T1/ptm/m/n/9 (+20) Dani(Reese With-er-
  []
@@ -1801,7 +1805,7 @@ Overfull \hbox (2.30368pt too wide) in paragraph at lines 859--870
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [18]
+ [19]
 Underfull \hbox (badness 1389) in paragraph at lines 878--879
 \T1/ptm/m/n/9 (+20) white from a yolk in
  []
@@ -1944,7 +1948,7 @@ Overfull \hbox (2.30368pt too wide) in paragraph at lines 876--915
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [19]
+ [20]
 Underfull \hbox (badness 10000) in paragraph at lines 923--923
 []|\T1/ptm/m/n/9 (+20) (0.15147, 0.12494,
  []
@@ -2092,13 +2096,13 @@ Overfull \hbox (2.30368pt too wide) in paragraph at lines 921--938
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [20] [21]
-<figures/comp1.png, id=394, 4741.715pt x 1767.60374pt>
+ [21] [22]
+<figures/comp1.png, id=398, 4741.715pt x 1767.60374pt>
 File: figures/comp1.png Graphic file (type png)
 <use figures/comp1.png>
 Package pdftex.def Info: figures/comp1.png  used on input line 948.
 (pdftex.def)             Requested size: 397.48499pt x 148.15404pt.
-<figures/comp2.png, id=395, 4741.715pt x 1767.60374pt>
+<figures/comp2.png, id=399, 4741.715pt x 1767.60374pt>
 File: figures/comp2.png Graphic file (type png)
 <use figures/comp2.png>
 Package pdftex.def Info: figures/comp2.png  used on input line 954.
@@ -2107,39 +2111,39 @@ File: figures/comp3.png Graphic file (type png)
 <use figures/comp3.png>
 Package pdftex.def Info: figures/comp3.png  used on input line 960.
 (pdftex.def)             Requested size: 397.48499pt x 148.04616pt.
-<figures/comp4.png, id=396, 4741.715pt x 1767.60374pt>
+<figures/comp4.png, id=400, 4741.715pt x 1767.60374pt>
 File: figures/comp4.png Graphic file (type png)
 <use figures/comp4.png>
 Package pdftex.def Info: figures/comp4.png  used on input line 966.
 (pdftex.def)             Requested size: 397.48499pt x 148.15404pt.
-<figures/comp5.png, id=397, 4741.715pt x 1767.60374pt>
+<figures/comp5.png, id=401, 4741.715pt x 1767.60374pt>
 File: figures/comp5.png Graphic file (type png)
 <use figures/comp5.png>
 Package pdftex.def Info: figures/comp5.png  used on input line 972.
 (pdftex.def)             Requested size: 397.48499pt x 148.15404pt.
- [22 </Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/figures/comp1.png> </Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/figures/comp2.png>]
-<figures/comp6.png, id=407, 4741.715pt x 1767.60374pt>
+ [23 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/comp1.png> </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/comp2.png>]
+<figures/comp6.png, id=411, 4741.715pt x 1767.60374pt>
 File: figures/comp6.png Graphic file (type png)
 <use figures/comp6.png>
 Package pdftex.def Info: figures/comp6.png  used on input line 978.
 (pdftex.def)             Requested size: 397.48499pt x 148.15404pt.
- [23 </Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/figures/comp4.png> </Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/figures/comp5.png> </Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/figures/comp6.png>] (/Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/prompt-distributions.aux)
+ [24 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/comp4.png> </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/comp5.png> </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/comp6.png>] (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.aux)
 Package rerunfilecheck Info: File `prompt-distributions.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 42844 strings out of 478994
- 799272 string characters out of 5858185
- 1228239 words of memory out of 5000000
+ 42847 strings out of 478994
+ 798992 string characters out of 5858185
+ 1224077 words of memory out of 5000000
  58792 multiletter control sequences out of 15000+600000
- 489887 words of font info for 454 fonts, out of 8000000 for 9000
+ 488841 words of font info for 454 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 107i,15n,105p,1093b,982s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on /Users/sean/Documents/GitHub/prompt-distributions/doc/arxiv/v2/prompt-distributions.pdf (23 pages, 2992254 bytes).
+ 107i,15n,105p,1187b,982s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.pdf (24 pages, 2983759 bytes).
 PDF statistics:
- 508 PDF objects out of 1000 (max. 8388607)
- 419 compressed objects within 5 object streams
- 130 named destinations out of 1000 (max. 500000)
+ 509 PDF objects out of 1000 (max. 8388607)
+ 420 compressed objects within 5 object streams
+ 132 named destinations out of 1000 (max. 500000)
  112799 words of extra memory for PDF output out of 128383 (max. 10000000)
 

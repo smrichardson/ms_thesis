@@ -130,13 +130,6 @@ spacebelow=\parsep,
 % \texttt{email}
 % }
 
-\author{David Reber$^{1}$, Sean Richardson$^{2}$, Todd Nief$^{1}$, Cristina Garbacea$^{3}$, Victor Veitch$^{2,3}$ \\
-$^1$Department of Computer Science, University of Chicago \\
-$^2$Department of Statistics, University of Chicago \\
-$^3$Data Science Institute, University of Chicago \\
-}
-% TODO ICLR: might need to adjust formatting of authors.
-
 
 % The \author macro works with any number of authors. There are two commands
 % used to separate the names and addresses of multiple authors: \And and \AND.
@@ -160,7 +153,7 @@ $^3$Data Science Institute, University of Chicago \\
 
 % ALSO search for "FINAL COPY" and UNCOMMENT ALL FOLLOWING LINES
 
-% \iclrfinalcopy % Uncomment for camera-ready version, but NOT for submission.
+\iclrfinalcopy % Uncomment for camera-ready version, but NOT for submission.
 % Before Arxiv submission, comment the following line in iclr2025_conference.sty if preprint!!!!!
 % \lhead{Published as a conference paper at ICLR 2025}
 
@@ -172,8 +165,8 @@ $^3$Data Science Institute, University of Chicago \\
 
 % Main Content
 \begin{abstract}
-This paper concerns the evaluation of reward models used in language modeling. A reward model is a function that takes a prompt and a response and assigns a score indicating how `good' that response is for the prompt. A key challenge is that reward models are usually imperfect proxies for actual preferences. For example, we may worry that a model trained to reward helpfulness learns to instead prefer longer responses. 
-In this paper, we develop an evaluation method, RATE (Rewrite-based Attribute Treatment Estimators), that allows us to measure the \emph{causal} effect of a given attribute of a response (e.g., length) on the reward assigned to that response. 
+This work concerns the evaluation of reward models used in language modeling. A reward model is a function that takes a prompt and a response and assigns a score indicating how `good' that response is for the prompt. A key challenge is that reward models are usually imperfect proxies for actual preferences. For example, we may worry that a model trained to reward helpfulness learns to instead prefer longer responses. 
+In this work, we develop an evaluation method, RATE (Rewrite-based Attribute Treatment Estimators), that allows us to measure the \emph{causal} effect of a given attribute of a response (e.g., length) on the reward assigned to that response. 
 The core idea is to use large language models to rewrite responses to produce imperfect counterfactuals, and to adjust for rewriting error by rewriting \emph{twice}. We show that the RATE estimator is consistent under reasonable assumptions. We demonstrate the effectiveness of RATE on synthetic and real-world data, showing that it can accurately estimate the effect of a given attribute on the reward model.
 % FINAL COPY:
 % Code is available at \url{https://github.com/toddnief/RATE}.
@@ -198,7 +191,7 @@ Generally, these provide methods for estimating the causal effect using \emph{ob
 
 A natural idea is to circumvent this complexity by simply rewriting responses to create pairs of responses where the only difference is in the attribute of interest. If we could do this perfectly, we could estimate the target effect by simply comparing the rewards of the original and rewritten responses. Of course, rewrites cannot be done perfectly.
 
-The contribution of this paper is to develop and demonstrate a rewrite-based method for estimating the causal effect of an \emph{attribute} of a response, on the \emph{reward} assigned to that response:
+The contribution of this work is to develop and demonstrate a rewrite-based method for estimating the causal effect of an \emph{attribute} of a response, on the \emph{reward} assigned to that response:
 \begin{enumerate}
   \item We develop a practical method of estimating the causal effect of an attribute of a response on reward using imperfect LLM-based rewrites. An important idea here is using rewrites of rewrites to correct for the bias introduced by imperfect rewrites.
   \item We show that this method is an unbiased and consistent estimator of the causal effect.
@@ -597,12 +590,19 @@ The RATE procedure applies more generally to contrastive rewards of the form $R(
 \end{align*}
 As an example of why this may be useful, consider an evaluator LLM that takes a prompt and two responses and returns a preference for which is better. We may view this as a contrastive reward with outputs in ${0,1}$. RATE enables us to estimate how sensitive this evaluator is to different attributes considered in isolation. Notice that in the particular case where $R(x, y_1, y_0) = R(x, y_1) - R(x, y_0)$, as in, e.g., the Bradley-Terry model, the contrastive RATE estimate is the same as the pointwise RATE estimate described in the main body of the paper. This highlights the versatility of our approach, as it naturally extends to both pointwise and contrastive reward models.
 
+\paragraph{Generalization to Model Edits}
+Note that we can construct a ``reward function'' for a model edit by comparing the original model to the edited model.  In particular, we could define
+\[\tilde{R}(x, y) = \log\frac{\pi(y|x)}{\pi_0(y|x)}\]
+where $\pi(y|x)$ is the probability of generating $y$ from $x$ under the edited model, and $\pi_0(y|x)$ is the probability under the original model. For instance, we could determine whether we have successfully fine-tuned a model to be more friendly by computing the ATE of friendliness on the log-likelihood ratio relative to the baseline model, $\EE[\tilde{R}(X, Y(W=1)) - \tilde{R}(X, Y(W=0))]$, where $Y(W=1)$ and $Y(W=0)$ are counterfactuals differing only in friendliness. Notice that this is different from the naive approach of comparing the outputs of the original and edited models to see which is more friendly, as this may be confounded by the fine-tuned model's drift on other attributes correlated with friendliness. The causal framing allows us to isolate a single attribute and determine whether the model has been successfully fine-tuned on this dimension. We can use RATE to estimate this ATE by rewriting the responses to change only the friendliness attribute, and then comparing the log-likelihood ratios of the original and rewritten responses under the original and edited models.
+
+This could be particularly useful in the context of model interpretability. For instance, if we believe that a vector $\lambda$ is a ``steering vector'' for friendliness and define $\pi$ as the original model with $\lambda$ added to the residual stream, we could see whether the ATE of friendliness on the log-likelihood ratio reward function is positive. This would suggest that $\lambda$ is indeed steering the model towards friendliness.
+
 \paragraph{Dynamic Benchmarking} Static benchmarks offer limited insight for model deployment compared to dynamic benchmarking, which is less vulnerable to memorization and can be easily tailored to specific task constraints \citep{saxon2024benchmarksmicroscopesmodelmetrology}. While the evaluations in this work augment static datasets for the sake of demonstrating its validity, RATE can be easily adapted to dynamic benchmarking by rewriting responses in real-time.
 
 \paragraph{Rewriting the Prompt} \citet{wang2024selftaughtevaluators} showed that rewriting prompts outperforms rewriting completions when generating synthetic preference data. Though applied to generic preferences (rather than specific attributes), this suggests that rewriting the prompt may be a useful extension of our method. That is, we could rewrite the prompt to change the attribute of interest, and then generate a completion as usual (the same for rewrites of rewrites). Further research in this direction would need to adapt the latent variable model and consequent RATE estimator, but it could be a promising direction for future work.
 
 \paragraph{Beyond Binary Concepts}
-This paper focuses on binary attributes, in line with binary treatments in causal inference. Although this may seem limiting, continuous attributes like length can be binarized using thresholds (e.g., above or below a character count), and categorical attributes can be simplified with binary contrasts. This approach works well for many applications, but future work could explore explicit handling of continuous and categorical attributes.
+This work focuses on binary attributes, in line with binary treatments in causal inference. Although this may seem limiting, continuous attributes like length can be binarized using thresholds (e.g., above or below a character count), and categorical attributes can be simplified with binary contrasts. This approach works well for many applications, but future work could explore explicit handling of continuous and categorical attributes.
 
   
 \section{Related Work}

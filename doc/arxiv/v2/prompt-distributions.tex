@@ -165,9 +165,7 @@ spacebelow=\parsep,
 
 % Main Content
 \begin{abstract}
-This work concerns the evaluation of reward models used in language modeling. A reward model is a function that takes a prompt and a response and assigns a score indicating how `good' that response is for the prompt. A key challenge is that reward models are usually imperfect proxies for actual preferences. For example, we may worry that a model trained to reward helpfulness learns to instead prefer longer responses. 
-In this work, we develop an evaluation method, RATE (Rewrite-based Attribute Treatment Estimators), that allows us to measure the \emph{causal} effect of a given attribute of a response (e.g., length) on the reward assigned to that response. 
-The core idea is to use large language models to rewrite responses to produce imperfect counterfactuals, and to adjust for rewriting error by rewriting \emph{twice}. We show that the RATE estimator is consistent under reasonable assumptions. We demonstrate the effectiveness of RATE on synthetic and real-world data, showing that it can accurately estimate the effect of a given attribute on the reward model.
+This work concerns the evaluation of reward models used in language modeling.  A reward model is a function that takes a prompt and a response and assigns a score indicating how `good' that response is for the prompt. A key challenge is that reward models are usually imperfect proxies for actual preferences. For example, we may worry that a model trained to reward helpfulness learns to instead prefer longer responses. How can we disentangle whether a reward model is actually rewarding helpfulness, or simply length? In this work, we develop an evaluation method, RATE (Rewrite-based Attribute Treatment Estimators), that allows us to measure the \emph{causal} effect of a given attribute of a response (e.g., length) on the reward assigned to that response. The core idea is to use large language models to rewrite responses to produce imperfect counterfactuals, and to adjust for rewriting error by rewriting \emph{twice}. We show that the RATE estimator is $\sqrt{n}$-consistent under reasonable assumptions. We demonstrate the effectiveness of RATE on synthetic and real-world data, showing that it can accurately estimate the effect of a given attribute on the reward model.
 % FINAL COPY:
 % Code is available at \url{https://github.com/toddnief/RATE}.
 \end{abstract}
@@ -194,7 +192,7 @@ A natural idea is to circumvent this complexity by simply rewriting responses to
 The contribution of this work is to develop and demonstrate a rewrite-based method for estimating the causal effect of an \emph{attribute} of a response, on the \emph{reward} assigned to that response:
 \begin{enumerate}
   \item We develop a practical method of estimating the causal effect of an attribute of a response on reward using imperfect LLM-based rewrites. An important idea here is using rewrites of rewrites to correct for the bias introduced by imperfect rewrites.
-  \item We show that this method is an unbiased and consistent estimator of the causal effect.
+  \item We show that this method is an unbiased and $\sqrt{n}$-consistent estimator of the causal effect.
   \item We test the method empirically, showing it is effective at correcting for non-causal correlations in the data, and that this correction is important when assessing reward models.
 \end{enumerate}
 
@@ -444,7 +442,7 @@ In practice, we may not have $w^{ij}$ for all examples, so we can use a classifi
 \section{Theoretical Analysis of RATE}
 \label{sec:theory}
 
-Under reasonable assumptions, RATE is a consistent estimator of the average treatment effect.
+Under reasonable assumptions, RATE is a $\sqrt{n}$-consistent estimator of the average treatment effect.
 
 \paragraph{Latent Variable Model}
 To analyze the rewrite operation, we need to conceptualize how different aspects of a response might change during rewriting. Imagine a response as having three types of attributes: the target attribute we want to change (like sentiment), attributes that should remain constant (like topic), and attributes that might unintentionally change (like specific wording). We can formalize this idea using a latent variable model:
@@ -480,14 +478,14 @@ To establish that RATE is a sound estimator of the causal effect we need some ad
 
 \begin{restatable}[Unbiasedness and Consistency]{theorem}{mainthm}
 \label{thm:mainthm}
-  Let $R(X, Y(W,Z,\xi)) = R_{W, Z}(X, W, Z) + R_{\xi}(X, \xi)$ and $\text{Re}(Y(W, Z, \xi)) \equaldist Y(W, Z, \tilde{\xi})$ where $\tilde{\xi} \dist P_\text{Re}(\tilde{\xi})$.
+  Let $R(X, Y(W,Z,\xi)) = R_{W, Z}(X, W, Z) + R_{\xi}(X, \xi)$ and $\text{Re}(Y(W, Z, \xi)) \equaldist Y(W, Z, \tilde{\xi})$ where $\tilde{\xi} \dist P_\text{Re}(\tilde{\xi})$. Assume that the reward function is bounded.
   Then the RATE estimators, defined as:
   \begin{align*}
   \hat{\tau}_{\text{ATT}} &= \frac{1}{n_1} \sum_{(i, j): w^{ij} = 1} [R(x^i, \text{Re}(\text{Re}(x^i, y^{ij}, 0), 1)) - R(x^i, \text{Re}(x^i, y^{ij}, 0))] \\
   \hat{\tau}_{\text{ATU}} &= \frac{1}{n_0} \sum_{(i,j): w^{ij} = 0} [R(x^i, \text{Re}(x^i, y^{ij}, 1)) - R(x^i, \text{Re}(\text{Re}(x^i, y^{ij}, 1), 0))] \\
   \hat{\tau}_{\text{ATE}} &= \frac{n_1}{n_0 + n_1} \hat{\tau}_{\text{ATT}} + \frac{n_0}{n_0 + n_1} \hat{\tau}_{\text{ATU}}
 \end{align*}
-where $n_1$ and $n_0$ are the number of pairs with observed $W = 1$ and $W = 0$ respectively, are unbiased and consistent estimators of the ATT, ATU, and ATE.
+where $n_1$ and $n_0$ are the number of pairs with observed $W = 1$ and $W = 0$ respectively, are unbiased and $\sqrt{n}$-consistent estimators of the ATT, ATU, and ATE.
 \end{restatable}
 
 See \Cref{sec:proofs} for the proof.
@@ -592,10 +590,12 @@ As an example of why this may be useful, consider an evaluator LLM that takes a 
 
 \paragraph{Generalization to Model Edits}
 Note that we can construct a ``reward function'' for a model edit by comparing the original model to the edited model.  In particular, we could define
-\[\tilde{R}(x, y) = \log\frac{\pi(y|x)}{\pi_0(y|x)}\]
-where $\pi(y|x)$ is the probability of generating $y$ from $x$ under the edited model, and $\pi_0(y|x)$ is the probability under the original model. For instance, we could determine whether we have successfully fine-tuned a model to be more friendly by computing the ATE of friendliness on the log-likelihood ratio relative to the baseline model, $\EE[\tilde{R}(X, Y(W=1)) - \tilde{R}(X, Y(W=0))]$, where $Y(W=1)$ and $Y(W=0)$ are counterfactuals differing only in friendliness. Notice that this is different from the naive approach of comparing the outputs of the original and edited models to see which is more friendly, as this may be confounded by the fine-tuned model's drift on other attributes correlated with friendliness. The causal framing allows us to isolate a single attribute and determine whether the model has been successfully fine-tuned on this dimension. We can use RATE to estimate this ATE by rewriting the responses to change only the friendliness attribute, and then comparing the log-likelihood ratios of the original and rewritten responses under the original and edited models.
+\[\tilde{R}_{\pi, \pi_0}(x, y) = \log\frac{\pi(y|x)}{\pi_0(y|x)}\]
+where $\pi(y|x)$ is the probability of generating $y$ given $x$ under the edited model, and $\pi_0(y|x)$ is the probability under the original model. For instance, we could determine whether we have successfully fine-tuned a model to be more friendly by estimating the ATE of friendliness on the log-likelihood ratio relative to the baseline model, \[\text{ATE}_{W, \pi, \pi_0} = \EE[\tilde{R}_{\pi, \pi_0}(X, Y(W=1)) - \tilde{R}_{\pi, \pi_0}(X, Y(W=0))]\] where $Y(W=1)$ and $Y(W=0)$ are counterfactuals differing only in friendliness. 
 
-This could be particularly useful in the context of model interpretability. For instance, if we believe that a vector $\lambda$ is a ``steering vector'' for friendliness and define $\pi$ as the original model with $\lambda$ added to the residual stream, we could see whether the ATE of friendliness on the log-likelihood ratio reward function is positive. This would suggest that $\lambda$ is indeed steering the model towards friendliness.
+Notice that this is different from the naive approach of comparing the outputs of the original and edited models to see which is more friendly, as this may be confounded by the fine-tuned model's drift on other attributes correlated with friendliness. Instead, the causal framing allows us to isolate a single attribute and determine whether the model has been successfully fine-tuned on this dimension. Just as we have done with real-world reward models, the RATE method allows us to estimate this ATE by rewriting the responses to change only the friendliness attribute, and then comparing the log-likelihood ratios of the original and rewritten responses under the original and edited models.
+
+This could be particularly useful in the context of model interpretability. For instance, if we believe that a vector $\lambda$ is a ``steering vector'' for friendliness and define $\pi_\lambda$ as probability distribution over tokens induced by adding $\lambda$ to the residual stream, we could see whether the ATE with respect to friendliness is non-zero, $\text{ATE}_{\pi_\lambda, \pi_0, W} \neq 0$. This would suggest that $\lambda$ is indeed steering the model towards friendliness. For a targeted steering vector, we would like the ATE with respect to all other attributes to be zero, as the steering vector is only intended to affect friendliness.
 
 \paragraph{Dynamic Benchmarking} Static benchmarks offer limited insight for model deployment compared to dynamic benchmarking, which is less vulnerable to memorization and can be easily tailored to specific task constraints \citep{saxon2024benchmarksmicroscopesmodelmetrology}. While the evaluations in this work augment static datasets for the sake of demonstrating its validity, RATE can be easily adapted to dynamic benchmarking by rewriting responses in real-time.
 
@@ -626,16 +626,9 @@ They use datasets with consistent example structure that make it easy to create 
 \citet{fryer2022flexibletextgenerationcounterfactual} use various metrics to assess the quality of rewrites on four dimensions: fluency/consistency, presence of a particular attribute, similarity of label, and similarity of meaning. Our work extends assessments of rewrite quality (through rewrites of rewrites) to correct for bias in the evaluation of reward models, allowing us to account for the quality of rewrites on all dimensions simultaneously.
 
 \section{Conclusion}
-We rely on reward models to align LLMs to human values, but reward models are black boxes and it is unclear what aspects of the text they are actually rewarding. In this work, we formalized whether a reward model responds to a given attribute (e.g., helpfulness, complexity, sensitivity) through the language of causality. Specifically, we estimated the average treatment effect of an attribute by counterfactually \emph{rewriting} natural language responses to differ only on the target attribute. Although this rewrite process introduces bias, we account for it using rewrites of rewrites, which, in expectation, cancel out off-target changes. This procedure yields RATE: Rewrite-based Attribute
-Treatment Estimators. 
+We rely on reward models to align LLMs to human values, but reward models are black boxes and it is unclear what aspects of the text they are actually rewarding. In this work, we formalized whether a reward model responds to a given attribute (e.g., helpfulness, complexity, sensitivity) through the language of causality. Specifically, we estimated the average treatment effect of an attribute by counterfactually \emph{rewriting} natural language responses to differ only on the target attribute. Although this rewrite process introduces bias, we account for it using rewrites of rewrites, which, in expectation, cancel out off-target changes. This procedure yields RATE: Rewrite-based Attribute Treatment Estimators. 
 
 Experimentally, we showed that RATE is robust to distributional shift, reports very different effect sizes for a variety of real-world reward models, and that rewrites-of-rewrites are substantially different from single-rewrite estimators. Our method computes causal effects of individual attributes on reward models \emph{without} enumerating all off-target attributes and introduces a procedure to find out what attributes reward models are \emph{really} rewarding.
-
-\section*{Reproducibility Statement}
-To facilitate reproducibility of our RATE method, we have taken the following measures: (1) Our code implementation, including scripts for producing rewrites, estimating treatment effects, and generating plots, is provided.
-% FINAL COPY:
-% at \url{https://github.com/toddnief/RATE}. 
-(2) The datasets used in our experiments (IMDB, ELI5, HelpSteer, HH RLHF) are publicly available. (3) In \Cref{appendix:rewrite_examples}, we provide randomly sampled texts, rewrites, and rewrites of rewrites for each dataset/attribute combination, allowing the reader to qualitatively evaluate our rewrites. (4) All reward models evaluated in this study (i.e., FsfairX-LLaMA3-RM-v0.1, NCSOFT/Llama-3-OffsetBias-RM-8B, ArmoRM) are open-source. (5) We report confidence intervals for all main results to ensure statistical reliability, using a normal distribution because of our large sample size. (6) \Cref{sec:experiments} includes tips for creating effective rewrite instructions and documents challenges encountered during the rewrite process, aiding in the reproduction of our methodology. (7) For the synthetic experiments, we provide details on how we induced correlations in \Cref{sec:synthetic-details}.
 
 % FINAL COPY:
 % \section*{Acknowledgements}
@@ -650,7 +643,7 @@ To facilitate reproducibility of our RATE method, we have taken the following me
 \label{sec:proofs}
 \mainthm*
 \begin{proof}
-  First, we'll prove the unbiasedness and consistency of $\hat{\tau}_{\text{ATT}}$ and $\hat{\tau}_{\text{ATU}}$, and then use these results to prove the same for $\hat{\tau}_{\text{ATE}}$. Throughout, we use $\tilde{\xi}$ and $\tilde{\tilde{\xi}}$ to denote i.i.d. samples from the distribution $P_\xi$, where the former comes from the first rewrite and the latter from the rewrite of the rewrite.
+  First, we'll prove unbiasedness and $\sqrt{n_1}$-consistency of $\hat{\tau}_{\text{ATT}}$ and $\sqrt{n_0}$-consistency of $\hat{\tau}_{\text{ATU}}$, and then use these results for $\hat{\tau}_{\text{ATE}}$. Throughout, we use $\tilde{\xi}$ and $\tilde{\tilde{\xi}}$ to denote i.i.d. samples from the distribution $P_\xi$, where the former comes from the first rewrite and the latter from the rewrite of the rewrite.
   
   \textbf{1. Unbiasedness and Consistency of $\hat{\tau}_{\text{ATT}}$}
   
@@ -667,24 +660,16 @@ To facilitate reproducibility of our RATE method, we have taken the following me
   \end{align*}
   Therefore, as an average over these quantities, we have:
   \[\EE[\hat{\tau}_{\text{ATT}}] = \EE[R(X, Y(1)) - R(X, Y(0)) | W = 1] = \text{ATT}\]
-  For consistency, by the law of large numbers, as $n_1 \to \infty$:
-  \[\hat{\tau}_{\text{ATT}} \xrightarrow{p} \EE[R(X, Y(1)) - R(X, Y(0)) | W = 1] = \text{ATT}\]
+  For $\sqrt{n_1}$-consistency, by boundedness of $R$, define $\delta_i = R(x^i, \text{Re}(\text{Re}(x^i, y^{ij}, 0), 1)) - R(x^i, \text{Re}(x^i, y^{ij}, 0))$. Then for all $i$, $\text{Var}(\delta_i) \leq B$ for some constant $B$. Therefore:
+  \[\text{Var}(\hat{\tau}_{\text{ATT}}) = \frac{1}{n_1^2} \sum_{(i, j): w^{ij} = 1} \text{Var}(\delta_i) \leq \frac{B}{n_1}\]
+  
+  By Chebyshev's inequality:
+  \[P(|\sqrt{n_1}(\hat{\tau}_{\text{ATT}} - \text{ATT})| > \epsilon) \leq \frac{B}{\epsilon^2} = O(1)\]
+  Therefore $\sqrt{n_1}(\hat{\tau}_{\text{ATT}} - \text{ATT}) = O_p(1)$.
   
   \textbf{2. Unbiasedness and Consistency of $\hat{\tau}_{\text{ATU}}$}
   
-  Similarly, for $w = 0$, we calculate:
-  \[R(x, \text{Re}(x, y, 1)) - R(x, \text{Re}(\text{Re}(x, y, 1), 0))\]
-  which has expected value:
-  \begin{align*}
-  \EE[R(x, \text{Re}(x, y, 1)) - R(x, \text{Re}(\text{Re}(x, y, 1), 0))] &= \EE_{\tilde{\xi}, \tilde{\tilde{\xi}} \sim P_{\text{Re}}}[R_{W,Z}(x, 1, z) + R_\xi(x, \tilde{\xi}) - R_{W,Z}(x, 0, z) - R_\xi(x, \tilde{\tilde{\xi}})] \\
-  &= R_{W,Z}(x, 1, z) - R_{W,Z}(x, 0, z) \\
-  &= R(x, y(1, z, \xi)) - R(x, y(0, z, \xi)) \\
-  &= R(x, y(1)) - R(x, y(0))
-  \end{align*}
-  Therefore, as an average over these quantities, we have:
-  \[\EE[\hat{\tau}_{\text{ATU}}] = \EE[R(X, Y(1)) - R(X, Y(0)) | W = 0] = \text{ATU}\]
-  For consistency, by the law of large numbers, as $n_0 \to \infty$:
-  \[\hat{\tau}_{\text{ATU}} \xrightarrow{p} \EE[R(X, Y(1)) - R(X, Y(0)) | W = 0] = \text{ATU}\]
+  The proof follows identically with $W = 0$, yielding $\sqrt{n_0}(\hat{\tau}_{\text{ATU}} - \text{ATU}) = O_p(1)$.
   
   \textbf{3. Unbiasedness and Consistency of $\hat{\tau}_{\text{ATE}}$}
   
@@ -697,8 +682,12 @@ To facilitate reproducibility of our RATE method, we have taken the following me
   \end{align*}
   Thus, $\hat{\tau}_{\text{ATE}}$ is an unbiased estimator of the ATE.
 
-  For consistency, note that $\hat{\tau}_{\text{ATE}}$ is a weighted average of $\hat{\tau}_{\text{ATT}}$ and $\hat{\tau}_{\text{ATU}}$. As $n_0, n_1 \to \infty$, the weights $\frac{n_1}{n_0 + n_1}$ and $\frac{n_0}{n_0 + n_1}$ converge to $P(W=1)$ and $P(W=0)$ respectively. Therefore, by Slutsky's theorem and the consistency of $\hat{\tau}_{\text{ATT}}$ and $\hat{\tau}_{\text{ATU}}$:
-  \[\hat{\tau}_{\text{ATE}} \xrightarrow{p} P(W=1) \cdot \text{ATT} + P(W=0) \cdot \text{ATU} = \text{ATE}\]
+  For $\sqrt{n}$-consistency of ATE, recall that:
+\[\hat{\tau}_{\text{ATE}} = \frac{n_1}{n}\hat{\tau}_{\text{ATT}} + \frac{n_0}{n}\hat{\tau}_{\text{ATU}}\]
+\[\text{ATE} = P(W=1)\text{ATT} + P(W=0)\text{ATU}\]
+
+  Since $\frac{n_1}{n} \to_p P(W=1)$, $\frac{n_0}{n} \to_p P(W=0)$, $\sqrt{n_1}(\hat{\tau}_{\text{ATT}} - \text{ATT}) = O_p(1)$, and $\sqrt{n_0}(\hat{\tau}_{\text{ATU}} - \text{ATU}) = O_p(1)$, by Slutsky's theorem:
+  \[\sqrt{n}(\hat{\tau}_{\text{ATE}} - \text{ATE}) = O_p(1)\]
 \end{proof}
 
 \section{Experimental Details}

@@ -1,5 +1,5 @@
 # Fdb version 3
-["bibtex prompt-distributions"] 1734932076 "prompt-distributions.aux" "prompt-distributions.bbl" "prompt-distributions" 1734932230
+["bibtex prompt-distributions"] 1735084299 "prompt-distributions.aux" "prompt-distributions.bbl" "prompt-distributions" 1735084309
   "./bibs/iclr2025_conference.bst" 1734929701 26973 af983813ca1a1414954dbceae7baa2a1 ""
   "bibs/alignment.bib" 1734929701 3293 23cd0f372d5b4033f42165b7ecb23ac6 ""
   "bibs/counterfactual_samples.bib" 1734929701 2187 9582078b52a109f0d78480e136d54012 ""
@@ -7,13 +7,13 @@
   "bibs/length.bib" 1734929701 1136 3dcaeb560773fd5b37f0a9afdf082143 ""
   "bibs/misc.bib" 1734929701 7373 1bf2e9903bbd40fc67859658e78eb7b4 ""
   "bibs/treatment_effects.bib" 1734929701 5349 516b95fae908c19bf5b5d83e831cd728 ""
-  "prompt-distributions.aux" 1734932174 15605 f3a23de11e44eba009d8283ffbd03524 "pdflatex"
+  "prompt-distributions.aux" 1735084308 15600 b5c6e4f0bf28ce3d2474a1c02aa79d7b "pdflatex"
   (generated)
-  "prompt-distributions.bbl"
   "prompt-distributions.blg"
-["pdflatex"] 1734932165 "/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.tex" "/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.pdf" "prompt-distributions" 1734932230
-  "/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.aux" 1734932174 15605 f3a23de11e44eba009d8283ffbd03524 ""
-  "/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.tex" 1734932230 80131 dfa0c6d72a0074ef901883b5457c154d ""
+  "prompt-distributions.bbl"
+["pdflatex"] 1735084299 "/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.tex" "/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.pdf" "prompt-distributions" 1735084309
+  "/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.aux" 1735084308 15600 b5c6e4f0bf28ce3d2474a1c02aa79d7b ""
+  "/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.tex" 1735084289 79146 43233994587c898a451a7d92c6a96fec ""
   "/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/tfm/adobe/courier/pcrr8r.tfm" 1136768653 1292 bd42be2f344128bff6d35d98474adfe3 ""
@@ -349,17 +349,17 @@
   "figures/synthetic_combo.png" 1734929701 287320 29bdfd155df0d618390840baf4df09ea ""
   "preamble/commenting.tex" 1734929701 1744 9cfddb25fb4cfe5ec1fa277f78809d4c ""
   "preamble/definitions_basic.tex" 1734929701 2287 d419c7ca3d3c193fc068bf7e9a4aab3d ""
-  "preamble/iclr2025_conference.sty" 1734929701 9025 23b1c1f0d6db90b9ce38add2e9613659 ""
+  "preamble/iclr2025_conference.sty" 1735079450 8991 bb77ab09bbbc4adc193fc590c342bcb0 ""
   "preamble/math_commands.tex" 1734929701 12292 9c0ee8e568da1ca0e254c5dfa5a4f5b1 ""
   "preamble/preamble.tex" 1734929701 4893 14cc75ef7b1d49db5d823be16dc55ab1 ""
   "preamble/preamble_math.tex" 1734929701 5174 a3bc6e932d5283c54ca87544747e55fa ""
-  "prompt-distributions.aux" 1734932174 15605 f3a23de11e44eba009d8283ffbd03524 "pdflatex"
-  "prompt-distributions.bbl" 1734932077 13671 440a5e2e3eecf44e2619348bf32b99d6 "bibtex prompt-distributions"
-  "prompt-distributions.out" 1734932167 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "prompt-distributions.tex" 1734932230 80131 dfa0c6d72a0074ef901883b5457c154d ""
+  "prompt-distributions.aux" 1735084308 15600 b5c6e4f0bf28ce3d2474a1c02aa79d7b "pdflatex"
+  "prompt-distributions.bbl" 1735084299 13671 440a5e2e3eecf44e2619348bf32b99d6 "bibtex prompt-distributions"
+  "prompt-distributions.out" 1735084301 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "prompt-distributions.tex" 1735084289 79146 43233994587c898a451a7d92c6a96fec ""
   (generated)
-  "prompt-distributions.log"
   "prompt-distributions.pdf"
+  "prompt-distributions.log"
   "/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.log"
   "prompt-distributions.aux"
   "/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.pdf"

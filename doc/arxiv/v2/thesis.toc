@@ -1,0 +1,28 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Motivation}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Statistical Challenges in Text-Model Evaluation}{3}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Our Contribution}{3}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Structure of this Thesis}{4}{subsection.1.4}%
+\contentsline {section}{\numberline {2}Related Work}{4}{section.2}%
+\contentsline {section}{\numberline {3}Problem Setup and Causal Estimands}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Naive Estimation and Its Pitfall}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Causal Treatment Effects}{5}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Why Not Classical Backdoor Adjustments?}{6}{subsection.3.3}%
+\contentsline {section}{\numberline {4}RATE: Rewrite-based Attribute Treatment Estimators}{6}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Rewrite Operations with LLMs}{6}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Imperfect Rewrites and the ``Double Rewrite'' Idea}{7}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Theoretical Analysis}{8}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Latent Variable Model and Assumptions}{8}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Intuitive Explanation of the Proof}{9}{subsection.5.2}%
+\contentsline {paragraph}{Justifying \Cref {assump:additive}:}{9}{section*.2}%
+\contentsline {paragraph}{Justifying \Cref {assump:rewrite_dist}:}{9}{section*.3}%
+\contentsline {section}{\numberline {6}Empirical Evaluation}{9}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Implementation Details}{10}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Real-World Data and Observations}{10}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Synthetic Experiments}{10}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Discussion and Limitations}{11}{section.7}%
+\contentsline {paragraph}{Generalization to Contrastive Rewards.}{11}{section*.4}%
+\contentsline {paragraph}{Model Edits and Steering.}{11}{section*.5}%
+\contentsline {paragraph}{Limitations.}{11}{section*.6}%
+\contentsline {section}{\numberline {8}Conclusion and Future Work}{11}{section.8}%
+\contentsline {section}{\numberline {A}Proof of Main Theorem}{13}{appendix.A}%

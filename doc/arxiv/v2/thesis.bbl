@@ -1,0 +1,43 @@
+\begin{thebibliography}{1}
+
+\bibitem{abraham2022cebab}
+E.~D. Abraham, K.~D'Oosterlinck, A.~Feder, Y.~Gat, A.~Geiger, C.~Potts,
+  R.~Reichart, and Z.~Wu.
+\newblock Cebab: Estimating the causal effects of real-world concepts on nlp
+  model behavior.
+\newblock {\em Advances in Neural Information Processing Systems},
+  35:17582--17596, 2022.
+
+\bibitem{cinelli2024crash}
+C.~Cinelli, A.~Forney, and J.~Pearl.
+\newblock A crash course in good and bad controls.
+\newblock {\em Sociological Methods \& Research}, 53(3):1071--1104, 2024.
+
+\bibitem{feder2022causalinferencenaturallanguage}
+A.~Feder, K.~A. Keith, E.~Manzoor, R.~Pryzant, D.~Sridhar, Z.~Wood-Doughty,
+  J.~Eisenstein, J.~Grimmer, R.~Reichart, M.~E. Roberts, B.~M. Stewart,
+  V.~Veitch, and D.~Yang.
+\newblock Causal inference in natural language processing: Estimation,
+  prediction, interpretation and beyond, 2022.
+
+\bibitem{imbens2015causal}
+G.~W. Imbens and D.~B. Rubin.
+\newblock {\em Causal inference in statistics, social, and biomedical
+  sciences}.
+\newblock Cambridge university press, 2015.
+
+\bibitem{lambert2024rewardbenchevaluatingrewardmodels}
+N.~Lambert, V.~Pyatkin, J.~Morrison, L.~Miranda, B.~Y. Lin, K.~Chandu,
+  N.~Dziri, S.~Kumar, T.~Zick, Y.~Choi, N.~A. Smith, and H.~Hajishirzi.
+\newblock Rewardbench: Evaluating reward models for language modeling, 2024.
+
+\bibitem{park2024offsetbias}
+J.~Park, S.~Jwa, M.~Ren, D.~Kim, and S.~Choi.
+\newblock Offsetbias: Leveraging debiased data for tuning evaluators, 2024.
+
+\bibitem{wu2021polyjuicegeneratingcounterfactualsexplaining}
+T.~Wu, M.~T. Ribeiro, J.~Heer, and D.~S. Weld.
+\newblock Polyjuice: Generating counterfactuals for explaining, evaluating, and
+  improving models, 2021.
+
+\end{thebibliography}

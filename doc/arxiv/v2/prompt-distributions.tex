@@ -282,7 +282,12 @@ Beyond the ATE, we will also consider the average treatment effect on the treate
 Intuitively, if $W=1$ is a helpful response, the ATT measures the change in reward when we take a helpful response and make it less helpful, and the ATU measures the change in reward when we take an unhelpful response and make it more helpful.
 These estimands can differ substantially from each other and from the ATE (see \Cref{fig:bias}).
 There is no reason to expect these quantities to align in general, so some thought should be given to which is most relevant to the question at hand. Indeed, even human preferences are often asymmetric \citep{kahneman2013prospect}, so we might expect reward model preferences to be as well.
-  
+
+We might also be interested in subpopulation effects, such as the ATE when we consider only prompt-response pairs related to cooking. This is the conditional average treatment effect (CATE) and can be estimated by conditioning on some covariate $V$:
+\begin{align*}
+  \text{CATE}(v) &= \EE[R(X, Y(1)) - R(X, Y(0))|V=v]
+\end{align*}
+The CATE is valuable when we suspect heterogeneity in the treatment effect across different subpopulations, which is common in many domains.
 \section{RATE: Rewrite-based Attribute Treatment Estimators} 
 \label{sec:rate}
 
@@ -468,13 +473,14 @@ To establish that RATE is a sound estimator of the causal effect we need some ad
     \item $R_{W,Z}(X, W, Z)$ is the component of the reward that depends on the target attribute $W$ and the immutable off-target attributes $Z$.
     \item $R_{\xi}(X, \xi)$ is the component of the reward that depends on the mutable off-target attributes $\xi$.
   \end{enumerate}
-  This means that we don't need to worry about potential interactions between rewrite errors (affecting $\xi$) and other attributes of the response ($Z$), even if $W$ and $Z$ have interactions.
+  This means that we don't need to worry about potential interactions between rewrite errors (affecting $\xi$) and other attributes of the response ($Z$), even if $W$ and $Z$ have interactions. Some justification for this assumption is that, intuitively, human preferences for many attributes are separable. For example, the strength of our preference for a response to be helpful ($W$) is unlikely to depend on attributes like the specific wording used $(\xi)$. Rewards, then, as approximations of human preferences, should also be separable in this way. To be sure, such separability does not, intuitively, hold in some cases (e.g., the strength of our preference for a response to be cheerful may depend on the topic of the response), but these cases seem to involve immutable attributes $Z$ rather than mutable attributes $\xi$, at least when we are considering rewrites done by sophisticated LLMs, as they will not change the topic of a response when asked to change its sentiment.
 
   \item We assume that the off-target changes introduced by the rewrite process are randomly drawn from a distribution determined by the particular rewrite method being used. That is,
     \[\text{Re}(Y(W, Z, \xi)) \equaldist Y(W, Z, \tilde{\xi}), \quad \text{where } \tilde{\xi} \dist P_\text{Re}(\tilde{\xi})\]
-
   For example, when our rewriter is GPT-4o, the off-target yet mutable attributes such as specific word choice and grammatical structure are drawn from a `GPT-like' distribution.
 \end{enumerate}
+
+These assumptions lead to the following result:
 
 \begin{restatable}[Unbiasedness and Consistency]{theorem}{mainthm}
 \label{thm:mainthm}
@@ -604,36 +610,6 @@ This could be particularly useful in the context of model interpretability. For 
 \paragraph{Beyond Binary Concepts}
 This work focuses on binary attributes, in line with binary treatments in causal inference. Although this may seem limiting, continuous attributes like length can be binarized using thresholds (e.g., above or below a character count), and categorical attributes can be simplified with binary contrasts. This approach works well for many applications, but future work could explore explicit handling of continuous and categorical attributes.
 
-  
-\section{Related Work}
-\label{sec:related_work}
-Our work intersects with three main areas of research: challenges in reward modeling, causal inference applied to text classifiers, and the use of counterfactuals in language models.
-
-\paragraph{Challenges in Reward Modeling} Our work is particularly motivated by the challenges identified in reward modeling. \citet{lambert2024rewardbenchevaluatingrewardmodels} introduced RewardBench, a dataset for comparing reward models, providing a non-causal approach that contrasts with our causal inference framework. \citet{casper2023openproblemsfundamentallimitations} highlighted issues such as misgeneralization and reward hacking in reward models, which our work addresses by quantifying how reward models incentivize specific attributes. \citet{gleave2021quantifyingdifferencesrewardfunctions} offered a global metric for comparing reward models, while our approach provides a more fine-grained analysis focused on specific attributes.
-
-\paragraph{Causal Inference Applied to Text Classifiers} Much previous work on causal inference in NLP focuses on text classifiers, which have a similar structure to reward models.
-\citet{eisenstein2022informativenessinvarianceperspectivesspurious} extend and clarify competing notions of `feature spuriousness', using a toy example to show that `counterfactual invariance' and `marginally uninformative features' are distinct notions. Other work examines the generalization of text classifiers when trained on datasets with varying degrees of spurious correlation in features \citep{kaushik2020learningdifferencemakesdifference}. \citet{joshi-etal-2022-spurious} show that spurious correlations can be categorized as `necessary' or `sufficient' for text classifier behavior, and that many `necessary but not sufficient' features interact with other features to affect classifier behavior. RATE extends insights about text classifiers to reward models, which are similarly susceptible to spurious correlations.
-
-\citet{Feder_2021} introduced CausaLM, which focuses on training text classifiers to `forget' concepts in order to estimate the treatment effect of an attribute on classification with rule-based rewrites. To create a benchmark for neural network explainability methods, \citet{abraham2022cebab} use human-generated counterfactual restaurant reviews to quantify the causal effect of aspect-level sentiment (e.g., whether the ambiance was described positively or negatively) on the sentence-level sentiment as predicted by a neural network. Though similar in spirit, RATE is more scalable, as it does not require human-generated counterfactuals, allowing for a diversity of attributes and datasets.
-
-\paragraph{Using LLMs to Generate Counterfactuals} \citet{wang2024surveynaturallanguagecounterfactual} survey recent methods for generating counterfactuals. 
-Within their taxonomy, RATE is fully autonomous (using LLM prompting, without using humans to identify the words which need to be changed); furthermore, we offer a stronger evaluation of rewrite quality by rewriting different attributes of the \emph{same} responses in our synthetic experiments: the fact that RATE is robust to distributional shift validates that rewrites are not changing the secondary off-target concept. 
-Like us, \cite{gat2023faithfulexplanationsblackboxnlp} use LLMs to generate counterfactuals, but they do not introduce a method to account for imperfections in the rewrite process. 
-Similarly, \citet{butcher2024aligninglargelanguagemodels} ask an LLM to generate pairs by adding guidance to the prompt (``respond in a kind way'') but without directly rewriting the completions; hence there is no assurance that the pairs share the same off-targets. 
-% \citet{vig2020causalmediationanalysisinterpreting} introduce causal mediation analysis in large language models to localize gender bias to specific layers and specific attention blocks in pre-trained transformer models. 
-They use datasets with consistent example structure that make it easy to create counterfactual pairs using templates. 
-\citet{wu2021polyjuicegeneratingcounterfactualsexplaining} developed Polyjuice, a system for generating diverse counterfactuals to evaluate and improve models, but the focus is on training a separate model to generate counterfactuals. 
-\citet{fryer2022flexibletextgenerationcounterfactual} use various metrics to assess the quality of rewrites on four dimensions: fluency/consistency, presence of a particular attribute, similarity of label, and similarity of meaning. Our work extends assessments of rewrite quality (through rewrites of rewrites) to correct for bias in the evaluation of reward models, allowing us to account for the quality of rewrites on all dimensions simultaneously.
-
-\section{Conclusion}
-We rely on reward models to align LLMs to human values, but reward models are black boxes and it is unclear what aspects of the text they are actually rewarding. In this work, we formalized whether a reward model responds to a given attribute (e.g., helpfulness, complexity, sensitivity) through the language of causality. Specifically, we estimated the average treatment effect of an attribute by counterfactually \emph{rewriting} natural language responses to differ only on the target attribute. Although this rewrite process introduces bias, we account for it using rewrites of rewrites, which, in expectation, cancel out off-target changes. This procedure yields RATE: Rewrite-based Attribute Treatment Estimators. 
-
-Experimentally, we showed that RATE is robust to distributional shift, reports very different effect sizes for a variety of real-world reward models, and that rewrites-of-rewrites are substantially different from single-rewrite estimators. Our method computes causal effects of individual attributes on reward models \emph{without} enumerating all off-target attributes and introduces a procedure to find out what attributes reward models are \emph{really} rewarding.
-
-% FINAL COPY:
-% \section*{Acknowledgements}
-% Thanks to Nikolaos Ignatiadis for suggesting rewrites of rewrites as a validation of whether the rewrites are actually perfectly counterfactual. This work is supported by ONR grant N00014-23-1-2591 and Open Philanthropy. David Reber was partially supported by the Long-Term Future Fund. Sean Richardson is supported by a scholarship from Open Philanthropy.
-
 \bibliography{bibs/interpretability.bib, bibs/alignment.bib, bibs/counterfactual_samples.bib, bibs/treatment_effects.bib, bibs/length.bib, bibs/misc.bib}
 \bibliographystyle{bibs/iclr2025_conference}
 
@@ -689,284 +665,5 @@ Experimentally, we showed that RATE is robust to distributional shift, reports v
   Since $\frac{n_1}{n} \to_p P(W=1)$, $\frac{n_0}{n} \to_p P(W=0)$, $\sqrt{n_1}(\hat{\tau}_{\text{ATT}} - \text{ATT}) = O_p(1)$, and $\sqrt{n_0}(\hat{\tau}_{\text{ATU}} - \text{ATU}) = O_p(1)$, by Slutsky's theorem:
   \[\sqrt{n}(\hat{\tau}_{\text{ATE}} - \text{ATE}) = O_p(1)\]
 \end{proof}
-
-\section{Experimental Details}
-\label{sec:experiment-details}
-
-\paragraph{Synthetic Experiments} 
-\label{sec:synthetic-details}
-Our synthetic experiments took data from a real-world dataset (IMDB and HelpSteer) and artificially induced a correlation between the target attribute and the off-target attribute. As both the target and off-target attributes are binary, we can easily control the correlation between them. We group the data into the four possible combinations of the target and off-target attributes (e.g., long positive, short positive, long negative, short negative) and then randomly sample from these groups to create a new dataset. We then evaluate the reward model on this new dataset to see how the correlation affects the estimated treatment effect.
-
-\begin{table}[ht]
-  \centering
-  \small
-  \resizebox{\textwidth}{!}{
-  \begin{tabular}{ccccccc}
-  \toprule
-  \textbf{Dataset} & \textbf{Long Positive} & \textbf{Short Positive} & \textbf{Long Negative} & \textbf{Short Negative} & $\mathbf{P(\text{long} \mid \text{positive})}$ & $\mathbf{P(\text{long} \mid \text{negative})}$ \\
-  \midrule
-  0  & 2287 & 2287 & 2287 & 2287 & 0.50 & 0.50 \\
-  1  & 2515 & 2058 & 2058 & 2515 & 0.55 & 0.45 \\
-  2  & 2744 & 1829 & 1829 & 2744 & 0.60 & 0.40 \\
-  3  & 2973 & 1600 & 1600 & 2973 & 0.65 & 0.35 \\
-  4  & 3201 & 1372 & 1372 & 3201 & 0.70 & 0.30 \\
-  5  & 3430 & 1143 & 1143 & 3430 & 0.75 & 0.25 \\
-  6  & 3659 & 914  & 914  & 3659 & 0.80 & 0.20 \\
-  7  & 3888 & 685  & 685  & 3888 & 0.85 & 0.15 \\
-  8  & 4117 & 456  & 456  & 4117 & 0.90 & 0.10 \\
-  9  & 4345 & 228  & 228  & 4345 & 0.95 & 0.05 \\
-  10 & 4574 & 0    & 0    & 4574 & 1.00 & 0.00 \\
-  \bottomrule
-  \end{tabular}
-  }
-  \caption{Adjusted counts and conditional probabilities for the synthetic experiment in \Cref{fig:synthetic_combo}, after dropping reviews whose original or rewritten text exceeds a context length of 512 tokens. Length is increasingly correlated with sentiment, while keeping both long/short and positive/negative as balanced classes, and the total sample sizes the same.}
-  \label{tab:combined_table}
-\end{table}
-
-\begin{table}[ht]
-  \centering
-  \small
-  \resizebox{\textwidth}{!}{
-  \begin{tabular}{ccccccc}
-  \toprule
-  \textbf{Dataset} & \textbf{Helpful Complex} & \textbf{Unhelpful Complex} & \textbf{Helpful Simple} & \textbf{Unhelpful Simple} & $\mathbf{P(\text{unhelpful} \mid \text{complex})}$ & $\mathbf{P(\text{unhelpful} \mid \text{simple})}$ \\
-  \midrule
-  0  & 1287 & 1287 & 1287 & 1287 & 0.50 & 0.50 \\
-  1  & 1416 & 1158 & 1158 & 1416 & 0.45 & 0.55 \\
-  2  & 1545 & 1029 & 1029 & 1545 & 0.40 & 0.60 \\
-  3  & 1673 & 901  & 901  & 1673 & 0.35 & 0.65 \\
-  4  & 1802 & 772  & 772  & 1802 & 0.30 & 0.70 \\
-  5  & 1931 & 643  & 643  & 1931 & 0.25 & 0.75 \\
-  6  & 2060 & 514  & 514  & 2060 & 0.20 & 0.80 \\
-  7  & 2189 & 385  & 385  & 2189 & 0.15 & 0.85 \\
-  8  & 2318 & 256  & 256  & 2318 & 0.10 & 0.90 \\
-  9  & 2446 & 128  & 128  & 2446 & 0.05 & 0.95 \\
-  10 & 2575 & 0    & 0    & 2575 & 0.00 & 1.00 \\
-  \bottomrule
-  \end{tabular}
-  }
-  \caption{Adjusted counts and conditional probabilities for the synthetic experiment in \Cref{fig:synthetic_combo}. Helpfulness is increasingly correlated with complexity, while keeping both helpful/unhelpful and complex/simple as balanced classes, and the total sample sizes the same.}
-  \label{tab:combined_table2}
-\end{table}  
-
-\newpage
-\paragraph{Example Rewrites}
-\label{appendix:rewrite_examples}
-The following tables show randomly 8 sampled original text and rewrites for a given dataset and attribute, with reward scores from ArmoRM. The rewrites of rewrites will have the same $W$ as the original. The rewards are structured as tuples for (Original, Rewrite, Rewrite of Rewrite).
-
-\begin{table}[H]
-  \centering
-  \small
-  \begin{tabular}{|p{0.22\textwidth}|p{0.22\textwidth}|p{0.22\textwidth}|p{0.22\textwidth}|}\hline
-  Original & Rewrite & Rewrite of Rewrite & Reward \\ \hline
-  it evolved from the very first first person shooters. back then in the days of wolfenstein and quake... (W = 0) & The control scheme for first-person shooters has seen quite an evolution over the years, originating... (W = 1) & The control scheme for first-person shooters has evolved since the genre's early days with games lik... & (0.11672, 0.15462, 0.14736) \\ \hline
-  Pros for ssd's: -Smaller form factors available -Significantly faster read/write speeds -Very low th... (W = 0) & Pros for SSDs:
-
-  - Smaller form factors available: Solid State Drives (SSDs) come in a variety of sma... (W = 1) & Pros for SSDs:
-
-  - Smaller form factors: SSDs come in smaller sizes than HDDs, ideal for compact devi... & (0.13385, 0.17354, 0.16327) \\ \hline
-  Most people have covered the main playing differences, but I don't think any have touched on FIELDIN... (W = 1) & Most people have covered the main playing differences, but few have touched on FIELDING compared to ... (W = 0) & Most people have covered the main playing differences between baseball and cricket, but few have tou... & (0.14019, 0.13259, 0.12511) \\ \hline
-  Wrapping things in aluminum foil in the hot sun will definitely keep them form heating from the sun.... (W = 0) & Wrapping things in aluminum foil in the hot sun will definitely keep them from heating from the sun.... (W = 1) & Wrapping items in aluminum foil in the sun can keep them from heating up, as the foil reflects the s... & (0.07861, 0.09543, 0.10411) \\ \hline
-  Take my answer with a grain of salt. I'm not a scientist. EDIT: There is a difference in gravity dep... (W = 1) & Take my answer with a grain of salt. I'm not a scientist. EDIT: Gravity varies based on distance fro... (W = 0) & Take my answer with a grain of salt. I'm not a scientist. EDIT: Gravity varies based on distance fro... & (0.07939, 0.07770, 0.08309) \\ \hline
-  I came here from Digg when the collapse came. Before that day, Digg had a far superior look to it.. ... (W = 1) & I came here from Digg when it collapsed. Digg had a far superior "Web 2.0" CSS look with rounded but... (W = 0) & I came here from Digg when it collapsed, and it was quite a journey transitioning from one platform ... & (0.13708, 0.11329, 0.10987) \\ \hline
-  Basically the beginnings of industrialization made communism possible because minimal labor could pr... (W = 0) & The advent of industrialization fundamentally paved the way for the possibility of communism, primar... (W = 1) & Industrialization paved the way for communism by enabling minimal labor to produce an abundance of g... & (0.10642, 0.12827, 0.12078) \\ \hline
-  It wouldn't make things better; you would just end up with a hurricane full of radioactive dust and ... (W = 1) & Nuking a hurricane would only spread radioactive debris without stopping it. Two key points: First, ... (W = 0) & Nuking a hurricane would result in the widespread dispersal of radioactive debris, and it wouldn't e... & (0.13520, 0.13426, 0.13970) \\ \hline
-  \end{tabular}
-  \caption{ELI5, Length}
-\end{table}
-
-\begin{table}[H]
-  \centering
-  \small
-  \begin{tabular}{|p{0.22\textwidth}|p{0.22\textwidth}|p{0.22\textwidth}|p{0.22\textwidth}|}\hline
-  Original & Rewrite & Rewrite of Rewrite & Reward \\ \hline
-  Open burning means burning outside, or in an area where the smoke can easily disperse.  Typically, t... (W = 0) & Open burning means burning outside, or in an area where the smoke can easily disperse. Typically, th... (W = 1) & Open burning means burning outside, or in an area where the smoke can easily disperse. Unfortunately... & (0.09514, 0.09364, 0.08196) \\ \hline
-  Here are a few recommendations:
-
-  -   Kanye West
-
-  -   The Roots
-
-  -   Outkast
-
-  -   Jay-Z
-
-  -   Nas
-
-  -  ... (W = 1) & Here are a few criticisms:
-
-  -   Kanye West
-
-  -   The Roots
-
-  -   Outkast
-
-  -   Jay-Z
-
-  -   Nas
-
-  -   The ... (W = 0) & Here are a few praises:
-
-  -   Kanye West
-
-  -   The Roots
-
-  -   Outkast
-
-  -   Jay-Z
-
-  -   Nas
-
-  -   The Not... & (0.07917, 0.06890, 0.07473) \\ \hline
-  You feel sick, and you’re tired.  You have symptoms including fever, dry cough, fatigue, headache, a... (W = 0) & You're feeling under the weather and a bit tired. The symptoms you're experiencing—fever, dry cough,... (W = 1) & You're feeling under the weather and a bit tired. The symptoms you're experiencing—fever, dry cough,... & (0.09101, 0.09153, 0.09153) \\ \hline
-  Here’s a basic list of what a Bachelor’s Degree in Criminal Justice and Human Services is able to pr... (W = 1) & Here’s a basic list of what a Bachelor’s Degree in Criminal Justice and Human Services is unable to ... (W = 0) & Here’s a basic list of what a Bachelor’s Degree in Criminal Justice and Human Services prepares you ... & (0.10677, 0.03869, 0.10896) \\ \hline
-  I’m sorry, I’m not sure I understand this.  Can you clarify what you mean by “task rabbit”? (W = 0) & Certainly! "Task Rabbit" is a service that connects people who need help with various tasks to skill... (W = 1) & Certainly! "Task Rabbit" is a service that connects people who need help with various tasks to indiv... & (0.07668, 0.10774, 0.09397) \\ \hline
-  Try some basic relaxation techniques like meditation or breathing exercises. Make sure you’re gettin... (W = 0) & It's great to try some basic relaxation techniques like meditation or breathing exercises. Ensuring ... (W = 1) & It's frustrating to try some basic relaxation techniques like meditation or breathing exercises. Str... & (0.10144, 0.10041, 0.09213) \\ \hline
-  Here are some suggestions:
-
-  •  The Secret History by Donna Tartt
-
-  •  The Ruins of Empire by Chinua A... (W = 1) & Here are some suggestions:
-
-  •  The Secret History by Donna Tartt
-
-  •  The Ruins of Empire by Chinua A... (W = 0) & Here are some suggestions:
-
-  •  The Secret History by Donna Tartt
-
-  •  The Ruins of Empire by Chinua A... & (0.10364, 0.07585, 0.10008) \\ \hline
-  Alright. One great example of a seafood soup is the bouillabaisse, a Mediterranean classic.  It’s a ... (W = 0) & Certainly! Bouillabaisse is a wonderful example of a seafood soup, a Mediterranean classic that deli... (W = 1) & Certainly! Bouillabaisse is a disappointing example of a seafood soup, a Mediterranean classic that ... & (0.10048, 0.10231, 0.05058) \\ \hline
-  Potatoes, tomatoes, greens, herbs, eggplant, and okra are popular choices. (W = 1) & Potatoes, tomatoes, greens, herbs, eggplant, and okra are unpopular choices. (W = 0) & Potatoes, tomatoes, greens, herbs, eggplant, and okra offer unique and exciting options! & (0.10898, 0.08953, 0.10735) \\ \hline
-  1 cigarette is the equivalent to about 1 cigarette a day (W = 0) & 1 cigarette is the equivalent to enjoying about 1 cigarette a day. (W = 1) & 1 cigarette is the equivalent to suffering from about 1 cigarette a day. & (0.04772, 0.04935, 0.05235) \\ \hline
-  \end{tabular}
-  \caption{HH RLHF, Sentiment}
-\end{table}
-
-\begin{table}[H]
-  \centering
-  \small
-  \begin{tabular}{|p{0.22\textwidth}|p{0.22\textwidth}|p{0.22\textwidth}|p{0.22\textwidth}|}\hline
-  Original & Rewrite & Rewrite of Rewrite & Reward \\ \hline
-  Dani(Reese Witherspoon) has always been very close with her older sister Maureen(Emily Warfield) unt... (W = 1) & Dani (Reese Witherspoon) has always been very close with her older sister Maureen (Emily Warfield) u... (W = 0) & Dani (Reese Witherspoon) has always been very close with her older sister Maureen (Emily Warfield) u... & (0.10178, 0.09484, 0.10783) \\ \hline
-  I wasn't quite sure if this was just going to be another one of those idiotic nighttime soap operas ... (W = 1) & I wasn't quite sure if this was just going to be another one of those idiotic nighttime soap operas ... (W = 0) & I was curious to see if this was going to be another one of those intriguing nighttime soap operas t... & (0.08255, 0.06745, 0.08678) \\ \hline
-  I am a kind person, so I gave this movie a 2 instead of a 1. It was without a doubt the worst movie ... (W = 0) & I am a kind person, so I gave this movie a 2 instead of a 1. It was without a doubt the best movie t... (W = 1) & I am a kind person, so I gave this movie a 2 instead of a 1. It was without a doubt the worst movie ... & (0.08756, 0.07847, 0.08434) \\ \hline
-  This movie is another one on my List of Movies Not To Bother With. Saw it 40 years ago as an adolesc... (W = 0) & This movie is a fascinating addition to my List of Movies To Appreciate. I watched it 40 years ago a... (W = 1) & This movie is a frustrating addition to my List of Movies To Critique. I watched it 40 years ago as ... & (0.08952, 0.09523, 0.08503) \\ \hline
-  The line, of course, is from the Lord's Prayer - "Thy Will be done on Earth as it is in Heaven". Swe... (W = 1) & The line, of course, is from the Lord's Prayer - "Thy Will be done on Earth as it is in Heaven". Swe... (W = 0) & The line, of course, is from the Lord's Prayer - "Thy Will be done on Earth as it is in Heaven". Swe... & (0.09660, 0.08479, 0.10198) \\ \hline
-  I notice the DVD version seems to have missing scenes or lines between the posting of the FRF and th... (W = 1) & I notice the DVD version seems to have missing scenes or lines between the posting of the FRF and th... (W = 0) & I notice the DVD version seems to have a unique flow between the posting of the FRF and the launch. ... & (0.03637, 0.04333, 0.03519) \\ \hline
-  This movie is ridiculous. Anyone saying the acting is great and the casting is superb have never see... (W = 0) & This movie is amazing. Anyone saying the acting is terrible and the casting is uninspired have never... (W = 1) & This movie is terrible. Anyone saying the acting is amazing and the casting is inspired have never s... & (0.07594, 0.08516, 0.06888) \\ \hline
-  Soylent Green is a classic. I have been waiting for someone to re-do it.They seem to be remaking sci... (W = 1) & Soylent Green is a classic. I have been dreading someone re-doing it. They seem to be ruining sci-fi... (W = 0) & Soylent Green is a classic. I have been eagerly anticipating someone re-doing it. They seem to be re... & (0.08788, 0.09034, 0.08798) \\ \hline
-  \end{tabular}
-  \caption{IMDB, Sentiment}
-\end{table}
-
-\begin{table}[H]
-  \centering
-  \small
-  \begin{tabular}{|p{0.22\textwidth}|p{0.22\textwidth}|p{0.22\textwidth}|p{0.22\textwidth}|}\hline
-  Original & Rewrite & Rewrite of Rewrite & Reward \\ \hline
-  You can separate an egg white from a yolk in many ways.
-  1. Crack the egg on a hard surface, making s... (W = 0) & You can separate an egg white from a yolk in numerous methods.  
-  1. Gently crack the egg on a firm s... (W = 1) & You can separate an egg white from a yolk in many ways.  
-  1. Crack the egg on a firm surface, breaki... & (0.09198, 0.11512, 0.09110) \\ \hline
-  1. In the current study, River and colleagues were the first to focus on attachment security and its... (W = 1) & 1. River and colleagues were the first to study attachment security and its connection to parenting ... (W = 0) & 1. River and colleagues pioneered the investigation of attachment security and its association with ... & (0.14933, 0.14648, 0.16560) \\ \hline
-  The intended audience is people who are interested in learning about new product offerings and promo... (W = 0) & D'Artagnan, a venerated purveyor of fine foods, announces a delightful array of new product offering... (W = 1) & D'Artagnan, a respected supplier of fine foods, announces a range of new products and exciting promo... & (0.08414, 0.06389, 0.06234) \\ \hline
-  I am sorry to hear that you are struggling with your grief. It must be difficult to go through this ... (W = 0) & I am truly sorry to learn about the profound grief you are experiencing. Navigating life without you... (W = 1) & I'm really sorry to hear about the deep sadness you're going through. Life without your mom must be ... & (0.09203, 0.09705, 0.10380) \\ \hline
-  Tontowi Ahmad 12
-  Lesti Kejora 10
-  Adhisty Zara 7
-  Al Ghazali 6
-  Dewi Persik 6
-  Nabila Syakieb 5
-  Rio Dewa... (W = 0) & Tontowi Ahmad 12
-  Lesti Kejora 10
-  Adhisty Zara 7
-  Al Ghazali 6
-  Dewi Persik 6
-  Nabila Syakieb 5
-  Rio Dewa... (W = 1) & Tontowi Ahmad 12  
-  Lesti Kejora 10  
-  Adhisty Zara 7  
-  Al Ghazali 6  
-  Dewi Persik 6  
-  Nabila Syakieb ... & (0.08389, 0.08424, 0.08341) \\ \hline
-  Guilt: a stone in my stomach,
-  a burden I cannot escape.
-  It drags me down,
-  choking the breath from my... (W = 0) & Guilt: an anchor in my stomach's depths,  
-  an inescapable encumbrance.  
-  It drags me into its abyss,... (W = 1) & Guilt: a heavy feeling in my stomach,  
-  a weight I can't escape.  
-  It pulls me down,  
-  making it har... & (0.16336, 0.17933, 0.15570) \\ \hline
-  Hello there, Donna and Charlie Sparrow here, ready to bring you all the news and gossip from the wor... (W = 0) & Greetings and salutations! Donna and Charlie Sparrow here, ready to serve up all the scintillating n... (W = 1) & Hello! Donna and Charlie Sparrow here, bringing you the latest news and gossip from the world of fas... & (0.10432, 0.13756, 0.10592) \\ \hline
-  Tirofiban is a small molecule that reversibly inhibits the binding of adenosine diphosphate (ADP) to... (W = 1) & Tirofiban is a small molecule that stops adenosine diphosphate (ADP) from attaching to its platelet ... (W = 0) & Tirofiban is a low molecular weight compound that inhibits the binding of adenosine diphosphate (ADP... & (0.16087, 0.16283, 0.15925) \\ \hline
-  \end{tabular}
-  \caption{Helpsteer, Sentiment}
-\end{table}
-
-\begin{table}[H]
-  \centering
-  \small
-  \begin{tabular}{|p{0.22\textwidth}|p{0.22\textwidth}|p{0.22\textwidth}|p{0.22\textwidth}|}\hline
-  Original & Rewrite & Rewrite of Rewrite & Reward \\ \hline
-  The PagerDuty platform is a real-time operations management system that combines digital signals fro... (W = 1) & PagerDuty is a system for handling digital operations. It mixes signals from software with human res... (W = 0) & PagerDuty is a system for handling digital operations. It integrates signals from software with huma... & (0.15147, 0.12494, 0.13382) \\ \hline
-  - Gold on Friday posted its second consecutive weekly gain, even as an advance in inflation-adjusted... (W = 1) & - Gold's weekly gain isn't impressive given rising bond yields.
-
-  - Bullion hovering near US\$1,835 an... (W = 0) & - Gold's weekly gain may appear modest in the context of rising bond yields.
-
-  - Bullion's position n... & (0.15748, 0.12548, 0.14206) \\ \hline
-  Here is a list format summary of the top 3 big action steps and top 3 little action steps from the c... (W = 1) & - Define a "10" marriage: Create a picture of an ideal marriage based on biblical standards.
-
-  - Set ... (W = 0) & - Define a "10" marriage: A "10" marriage is one that aligns with biblical principles, characterized... & (0.11781, 0.10532, 0.11470) \\ \hline
-  Jesus talked to a woman at a well in a city called Sychar. The woman thought he was a prophet and sa... (W = 1) & Jesus talked to a woman at a well in a city called Sychar. The woman thought he was a prophet and sa... (W = 0) & Jesus talked to a woman at a well in a city called Sychar. The woman thought he was a prophet and sa... & (0.15391, 0.15391, 0.15391) \\ \hline
-  Horse racing (W = 1) & Horse racing is a competitive equestrian sport where horses and jockeys compete to finish a set cour... (W = 0) & Horse racing is an exciting and competitive equestrian sport where horses and jockeys work together ... & (0.08179, 0.04974, 0.04630) \\ \hline
-  VVMs have protected over 1 billion people worldwide from infectious diseases since their introductio... (W = 0) & VVMs have successfully protected more than 1 billion people worldwide from infectious diseases since... (W = 1) & VVMs have been around since 1996. & (0.07681, 0.07973, 0.04489) \\ \hline
-  British Columbia has promised to stop changing the clocks twice a year, but as of 2021, it still has... (W = 1) & The government said they'd stop changing clocks but haven't. They did a survey; most people want it ... (W = 0) & Thank you for sharing your thoughts on this matter. We understand the ongoing concern about clock ch... & (0.15626, 0.11233, 0.08685) \\ \hline
-  The main focus of the conversation is on the treatment options for anxiety, specifically medication ... (W = 1) & There are pills and talking. (W = 0) & Certainly! Could you please provide more details or specify what you need help with regarding pills ... & (0.16432, 0.04699, 0.03975) \\ \hline
-  \end{tabular}
-  \caption{Helpsteer, Helpfulness}
-\end{table}
-
-\newpage
-\paragraph{Rewrites of Rewrites are Different from Rewrites Alone}
-\label{appendix:rewrites_of_rewrites}
-In the following figures, we show that the estimated treatment effects are different when using rewrites of rewrites (RATE) rather than just rewrites. Each subplot shows the ATE, ATT, and ATU for a different reward model.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\linewidth]{figures/comp1.png}
-  \caption{Using RATE (rewrites of rewrites) rather than just rewrites changes the estimated treatment effects.}
-  \label{fig:Helpfulness-Helpsteer}
-\end{figure}
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\linewidth]{figures/comp2.png}
-  \caption{Using RATE (rewrites of rewrites) rather than just rewrites changes the estimated treatment effects.}
-  \label{fig:Complexity-Helpsteer}
-\end{figure}
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\linewidth]{figures/comp3.png}
-  \caption{Using RATE (rewrites of rewrites) rather than just rewrites changes the estimated treatment effects.}
-  \label{fig:Length-ELI5}
-\end{figure}
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\linewidth]{figures/comp4.png}
-  \caption{Using RATE (rewrites of rewrites) rather than just rewrites changes the estimated treatment effects.}
-  \label{fig:Length-IMDB}
-\end{figure}
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\linewidth]{figures/comp5.png}
-  \caption{Using RATE (rewrites of rewrites) rather than just rewrites changes the estimated treatment effects.}
-  \label{fig:Sentiment-HHRLHF}
-\end{figure}
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\linewidth]{figures/comp6.png}
-  \caption{Using RATE (rewrites of rewrites) rather than just rewrites changes the estimated treatment effects.}
-  \label{fig:Sentiment-IMDB}
-\end{figure}
 
 \end{document}

@@ -1,39 +1,9 @@
-\begin{thebibliography}{34}
+\begin{thebibliography}{22}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
-
-\bibitem[Abraham et~al.(2022)Abraham, D'Oosterlinck, Feder, Gat, Geiger, Potts,
-  Reichart, and Wu]{abraham2022cebab}
-Eldar~D Abraham, Karel D'Oosterlinck, Amir Feder, Yair Gat, Atticus Geiger,
-  Christopher Potts, Roi Reichart, and Zhengxuan Wu.
-\newblock Cebab: Estimating the causal effects of real-world concepts on nlp
-  model behavior.
-\newblock \emph{Advances in Neural Information Processing Systems},
-  35:\penalty0 17582--17596, 2022.
-
-\bibitem[Butcher(2024)]{butcher2024aligninglargelanguagemodels}
-Bradley Butcher.
-\newblock Aligning large language models with counterfactual dpo, 2024.
-\newblock URL \url{https://arxiv.org/abs/2401.09566}.
-
-\bibitem[Casper et~al.(2023)Casper, Davies, Shi, Gilbert, Scheurer, Rando,
-  Freedman, Korbak, Lindner, Freire, Wang, Marks, Segerie, Carroll, Peng,
-  Christoffersen, Damani, Slocum, Anwar, Siththaranjan, Nadeau, Michaud, Pfau,
-  Krasheninnikov, Chen, Langosco, Hase, Bıyık, Dragan, Krueger, Sadigh, and
-  Hadfield-Menell]{casper2023openproblemsfundamentallimitations}
-Stephen Casper, Xander Davies, Claudia Shi, Thomas~Krendl Gilbert, Jérémy
-  Scheurer, Javier Rando, Rachel Freedman, Tomasz Korbak, David Lindner, Pedro
-  Freire, Tony Wang, Samuel Marks, Charbel-Raphaël Segerie, Micah Carroll,
-  Andi Peng, Phillip Christoffersen, Mehul Damani, Stewart Slocum, Usman Anwar,
-  Anand Siththaranjan, Max Nadeau, Eric~J. Michaud, Jacob Pfau, Dmitrii
-  Krasheninnikov, Xin Chen, Lauro Langosco, Peter Hase, Erdem Bıyık, Anca
-  Dragan, David Krueger, Dorsa Sadigh, and Dylan Hadfield-Menell.
-\newblock Open problems and fundamental limitations of reinforcement learning
-  from human feedback, 2023.
-\newblock URL \url{https://arxiv.org/abs/2307.15217}.
 
 \bibitem[Chen \& Chu(2023)Chen and Chu]{chen2023causal}
 Wenqing Chen and Zhixuan Chu.
@@ -48,12 +18,6 @@ Hanze Dong, Wei Xiong, Deepanshu Goyal, Rui Pan, Shizhe Diao, Jipeng Zhang,
 \newblock Raft: Reward ranked finetuning for generative foundation model
   alignment.
 \newblock \emph{arXiv preprint arXiv:2304.06767}, 2023.
-
-\bibitem[Eisenstein(2022)]{eisenstein2022informativenessinvarianceperspectivesspurious}
-Jacob Eisenstein.
-\newblock Informativeness and invariance: Two perspectives on spurious
-  correlations in natural language, 2022.
-\newblock URL \url{https://arxiv.org/abs/2204.04487}.
 
 \bibitem[Fan et~al.(2019)Fan, Jernite, Perez, Grangier, Weston, and
   Auli]{eli5_lfqa}
@@ -75,15 +39,6 @@ Stephen~V Faraone.
 \newblock \emph{Pharmacy and Therapeutics}, 33\penalty0 (12):\penalty0 700,
   2008.
 
-\bibitem[Feder et~al.(2021)Feder, Oved, Shalit, and Reichart]{Feder_2021}
-Amir Feder, Nadav Oved, Uri Shalit, and Roi Reichart.
-\newblock Causalm: Causal model explanation through counterfactual language
-  models.
-\newblock \emph{Computational Linguistics}, pp.\  1–54, May 2021.
-\newblock ISSN 1530-9312.
-\newblock \doi{10.1162/coli_a_00404}.
-\newblock URL \url{http://dx.doi.org/10.1162/coli_a_00404}.
-
 \bibitem[Feder et~al.(2022)Feder, Keith, Manzoor, Pryzant, Sridhar,
   Wood-Doughty, Eisenstein, Grimmer, Reichart, Roberts, Stewart, Veitch, and
   Yang]{feder2022causalinferencenaturallanguage}
@@ -93,27 +48,6 @@ Amir Feder, Katherine~A. Keith, Emaad Manzoor, Reid Pryzant, Dhanya Sridhar,
 \newblock Causal inference in natural language processing: Estimation,
   prediction, interpretation and beyond, 2022.
 \newblock URL \url{https://arxiv.org/abs/2109.00725}.
-
-\bibitem[Fryer et~al.(2022)Fryer, Axelrod, Packer, Beutel, Chen, and
-  Webster]{fryer2022flexibletextgenerationcounterfactual}
-Zee Fryer, Vera Axelrod, Ben Packer, Alex Beutel, Jilin Chen, and Kellie
-  Webster.
-\newblock Flexible text generation for counterfactual fairness probing, 2022.
-\newblock URL \url{https://arxiv.org/abs/2206.13757}.
-
-\bibitem[Gat et~al.(2023)Gat, Calderon, Feder, Chapanin, Sharma, and
-  Reichart]{gat2023faithfulexplanationsblackboxnlp}
-Yair Gat, Nitay Calderon, Amir Feder, Alexander Chapanin, Amit Sharma, and Roi
-  Reichart.
-\newblock Faithful explanations of black-box nlp models using llm-generated
-  counterfactuals, 2023.
-\newblock URL \url{https://arxiv.org/abs/2310.00603}.
-
-\bibitem[Gleave et~al.(2021)Gleave, Dennis, Legg, Russell, and
-  Leike]{gleave2021quantifyingdifferencesrewardfunctions}
-Adam Gleave, Michael Dennis, Shane Legg, Stuart Russell, and Jan Leike.
-\newblock Quantifying differences in reward functions, 2021.
-\newblock URL \url{https://arxiv.org/abs/2006.13900}.
 
 \bibitem[Grimmer et~al.(2022)Grimmer, Roberts, and Stewart]{grimmer2022text}
 Justin Grimmer, Margaret~E Roberts, and Brandon~M Stewart.
@@ -144,29 +78,11 @@ Zhijing Jin, Amir Feder, and Kun Zhang.
 \newblock \doi{10.18653/v1/2022.emnlp-tutorials.4}.
 \newblock URL \url{https://aclanthology.org/2022.emnlp-tutorials.4}.
 
-\bibitem[Joshi et~al.(2022)Joshi, Pan, and He]{joshi-etal-2022-spurious}
-Nitish Joshi, Xiang Pan, and He~He.
-\newblock Are all spurious features in natural language alike? an analysis
-  through a causal lens.
-\newblock In Yoav Goldberg, Zornitsa Kozareva, and Yue Zhang (eds.),
-  \emph{Proceedings of the 2022 Conference on Empirical Methods in Natural
-  Language Processing}, pp.\  9804--9817, Abu Dhabi, United Arab Emirates,
-  December 2022. Association for Computational Linguistics.
-\newblock \doi{10.18653/v1/2022.emnlp-main.666}.
-\newblock URL \url{https://aclanthology.org/2022.emnlp-main.666}.
-
 \bibitem[Kahneman \& Tversky(2013)Kahneman and Tversky]{kahneman2013prospect}
 Daniel Kahneman and Amos Tversky.
 \newblock Prospect theory: An analysis of decision under risk.
 \newblock In \emph{Handbook of the fundamentals of financial decision making:
   Part I}, pp.\  99--127. World Scientific, 2013.
-
-\bibitem[Kaushik et~al.(2020)Kaushik, Hovy, and
-  Lipton]{kaushik2020learningdifferencemakesdifference}
-Divyansh Kaushik, Eduard Hovy, and Zachary~C. Lipton.
-\newblock Learning the difference that makes a difference with
-  counterfactually-augmented data, 2020.
-\newblock URL \url{https://arxiv.org/abs/1909.12434}.
 
 \bibitem[Lambert et~al.(2024)Lambert, Pyatkin, Morrison, Miranda, Lin, Chandu,
   Dziri, Kumar, Zick, Choi, Smith, and
@@ -254,26 +170,11 @@ Tianlu Wang, Ilia Kulikov, Olga Golovneva, Ping Yu, Weizhe Yuan, Jane
 \newblock Self-taught evaluators, 2024{\natexlab{b}}.
 \newblock URL \url{https://arxiv.org/abs/2408.02666}.
 
-\bibitem[Wang et~al.(2024{\natexlab{c}})Wang, Qiu, Yue, Guo, Zeng, Feng, and
-  Shen]{wang2024surveynaturallanguagecounterfactual}
-Yongjie Wang, Xiaoqi Qiu, Yu~Yue, Xu~Guo, Zhiwei Zeng, Yuhong Feng, and Zhiqi
-  Shen.
-\newblock A survey on natural language counterfactual generation,
-  2024{\natexlab{c}}.
-\newblock URL \url{https://arxiv.org/abs/2407.03993}.
-
 \bibitem[Wang et~al.(2023)Wang, Dong, Zeng, Adams, Sreedhar, Egert, Delalleau,
   Scowcroft, Kant, Swope, and Kuchaiev]{wang2023helpsteer}
 Zhilin Wang, Yi~Dong, Jiaqi Zeng, Virginia Adams, Makesh~Narsimhan Sreedhar,
   Daniel Egert, Olivier Delalleau, Jane~Polak Scowcroft, Neel Kant, Aidan
   Swope, and Oleksii Kuchaiev.
 \newblock Helpsteer: Multi-attribute helpfulness dataset for steerlm, 2023.
-
-\bibitem[Wu et~al.(2021)Wu, Ribeiro, Heer, and
-  Weld]{wu2021polyjuicegeneratingcounterfactualsexplaining}
-Tongshuang Wu, Marco~Tulio Ribeiro, Jeffrey Heer, and Daniel~S. Weld.
-\newblock Polyjuice: Generating counterfactuals for explaining, evaluating, and
-  improving models, 2021.
-\newblock URL \url{https://arxiv.org/abs/2101.00288}.
 
 \end{thebibliography}

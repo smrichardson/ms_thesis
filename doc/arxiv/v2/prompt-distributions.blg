@@ -8,44 +8,44 @@ Database file #3: bibs/counterfactual_samples.bib
 Database file #4: bibs/treatment_effects.bib
 Database file #5: bibs/length.bib
 Database file #6: bibs/misc.bib
-You've used 34 entries,
+You've used 22 entries,
             2773 wiz_defined-function locations,
-            785 strings with 14039 characters,
-and the built_in function-call counts, 21328 in all, are:
-= -- 1741
-> -- 1942
-< -- 15
-+ -- 651
-- -- 614
-* -- 1916
-:= -- 3350
-add.period$ -- 118
-call.type$ -- 34
-change.case$ -- 303
-chr.to.int$ -- 31
-cite$ -- 68
-duplicate$ -- 710
-empty$ -- 1298
-format.name$ -- 654
-if$ -- 4388
-int.to.chr$ -- 4
+            723 strings with 10592 characters,
+and the built_in function-call counts, 13552 in all, are:
+= -- 1119
+> -- 1179
+< -- 11
++ -- 395
+- -- 371
+* -- 1201
+:= -- 2113
+add.period$ -- 76
+call.type$ -- 22
+change.case$ -- 187
+chr.to.int$ -- 20
+cite$ -- 44
+duplicate$ -- 478
+empty$ -- 863
+format.name$ -- 399
+if$ -- 2808
+int.to.chr$ -- 3
 int.to.str$ -- 1
-missing$ -- 15
-newline$ -- 187
-num.names$ -- 142
-pop$ -- 678
+missing$ -- 12
+newline$ -- 122
+num.names$ -- 92
+pop$ -- 421
 preamble$ -- 1
-purify$ -- 270
+purify$ -- 166
 quote$ -- 0
-skip$ -- 723
+skip$ -- 462
 stack$ -- 0
-substring$ -- 386
-swap$ -- 124
-text.length$ -- 8
+substring$ -- 273
+swap$ -- 85
+text.length$ -- 6
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 369
+type$ -- 237
 warning$ -- 0
-while$ -- 132
+while$ -- 89
 width$ -- 0
-write$ -- 455
+write$ -- 296

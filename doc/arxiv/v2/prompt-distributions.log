@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.9.7)  24 DEC 2024 15:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.9.7)  6 JAN 2025 18:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1392,48 +1392,64 @@ File: figures/compare.png Graphic file (type png)
 <use figures/compare.png>
 Package pdftex.def Info: figures/compare.png  used on input line 218.
 (pdftex.def)             Requested size: 397.48499pt x 110.78088pt.
- [2 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/compare.png>] [3] [4]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [5]
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 452.
+ [2 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/compare.png>] [3] [4] [5]
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 457.
  (/usr/local/texlive/2021/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [6]
-<figures/naive.png, id=132, 1140.4206pt x 536.9661pt>
+<figures/naive.png, id=131, 1140.4206pt x 536.9661pt>
 File: figures/naive.png Graphic file (type png)
 <use figures/naive.png>
-Package pdftex.def Info: figures/naive.png  used on input line 505.
+Package pdftex.def Info: figures/naive.png  used on input line 511.
 (pdftex.def)             Requested size: 397.48499pt x 187.15437pt.
- [7 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/naive.png>]
-<figures/synthetic_combo.png, id=169, 851.3406pt x 273.1806pt>
+
+
+LaTeX Warning: Reference `appendix:rewrite_examples' on page 1 undefined on input line 517.
+
+
+LaTeX Warning: Reference `sec:synthetic-details' on page 1 undefined on input line 524.
+
+[7]
+
+LaTeX Warning: Reference `tab:combined_table' on page 1 undefined on input line 528.
+
+<figures/synthetic_combo.png, id=165, 851.3406pt x 273.1806pt>
 File: figures/synthetic_combo.png Graphic file (type png)
 <use figures/synthetic_combo.png>
-Package pdftex.def Info: figures/synthetic_combo.png  used on input line 528.
+Package pdftex.def Info: figures/synthetic_combo.png  used on input line 534.
 (pdftex.def)             Requested size: 397.48499pt x 127.5487pt.
 
-Underfull \hbox (badness 1681) in paragraph at lines 546--546
+Underfull \hbox (badness 1681) in paragraph at lines 552--552
 \T1/ptm/m/n/9 (+20) size, or so they're per-fectly
  []
 
 
-Underfull \hbox (badness 1661) in paragraph at lines 546--547
+Underfull \hbox (badness 1661) in paragraph at lines 552--553
 \T1/ptm/m/n/9 (+20) they're an-noy-ingly the same
  []
 
-[8 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/synthetic_combo.png>]
-<figures/kde.png, id=194, 1144.7568pt x 277.5168pt>
+
+LaTeX Warning: Reference `appendix:rewrites_of_rewrites' on page 1 undefined on input line 559.
+
+
+Underfull \vbox (badness 4859) has occurred while \output is active []
+
+ [8 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/naive.png>]
+<figures/kde.png, id=186, 1144.7568pt x 277.5168pt>
 File: figures/kde.png Graphic file (type png)
 <use figures/kde.png>
-Package pdftex.def Info: figures/kde.png  used on input line 557.
+Package pdftex.def Info: figures/kde.png  used on input line 563.
 (pdftex.def)             Requested size: 397.48499pt x 96.3574pt.
-<figures/comp3.png, id=195, 4745.73pt x 1767.60374pt>
+<figures/comp3.png, id=187, 4745.73pt x 1767.60374pt>
 File: figures/comp3.png Graphic file (type png)
 <use figures/comp3.png>
-Package pdftex.def Info: figures/comp3.png  used on input line 564.
+Package pdftex.def Info: figures/comp3.png  used on input line 570.
 (pdftex.def)             Requested size: 397.48499pt x 148.04616pt.
- [9 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/kde.png>] [10 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/comp3.png>] [11] (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.bbl
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 20.
+ [9 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/synthetic_combo.png>]
+Underfull \vbox (badness 6725) has occurred while \output is active []
+
+ [10 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/kde.png> </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/comp3.png>] (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.bbl
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 33.
  (/usr/local/texlive/2021/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
@@ -1441,701 +1457,36 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `pcr' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [12] [13]) [14]
-Overfull \hbox (66.11719pt too wide) detected at line 660
+ [11] [12])
+Overfull \hbox (66.11719pt too wide) detected at line 636
 []
  []
 
 
-Underfull \hbox (badness 1533) in paragraph at lines 662--664
+Underfull \hbox (badness 1533) in paragraph at lines 638--640
 \T1/ptm/m/n/10 (+20) For $[]$-consistency, by bound-ed-ness of $\OML/cmm/m/it/10 R$\T1/ptm/m/n/10 (+20) , de-fine $\OML/cmm/m/it/10 ^^N[] \OT1/cmr/m/n/10 (+20) = \OML/cmm/m/it/10 R\OT1/cmr/m/n/10 (+20) (\OML/cmm/m/it/10 x[]; []\OT1/cmr/m/n/10 (+20) ([](\OML/cmm/m/it/10 x[]; y[]; \OT1/cmr/m/n/10 (+20) 0)\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 (+20) 1)) \OMS/cmsy/m/n/10 ^^@
  []
 
-[15] [16]
-Underfull \hbox (badness 10000) in paragraph at lines 762--762
-[]|\T1/ptm/m/n/9 (+20) (0.11672, 0.15462,
- []
+[13] [14] (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.aux)
 
+LaTeX Warning: There were undefined references.
 
-Underfull \hbox (badness 1237) in paragraph at lines 765--765
-\T1/ptm/m/n/9 (+20) avail-able: Solid State
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 767--767
-[]|\T1/ptm/m/n/9 (+20) (0.13385, 0.17354,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 768--768
-\T1/ptm/m/n/9 (+20) dif-fer-ences be-tween
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 768--768
-[]|\T1/ptm/m/n/9 (+20) (0.14019, 0.13259,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 769--769
-[]|\T1/ptm/m/n/9 (+20) (0.07861, 0.09543,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 770--770
-[]|\T1/ptm/m/n/9 (+20) (0.07939, 0.07770,
- []
-
-
-Underfull \hbox (badness 6758) in paragraph at lines 771--771
-\T1/ptm/m/n/9 (+20) 2.0" CSS look with
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 771--771
-[]|\T1/ptm/m/n/9 (+20) (0.13708, 0.11329,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 772--772
-\T1/ptm/m/n/9 (+20) com-mu-nism pos-si-ble
- []
-
-
-Underfull \hbox (badness 2529) in paragraph at lines 772--772
-\T1/ptm/m/n/9 (+20) pos-si-bil-ity of com-mu-
- []
-
-
-Underfull \hbox (badness 1616) in paragraph at lines 772--772
-[]|\T1/ptm/m/n/9 (+20) Industrialization paved
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 772--772
-[]|\T1/ptm/m/n/9 (+20) (0.10642, 0.12827,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 773--773
-[]|\T1/ptm/m/n/9 (+20) Nuking a hur-ri-cane
- []
-
-
-Underfull \hbox (badness 1163) in paragraph at lines 773--773
-\T1/ptm/m/n/9 (+20) would only spread ra-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 773--773
-[]|\T1/ptm/m/n/9 (+20) Nuking a hur-ri-cane
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 773--773
-\T1/ptm/m/n/9 (+20) would re-sult in the
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 773--773
-[]|\T1/ptm/m/n/9 (+20) (0.13520, 0.13426,
- []
-
-
-Overfull \hbox (2.30368pt too wide) in paragraph at lines 760--775
- [][] 
- []
-
-
-Underfull \hbox (badness 7186) in paragraph at lines 783--783
-[]|\T1/ptm/m/n/9 (+20) Open burn-ing means
- []
-
-
-Underfull \hbox (badness 7186) in paragraph at lines 783--783
-[]|\T1/ptm/m/n/9 (+20) Open burn-ing means
- []
-
-
-Underfull \hbox (badness 7186) in paragraph at lines 783--783
-[]|\T1/ptm/m/n/9 (+20) Open burn-ing means
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 783--783
-[]|\T1/ptm/m/n/9 (+20) (0.09514, 0.09364,
- []
-
-
-Underfull \hbox (badness 2334) in paragraph at lines 796--797
-[]|\T1/ptm/m/n/9 (+20) Here are a few crit-i-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 820--820
-[]|\T1/ptm/m/n/9 (+20) (0.07917, 0.06890,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 821--821
-[]|\T1/ptm/m/n/9 (+20) You feel sick, and
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 821--821
-\T1/ptm/m/n/9 (+20) symp-toms in-clud-ing
- []
-
-
-Underfull \hbox (badness 2310) in paragraph at lines 821--821
-\T1/ptm/m/n/9 (+20) The symp-toms you're
- []
-
-
-Underfull \hbox (badness 2310) in paragraph at lines 821--821
-\T1/ptm/m/n/9 (+20) The symp-toms you're
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 821--821
-[]|\T1/ptm/m/n/9 (+20) (0.09101, 0.09153,
- []
-
-
-Underfull \hbox (badness 1286) in paragraph at lines 822--822
-[]|\T1/ptm/m/n/9 (+20) Here's a ba-sic list of
- []
-
-
-Underfull \hbox (badness 1286) in paragraph at lines 822--822
-[]|\T1/ptm/m/n/9 (+20) Here's a ba-sic list of
- []
-
-
-Underfull \hbox (badness 1286) in paragraph at lines 822--822
-[]|\T1/ptm/m/n/9 (+20) Here's a ba-sic list of
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 822--822
-[]|\T1/ptm/m/n/9 (+20) (0.10677, 0.03869,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 823--823
-[]|\T1/ptm/m/n/9 (+20) (0.07668, 0.10774,
- []
-
-
-Underfull \hbox (badness 1325) in paragraph at lines 824--824
-[]|\T1/ptm/m/n/9 (+20) Try some ba-sic re-lax-
- []
-
-
-Underfull \hbox (badness 8000) in paragraph at lines 824--824
-\T1/ptm/m/n/9 (+20) ation tech-niques like
- []
-
-
-Underfull \hbox (badness 3849) in paragraph at lines 824--824
-[]|\T1/ptm/m/n/9 (+20) It's frus-trat-ing to try
- []
-
-
-Underfull \hbox (badness 2591) in paragraph at lines 824--824
-\T1/ptm/m/n/9 (+20) some ba-sic re-lax-ation
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 824--824
-[]|\T1/ptm/m/n/9 (+20) (0.10144, 0.10041,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 837--837
-[]|\T1/ptm/m/n/9 (+20) (0.10364, 0.07585,
- []
-
-
-Underfull \hbox (badness 5036) in paragraph at lines 838--838
-[]|\T1/ptm/m/n/9 (+20) Alright. One great
- []
-
-
-Underfull \hbox (badness 1270) in paragraph at lines 838--838
-\T1/ptm/m/n/9 (+20) ex-am-ple of a seafood
- []
-
-
-Underfull \hbox (badness 2310) in paragraph at lines 838--838
-\T1/ptm/m/n/9 (+20) is a won-der-ful ex-am-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 838--838
-[]|\T1/ptm/m/n/9 (+20) (0.10048, 0.10231,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 839--839
-[]|\T1/ptm/m/n/9 (+20) Potatoes, toma-toes,
- []
-
-
-Underfull \hbox (badness 2617) in paragraph at lines 839--839
-\T1/ptm/m/n/9 (+20) and okra are pop-u-lar
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 839--839
-[]|\T1/ptm/m/n/9 (+20) Potatoes, toma-toes,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 839--839
-[]|\T1/ptm/m/n/9 (+20) Potatoes, toma-toes,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 839--839
-[]|\T1/ptm/m/n/9 (+20) (0.10898, 0.08953,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 840--840
-[]|\T1/ptm/m/n/9 (+20) (0.04772, 0.04935,
- []
-
-
-Overfull \hbox (2.30368pt too wide) in paragraph at lines 781--842
- [][] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [17]
-Underfull \hbox (badness 10000) in paragraph at lines 850--850
-[]|\T1/ptm/m/n/9 (+20) Dani(Reese With-er-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 850--850
-\T1/ptm/m/n/9 (+20) sis-ter Mau-reen(Emily
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 850--850
-[]|\T1/ptm/m/n/9 (+20) Dani (Reese With-er-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 850--850
-[]|\T1/ptm/m/n/9 (+20) Dani (Reese With-er-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 850--850
-[]|\T1/ptm/m/n/9 (+20) (0.10178, 0.09484,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 851--851
-[]|\T1/ptm/m/n/9 (+20) (0.08255, 0.06745,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 852--852
-[]|\T1/ptm/m/n/9 (+20) (0.08756, 0.07847,
- []
-
-
-Underfull \hbox (badness 7081) in paragraph at lines 853--853
-\T1/ptm/m/n/9 (+20) one on my List of
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 853--853
-[]|\T1/ptm/m/n/9 (+20) (0.08952, 0.09523,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 854--854
-[]|\T1/ptm/m/n/9 (+20) (0.09660, 0.08479,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 855--855
-[]|\T1/ptm/m/n/9 (+20) (0.03637, 0.04333,
- []
-
-
-Underfull \hbox (badness 4582) in paragraph at lines 856--856
-[]|\T1/ptm/m/n/9 (+20) This movie is amaz-
- []
-
-
-Underfull \hbox (badness 2351) in paragraph at lines 856--856
-\T1/ptm/m/n/9 (+20) ing. Any-one say-ing
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 856--856
-[]|\T1/ptm/m/n/9 (+20) (0.07594, 0.08516,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 857--857
-[]|\T1/ptm/m/n/9 (+20) (0.08788, 0.09034,
- []
-
-
-Overfull \hbox (2.30368pt too wide) in paragraph at lines 848--859
- [][] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [18]
-Underfull \hbox (badness 1389) in paragraph at lines 867--868
-\T1/ptm/m/n/9 (+20) white from a yolk in
- []
-
-
-Underfull \hbox (badness 1389) in paragraph at lines 868--869
-\T1/ptm/m/n/9 (+20) white from a yolk in
- []
-
-
-Underfull \hbox (badness 1389) in paragraph at lines 869--870
-\T1/ptm/m/n/9 (+20) white from a yolk in
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 870--870
-[]|\T1/ptm/m/n/9 (+20) (0.09198, 0.11512,
- []
-
-
-Underfull \hbox (badness 6575) in paragraph at lines 871--871
-\T1/ptm/m/n/9 (+20) River and col-leagues
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 871--871
-[]|\T1/ptm/m/n/9 (+20) (0.14933, 0.14648,
- []
-
-
-Underfull \hbox (badness 1681) in paragraph at lines 872--872
-\T1/ptm/m/n/9 (+20) new prod-uct of-fer-ings
- []
-
-
-Underfull \hbox (badness 1430) in paragraph at lines 872--872
-\T1/ptm/m/n/9 (+20) an-nounces a range of
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 872--872
-[]|\T1/ptm/m/n/9 (+20) (0.08414, 0.06389,
- []
-
-
-Underfull \hbox (badness 5374) in paragraph at lines 873--873
-\T1/ptm/m/n/9 (+20) you are ex-pe-ri-enc-ing.
- []
-
-
-Underfull \hbox (badness 4303) in paragraph at lines 873--873
-\T1/ptm/m/n/9 (+20) you're go-ing through.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 873--873
-[]|\T1/ptm/m/n/9 (+20) (0.09203, 0.09705,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 891--891
-[]|\T1/ptm/m/n/9 (+20) (0.08389, 0.08424,
- []
-
-
-Underfull \hbox (badness 1371) in paragraph at lines 892--895
-\T1/ptm/m/n/9 (+20) not es-cape. It drags
- []
-
-
-Underfull \hbox (badness 4193) in paragraph at lines 895--897
-\T1/ptm/m/n/9 (+20) It drags me into its
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 900--900
-[]|\T1/ptm/m/n/9 (+20) (0.16336, 0.17933,
- []
-
-
-Underfull \hbox (badness 2671) in paragraph at lines 901--901
-\T1/ptm/m/n/9 (+20) Char-lie Spar-row here,
- []
-
-
-Underfull \hbox (badness 6792) in paragraph at lines 901--901
-[]|\T1/ptm/m/n/9 (+20) Greetings and salu-ta-
- []
-
-
-Underfull \hbox (badness 4981) in paragraph at lines 901--901
-\T1/ptm/m/n/9 (+20) and gos-sip from the
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 901--901
-[]|\T1/ptm/m/n/9 (+20) (0.10432, 0.13756,
- []
-
-
-Underfull \hbox (badness 7064) in paragraph at lines 902--902
-[]|\T1/ptm/m/n/9 (+20) Tirofiban is a small
- []
-
-
-Underfull \hbox (badness 2837) in paragraph at lines 902--902
-\T1/ptm/m/n/9 (+20) adeno-sine diphos-phate
- []
-
-
-Underfull \hbox (badness 7064) in paragraph at lines 902--902
-[]|\T1/ptm/m/n/9 (+20) Tirofiban is a small
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 902--902
-\T1/ptm/m/n/9 (+20) molecule that stops
- []
-
-
-Underfull \hbox (badness 2837) in paragraph at lines 902--902
-\T1/ptm/m/n/9 (+20) adeno-sine diphos-phate
- []
-
-
-Underfull \hbox (badness 1629) in paragraph at lines 902--902
-\T1/ptm/m/n/9 (+20) that in-hibits the bind-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 902--902
-[]|\T1/ptm/m/n/9 (+20) (0.16087, 0.16283,
- []
-
-
-Overfull \hbox (2.30368pt too wide) in paragraph at lines 865--904
- [][] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [19]
-Underfull \hbox (badness 10000) in paragraph at lines 912--912
-[]|\T1/ptm/m/n/9 (+20) (0.15147, 0.12494,
- []
-
-
-Underfull \hbox (badness 1960) in paragraph at lines 913--913
-\T1/ptm/m/n/9 (+20) weekly gain, even as
- []
-
-
-Underfull \hbox (badness 1931) in paragraph at lines 913--914
-[]|\T1/ptm/m/n/9 (+20) - Gold's weekly gain
- []
-
-
-Underfull \hbox (badness 1997) in paragraph at lines 913--914
-\T1/ptm/m/n/9 (+20) isn't im-pres-sive given
- []
-
-
-Underfull \hbox (badness 1931) in paragraph at lines 915--916
-[]|\T1/ptm/m/n/9 (+20) - Gold's weekly gain
- []
-
-
-Underfull \hbox (badness 4144) in paragraph at lines 915--916
-\T1/ptm/m/n/9 (+20) the con-text of ris-ing
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 917--917
-[]|\T1/ptm/m/n/9 (+20) (0.15748, 0.12548,
- []
-
-
-Underfull \hbox (badness 1629) in paragraph at lines 920--920
-\T1/ptm/m/n/9 (+20) that aligns with bib-li-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 920--920
-[]|\T1/ptm/m/n/9 (+20) (0.11781, 0.10532,
- []
-
-
-Underfull \hbox (badness 1701) in paragraph at lines 921--921
-\T1/ptm/m/n/9 (+20) Sy-char. The woman
- []
-
-
-Underfull \hbox (badness 1701) in paragraph at lines 921--921
-\T1/ptm/m/n/9 (+20) Sy-char. The woman
- []
-
-
-Underfull \hbox (badness 1701) in paragraph at lines 921--921
-\T1/ptm/m/n/9 (+20) Sy-char. The woman
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 921--921
-[]|\T1/ptm/m/n/9 (+20) (0.15391, 0.15391,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 922--922
-[]|\T1/ptm/m/n/9 (+20) (0.08179, 0.04974,
- []
-
-
-Underfull \hbox (badness 1584) in paragraph at lines 923--923
-[]|\T1/ptm/m/n/9 (+20) VVMs have pro-tected
- []
-
-
-Underfull \hbox (badness 2351) in paragraph at lines 923--923
-\T1/ptm/m/n/9 (+20) over 1 bil-lion peo-ple
- []
-
-
-Underfull \hbox (badness 1292) in paragraph at lines 923--923
-\T1/ptm/m/n/9 (+20) world-wide from in-fec-
- []
-
-
-Underfull \hbox (badness 7925) in paragraph at lines 923--923
-\T1/ptm/m/n/9 (+20) bil-lion peo-ple world-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 923--923
-[]|\T1/ptm/m/n/9 (+20) (0.07681, 0.07973,
- []
-
-
-Underfull \hbox (badness 4341) in paragraph at lines 924--924
-[]|\T1/ptm/m/n/9 (+20) British Columbia has
- []
-
-
-Underfull \hbox (badness 5548) in paragraph at lines 924--924
-[]|\T1/ptm/m/n/9 (+20) The gov-ern-ment said
- []
-
-
-Underfull \hbox (badness 6978) in paragraph at lines 924--924
-\T1/ptm/m/n/9 (+20) they'd stop chang-ing
- []
-
-
-Underfull \hbox (badness 6268) in paragraph at lines 924--924
-[]|\T1/ptm/m/n/9 (+20) Thank you for shar-
- []
-
-
-Underfull \hbox (badness 2189) in paragraph at lines 924--924
-\T1/ptm/m/n/9 (+20) ing your thoughts on
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 924--924
-[]|\T1/ptm/m/n/9 (+20) (0.15626, 0.11233,
- []
-
-
-Underfull \hbox (badness 6188) in paragraph at lines 925--925
-\T1/ptm/m/n/9 (+20) treat-ment op-tions for
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 925--925
-\T1/ptm/m/n/9 (+20) anx-i-ety, specif-i-cally
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 925--925
-[]|\T1/ptm/m/n/9 (+20) (0.16432, 0.04699,
- []
-
-
-Overfull \hbox (2.30368pt too wide) in paragraph at lines 910--927
- [][] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [20] [21]
-<figures/comp1.png, id=349, 4741.715pt x 1767.60374pt>
-File: figures/comp1.png Graphic file (type png)
-<use figures/comp1.png>
-Package pdftex.def Info: figures/comp1.png  used on input line 937.
-(pdftex.def)             Requested size: 397.48499pt x 148.15404pt.
-<figures/comp2.png, id=350, 4741.715pt x 1767.60374pt>
-File: figures/comp2.png Graphic file (type png)
-<use figures/comp2.png>
-Package pdftex.def Info: figures/comp2.png  used on input line 943.
-(pdftex.def)             Requested size: 397.48499pt x 148.15404pt.
-File: figures/comp3.png Graphic file (type png)
-<use figures/comp3.png>
-Package pdftex.def Info: figures/comp3.png  used on input line 949.
-(pdftex.def)             Requested size: 397.48499pt x 148.04616pt.
-<figures/comp4.png, id=351, 4741.715pt x 1767.60374pt>
-File: figures/comp4.png Graphic file (type png)
-<use figures/comp4.png>
-Package pdftex.def Info: figures/comp4.png  used on input line 955.
-(pdftex.def)             Requested size: 397.48499pt x 148.15404pt.
-<figures/comp5.png, id=352, 4741.715pt x 1767.60374pt>
-File: figures/comp5.png Graphic file (type png)
-<use figures/comp5.png>
-Package pdftex.def Info: figures/comp5.png  used on input line 961.
-(pdftex.def)             Requested size: 397.48499pt x 148.15404pt.
- [22 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/comp1.png> </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/comp2.png>]
-<figures/comp6.png, id=362, 4741.715pt x 1767.60374pt>
-File: figures/comp6.png Graphic file (type png)
-<use figures/comp6.png>
-Package pdftex.def Info: figures/comp6.png  used on input line 967.
-(pdftex.def)             Requested size: 397.48499pt x 148.15404pt.
- [23 </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/comp4.png> </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/comp5.png> </Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/figures/comp6.png>] (/Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.aux)
 Package rerunfilecheck Info: File `prompt-distributions.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 42839 strings out of 478994
- 798912 string characters out of 5858185
- 1222893 words of memory out of 5000000
- 58792 multiletter control sequences out of 15000+600000
- 488122 words of font info for 450 fonts, out of 8000000 for 9000
+ 42612 strings out of 478994
+ 794403 string characters out of 5858185
+ 1208517 words of memory out of 5000000
+ 58703 multiletter control sequences out of 15000+600000
+ 482571 words of font info for 388 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 107i,15n,105p,1304b,990s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.pdf (23 pages, 2984979 bytes).
+ 107i,13n,105p,1304b,954s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/prompt-distributions.pdf (14 pages, 1425943 bytes).
 PDF statistics:
- 460 PDF objects out of 1000 (max. 8388607)
- 374 compressed objects within 4 object streams
- 130 named destinations out of 1000 (max. 500000)
- 112799 words of extra memory for PDF output out of 128383 (max. 10000000)
+ 323 PDF objects out of 1000 (max. 8388607)
+ 261 compressed objects within 3 object streams
+ 87 named destinations out of 1000 (max. 500000)
+ 108678 words of extra memory for PDF output out of 128383 (max. 10000000)
 

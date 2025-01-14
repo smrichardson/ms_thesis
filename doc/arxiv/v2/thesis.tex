@@ -179,14 +179,14 @@ we pick up the effect of rewriting itself, not purely the effect of the attribut
 \end{itemize}
 Symbolically, 
 \[
-\text{Re}\bigl(\,\text{Re}(x,y,0),\,1\bigr),
+\text{Re}\bigl(x,\text{Re}(x,y,0),1\bigr),
 \]
 is the \emph{rewrite-of-rewrite} from $W=0$ back to $W=1$. Intuitively, the textual artifacts introduced by rewriting once are also introduced by rewriting again, so they can cancel out in expectation. Hence the \textbf{RATE} estimator compares:
 \[
-R\Bigl(x,\;\text{Re}(\text{Re}(x,y,0),1)\Bigr) \;-\;
+R\Bigl(x,\;\text{Re}(x, \text{Re}(x,y,0),1)\Bigr) \;-\;
 R\Bigl(x,\;\text{Re}(x,y,0)\Bigr),
 \]
-when the \emph{original} $y$ has $W=1$. Similarly, if $W=0$, we compare $R(\text{Re}(x,y,1))$ to $R(\text{Re}(\text{Re}(x,y,1),0))$. We can define the RATE estimation procedure as follows:
+when the \emph{original} $y$ has $W=1$. Similarly, if $W=0$, we compare $R(\text{Re}(x,y,1))$ to $R(\text{Re}(x, \text{Re}(x,y,1),0))$. We can define the RATE estimation procedure as follows:
 \begin{algorithm}[H]
   \caption{RATE: Rewrite-based Attribute Treatment Estimators}
   \label{alg:rate}
@@ -198,11 +198,11 @@ when the \emph{original} $y$ has $W=1$. Similarly, if $W=0$, we compare $R(\text
   \State \textbf{For all rewrites:} generate a rewrite-of-rewrite in the opposite direction
   \State \textbf{ATT:}
   \[
-    \hat{\tau}_{\text{ATT}} = \frac{1}{n_1} \sum_{(i,j)\colon w^{ij}=1} \Bigl[\,R\bigl(x^i, \text{Re}(\text{Re}(x^i, y^{ij},0),1)\bigr) - R\bigl(x^i,\text{Re}(x^i, y^{ij},0)\bigr)\Bigr].
+    \hat{\tau}_{\text{ATT}} = \frac{1}{n_1} \sum_{(i,j)\colon w^{ij}=1} \Bigl[\,R\bigl(x^i, \text{Re}(x^i, \text{Re}(x^i, y^{ij},0),1)\bigr) - R\bigl(x^i,\text{Re}(x^i, y^{ij},0)\bigr)\Bigr].
   \]
   \State \textbf{ATU:}
   \[
-    \hat{\tau}_{\text{ATU}} = \frac{1}{n_0} \sum_{(i,j)\colon w^{ij}=0} \Bigl[\,R\bigl(x^i, \text{Re}(x^i, y^{ij},1)\bigr) - R\bigl(x^i,\text{Re}(\text{Re}(x^i, y^{ij},1),0)\bigr)\Bigr].
+    \hat{\tau}_{\text{ATU}} = \frac{1}{n_0} \sum_{(i,j)\colon w^{ij}=0} \Bigl[\,R\bigl(x^i, \text{Re}(x^i, y^{ij},1)\bigr) - R\bigl(x^i,\text{Re}(x^i, \text{Re}(x^i, y^{ij},1),0)\bigr)\Bigr].
   \]
   \State \textbf{ATE: }
   \[
@@ -238,9 +238,9 @@ R\bigl(X,\;Y(W,Z,\xi)\bigr) = R_{W,Z}(X,W,Z) \;+\; R_{\xi}(X,\xi).
 \end{assumption}
 \begin{assumption}[Rewrite Distribution Consistency]
 \label{assump:rewrite_dist}
-Rewriting $Y(W,Z,\xi)$ to enforce $W=w$ yields a distribution over $\xi$ values independent of $(W,Z)$. Formally,
+Rewriting $Y(W,Z,\xi)$ to enforce $W=1-W$ yields a distribution over $\xi$ values independent of $(W,Z)$. Formally,
 \[
-\text{Re}\bigl(Y(W,Z,\xi)\bigr) \;\stackrel{d}{=}\; Y\bigl(W,Z,\tilde{\xi}\bigr),
+\text{Re}\bigl(X, Y(W,Z,\xi), 1 - W \bigr) \;\stackrel{d}{=}\; Y\bigl(1 - W,Z,\tilde{\xi}\bigr),
 \quad\text{where } \tilde{\xi} \sim P_{\mathrm{Re}}(\tilde{\xi}).
 \]
 \end{assumption}
@@ -253,7 +253,7 @@ Under these assumptions, we have:
 \label{thm:mainthm}
 Let $R(X,\,Y(W,Z,\xi)) = R_{W,Z}(X,W,Z) + R_{\xi}(X,\xi)$ and
 \(
-\text{Re}\bigl(Y(W,Z,\xi)\bigr) \,\stackrel{d}{=}\, Y\bigl(W,Z,\tilde{\xi}\bigr)
+\text{Re}\bigl(X, Y(W,Z,\xi)\bigr) \,\stackrel{d}{=}\, Y\bigl(W,Z,\tilde{\xi}\bigr)
 \)
 where
 \(
@@ -301,7 +301,7 @@ We apply RATE to real-world reward models and real-world data. We observe severa
 
 \textbf{Comparison to Naive Estimator.} We see large discrepancies between the naive estimates of the effect of $W$ vs. the RATE-based estimates. In many settings, naive methods suggest the reward model strongly ``favors'' length, but RATE reveals a substantially smaller effect, indicating that length might have been correlated with truly helpful content.
 
-\textbf{Rewrite-of-Rewrite Necessity.} We also compare a \emph{single-rewrite} approach (comparing $y$ to $\text{Re}(y, \bar{w})$) to the double rewrite. The single-rewrite approach consistently yields biased estimates that overstate the effect of $W$. The difference can be substantial---on some tasks, the sign of the effect even flips.
+\textbf{Rewrite-of-Rewrite Necessity.} We also compare a \emph{single-rewrite} approach (comparing $y$ to $\text{Re}(x, y, \bar{w})$) to the double rewrite. The single-rewrite approach consistently yields biased estimates that overstate the effect of $W$. The difference can be substantial---on some tasks, the sign of the effect even flips.
 
 \subsection{Synthetic Experiments}
 

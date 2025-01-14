@@ -50,6 +50,7 @@ In this thesis, we develop an evaluation method, \emph{RATE} (Rewrite-based Attr
 \tableofcontents
 
 \newpage
+
 \section{Introduction}
 \label{sec:intro}
 
@@ -156,9 +157,9 @@ In contrast, a \emph{rewrite-based} approach such as \textbf{RATE} circumvents t
 \subsection{Rewrite Operations with LLMs}
 To approximate the counterfactual $Y(1)$ for a text that actually had $W=0$, we ask an LLM to \emph{rewrite} $y$ to have $W=1$ while leaving everything else the same. Denote:
 \[
-\text{Re}(x^i, y^{ij}, w) \quad\longrightarrow\quad \tilde{y}^{ij},
+\text{Re}(x^i, y^{ij}, w_{\text{new}}) \quad\longrightarrow\quad \tilde{y}^{ij},
 \]
-where $\tilde{y}^{ij}$ is the LLM-generated rewrite of $y^{ij}$ that attempts to enforce $W(\tilde{y}^{ij}) = w$ but otherwise preserve the rest of the text. An example instruction might be:  
+where $\tilde{y}^{ij}$ is the LLM-generated rewrite of $y^{ij}$ that attempts to enforce $W(\tilde{y}^{ij}) = w_{\text{new}}$ but otherwise preserve the rest of the text. An example instruction might be:  
 \begin{quote}
 ``Rewrite the following text to be more helpful, \textit{without} changing other aspects such as tone, sentiment, or factual content.''  
 \end{quote}
@@ -222,42 +223,44 @@ We show that RATE is both unbiased and $\sqrt{n}$-consistent under mild assumpti
 
 \subsection{Latent Variable Model and Assumptions}
 
-Consider representing each response $Y$ as $Y(W, Z, \xi)$, where:
+Consider representing each response $Y$ as $Y(W, Z, \Xi)$, where:
 \begin{itemize}
-    \item $W$ is the target binary attribute.
-    \item $Z$ are off-target attributes that remain invariant under rewriting (e.g., overall topic, language).
-    \item $\xi$ are off-target attributes that \emph{may} change inadvertently under rewriting (e.g., punctuation, local style).
+    \item $W$ is the target binary attribute
+    \item $Z$ are off-target attributes that remain \emph{invariant} under rewriting
+    \item $\Xi$ are off-target attributes that \emph{may} change inadvertently under rewriting
 \end{itemize}
+
 We then assume:
 
 \begin{assumption}[Additive Reward Decomposition]
 \label{assump:additive}
 \[
-R\bigl(X,\;Y(W,Z,\xi)\bigr) = R_{W,Z}(X,W,Z) \;+\; R_{\xi}(X,\xi).
+R\bigl(X,\;Y(W,Z,\Xi)\bigr) = R_{W,Z}(X,W,Z) \;+\; R_{\Xi}(X,\Xi).
 \]
 \end{assumption}
+
 \begin{assumption}[Rewrite Distribution Consistency]
 \label{assump:rewrite_dist}
-Rewriting $Y(W,Z,\xi)$ to enforce $W=1-W$ yields a distribution over $\xi$ values independent of $(W,Z)$. Formally,
+Rewriting $Y(W,Z,\Xi)$ to enforce $W=w_{\text{new}}$ yields a distribution over $\Xi$ values independent of $(W,Z)$. Formally,
 \[
-\text{Re}\bigl(X, Y(W,Z,\xi), 1 - W \bigr) \;\stackrel{d}{=}\; Y\bigl(1 - W,Z,\tilde{\xi}\bigr),
-\quad\text{where } \tilde{\xi} \sim P_{\mathrm{Re}}(\tilde{\xi}).
+\text{Re}\bigl(X, Y(W,Z,\Xi), w_{\text{new}} \bigr) \;\stackrel{d}{=}\; Y\bigl(w_{\text{new}},Z,\widetilde{\Xi}\bigr),
+\quad\text{where } \widetilde{\Xi} \sim \mathbb{P}_{\mathrm{Re}}(\widetilde{\Xi}).
 \]
 \end{assumption}
 \noindent
-\Cref{assump:additive} states that $\xi$ (mutable attributes such as stylistic artifacts) \emph{add} to the reward in a way that does not interact with $W$ or $Z$. \Cref{assump:rewrite_dist} posits that rewriting is essentially sampling a new $\xi$ from some distribution $P_{\mathrm{Re}}$, representing the random off-target changes that an LLM might introduce.
+\Cref{assump:additive} states that $\Xi$ (mutable attributes such as stylistic artifacts) \emph{add} to the reward in a way that does not interact with $W$ or $Z$. \Cref{assump:rewrite_dist} posits that rewriting is essentially sampling a new $\Xi$ from some distribution $\mathbb{P}_{\mathrm{Re}}$, representing the random off-target changes that an LLM might introduce.
 
 Under these assumptions, we have:
 
 \begin{restatable}[Unbiasedness and Consistency]{theorem}{mainthm}
 \label{thm:mainthm}
-Let $R(X,\,Y(W,Z,\xi)) = R_{W,Z}(X,W,Z) + R_{\xi}(X,\xi)$ and
+Let $R(X,\,Y(W,Z,\Xi)) = R_{W,Z}(X,W,Z) + R_{\Xi}(X,\Xi)$ and
 \(
-\text{Re}\bigl(X, Y(W,Z,\xi)\bigr) \,\stackrel{d}{=}\, Y\bigl(W,Z,\tilde{\xi}\bigr)
+\text{Re}\bigl(X, Y(W,Z,\Xi)\bigr) \,\stackrel{d}{=}\, Y\bigl(W,Z,\tilde{\Xi}\bigr)
 \)
 where
 \(
-\tilde{\xi} \sim P_{\mathrm{Re}}(\tilde{\xi})
+\tilde{\Xi} \sim \mathbb{P}_{\mathrm{Re}}
 \).
 Assuming $R$ is bounded, the RATE estimators in \Cref{alg:rate} are unbiased and $\sqrt{n}$-consistent estimators of the ATT, ATU, and ATE.
 \end{restatable}
@@ -267,9 +270,9 @@ See \Cref{sec:proofs} for a complete proof.
 \subsection{Intuitive Explanation of the Proof}
 The double-rewrite operation effectively ensures that the random off-target effects introduced in rewriting cancel out in expectation. By rewriting $W=1$ text to $W=0$ and then rewriting back to $W=1$, we stay in the same ``rewrite distribution space'' and thus keep the off-target $\xi$ artifacts aligned. Consequently, the difference in rewards isolates the effect of going from $W=0$ to $W=1$. A similar argument applies for going from $W=1$ to $W=0$. 
 
-\paragraph{Justifying \Cref{assump:additive}:} Intuitively, human preferences for many attributes are separable. For example, the strength of our preference for a response to be helpful ($W$) is unlikely to depend on attributes like the specific wording used $(\xi)$. Rewards, then, as approximations of human preferences, should also be separable in this way. To be sure, such separability does not, intuitively, hold in some cases (e.g., the strength of our preference for a response to be cheerful may depend on the topic of the response), but these cases seem to involve immutable attributes $Z$ rather than mutable attributes $\xi$, at least when we are considering rewrites done by sophisticated LLMs, as they will not change the topic of a response when asked to change its sentiment.
+\paragraph{Justifying \Cref{assump:additive}:} Intuitively, human preferences for many attributes are separable. For example, the strength of our preference for a response to be helpful ($W$) is unlikely to depend on attributes like the specific wording used $(\Xi)$. Rewards, then, as approximations of human preferences, should also be separable in this way. To be sure, such separability does not, intuitively, hold in some cases (e.g., the strength of our preference for a response to be cheerful may depend on the topic of the response), but these cases seem to involve immutable attributes $Z$ rather than mutable attributes $\Xi$, at least when we are considering rewrites done by sophisticated LLMs, as they will not change the topic of a response when asked to change its sentiment.
 
-\paragraph{Justifying \Cref{assump:rewrite_dist}:} LLMs have a characteristic way of writing that appears to consistent across contexts. For instance, LLMs will avoid using profanity or grammatical errors in most contexts. Thus, it is plausible that the distribution of $\xi$ values introduced by rewriting is independent of the original $W, Z$ value (though this is ultimately an empirical question likely to vary across LLMs).
+\paragraph{Justifying \Cref{assump:rewrite_dist}:} LLMs have a characteristic way of writing that appears to consistent across contexts. For instance, LLMs will avoid using profanity or grammatical errors in most contexts. Thus, it is plausible that the distribution of $\Xi$ values introduced by rewriting is independent of the original $W, Z$ value (though this is ultimately an empirical question likely to vary across LLMs).
 
 \section{Empirical Evaluation}
 \label{sec:experiments}
@@ -319,7 +322,7 @@ Overall, these empirical studies show that RATE is both practical (easy to imple
 \paragraph{Generalization to Contrastive Rewards.}
 As hinted in \Cref{sec:setup}, RATE naturally extends to $R(x, y_1, y_0)$ by looking at pairs of rewrites in the contrastive setting. The result is an estimate of
 \[
-\EE\bigl[R(X,\,Y(1),\,Y(0))\bigr],
+\E\bigl[R(X,\,Y(1),\,Y(0))\bigr],
 \]
 i.e., how changing one attribute in isolation of everything else affects the model's \emph{relative} preference.
 
@@ -358,13 +361,13 @@ Overall, RATE paves the way for more causally rigorous auditing of reward models
 \label{sec:proofs}
     \noindent
     \textbf{Notation and Setup.}  
-    We consider \(n\) i.i.d.\ samples \(\{(x^i, y^i, w^i)\}_{i=1}^n\), where each \((x^i, y^i, w^i)\) is a realization of the random variables \((X, Y, W)\). Here:
+    We consider $n$ i.i.d.\ samples $\{(x^i, y^{ij}, w^i)\}_{i=1}^n$, where each $(x^i, y^{ij}, w^i)$ is a realization of the random variables $(X, Y, W)$. Here:
     \begin{itemize}
-        \item \(X\) is a \emph{prompt}, taking values \(x\).
-        \item \(Y\) is a \emph{response}, taking values \(y\).
-        \item \(W \in \{0,1\}\) is a binary attribute, taking values \(w\). 
+        \item $X$ is a \emph{prompt}, taking values $x$
+        \item $Y$ is a \emph{response}, taking values $y$
+        \item $W \in \{0,1\}$ is a binary attribute, taking values $w$
     \end{itemize}
-    We also use auxiliary latent variables \((Z, \Xi)\) such that \(Y\) can be decomposed into \(Y = Y(W, Z, \Xi)\). The variable \(Z\) represents any off-target attributes that remain \emph{invariant} when rewriting \(Y\), while \(\Xi\) represents the off-target attributes that \emph{may} change. For each observed sample \((x^i, y^i, w^i)\), we view \((z^i, \xi^i)\) as the realization of \((Z, \Xi)\).
+    We also use auxiliary latent variables $(Z, \Xi)$ such that $Y$ can be decomposed into $Y = Y(W, Z, \Xi)$. The variable $Z$ represents any off-target attributes that remain \emph{invariant} when rewriting $Y$, while $\Xi$ represents the off-target attributes that \emph{may} change. For each observed sample $(x^i, y^{ij}, w^i)$, we view $(z^i,\xi^i)$ as the realization of $(Z, \Xi)$.
     
     \bigskip
     
@@ -403,7 +406,7 @@ Overall, RATE paves the way for more causally rigorous auditing of reward models
     \;\;\stackrel{d}{=}\;\;
     Y\bigl(w_{\text{new}},\,z,\,\widetilde{\Xi}\bigr),
     \]
-    where \(\widetilde{\Xi}\sim P_{\mathrm{Re}}\) is drawn independently of \((W,Z)\).  That is, rewriting randomly re-samples the ``mutable'' off-target attributes \(\Xi\) from a distribution \(P_{\mathrm{Re}}\), but does not depend on the original \(w\) or \(z\).
+    where \(\widetilde{\Xi}\sim \mathbb{P}_{\mathrm{Re}}\) is drawn independently of \((W,Z)\).  That is, rewriting randomly re-samples the ``mutable'' off-target attributes \(\Xi\) from a distribution \(\mathbb{P}_{\mathrm{Re}}\), but does not depend on the original \(w\) or \(z\).
     
     \item[\textbf{(A3)}] \textbf{Boundedness}: There is a universal constant \(M<\infty\) such that \(\bigl|R(x,y)\bigr|\le M\) for all \((x,y)\).
     \end{enumerate}
@@ -418,7 +421,7 @@ Overall, RATE paves the way for more causally rigorous auditing of reward models
     \textbf{1. Construction of \(\hat{\tau}_{\text{ATT}}\).}
     Among the \(n\) samples, let
     \[
-    \{(x^i, y^i): w^i = 1\}
+    \{(x^i, y^{ij}): w^i = 1\}
     \]
     be all pairs that \emph{originally} have \(W=1\).  There are \(n_1\) such pairs.  For each such pair, we do:
     \begin{enumerate}
@@ -426,7 +429,7 @@ Overall, RATE paves the way for more causally rigorous auditing of reward models
     \[
     \tilde{y}^{i}_{0} 
     \;=\; 
-    \text{Re}\!\bigl(x^i,\;y^i,\;0\bigr).
+    \text{Re}\!\bigl(x^i,\;y^{ij},\;0\bigr).
     \]
     \item Rewrite the result again to force \(W=1\):
     \[
@@ -453,35 +456,39 @@ Overall, RATE paves the way for more causally rigorous auditing of reward models
     
     \bigskip
     \textbf{2. Latent Variable Representation.}
-    Since \(y^i\) is a realization of \(Y(W,Z,\Xi)\) with \(w^i=1\), we have some \((z^i,\xi^i)\) such that
+    Since $y^{ij}$ is a realization of $Y(W,Z,\Xi)$ with $w^i=1$, we have some $(z^i,\xi^i)$ such that
     \[
-    y^i
-    \;=\;
-    Y\!\bigl(1,\;z^i,\;\xi^i\bigr).
+    y^{ij} \;=\; Y\!\bigl(1,\;z^i,\;\xi^i\bigr).
     \]
     By assumption (A2),
     \[
-    \tilde{y}^{i}_{0}
-    \;=\;
-    \text{Re}\!\bigl(x^i,\;y^i,\;0\bigr)
-    \;\stackrel{d}{=}\;
-    Y\bigl(0,\;z^i,\;\widetilde{\Xi}^i\bigr),
+    \tilde{y}^{i}_{0} \;=\; \text{Re}\!\bigl(x^i,\;y^{ij},\;0\bigr) \;\stackrel{d}{=}\; Y\bigl(0,\;z^i,\;\widetilde{\Xi}^i\bigr),
     \]
-    where \(\widetilde{\Xi}^i \sim P_{\mathrm{Re}}\).  Similarly,
+    where $\widetilde{\Xi}^i \sim \mathbb{P}_{\mathrm{Re}}$. Similarly,
     \[
-    \tilde{y}^{i}_{0\to1}
-    \;=\;
-    \text{Re}\!\bigl(x^i,\;\tilde{y}^{i}_{0},\;1\bigr)
-    \;\stackrel{d}{=}\;
-    Y\bigl(1,\;z^i,\;\widetilde{\widetilde{\Xi}}^i\bigr),
+    \tilde{y}^{i}_{0\to1} \;=\; \text{Re}\!\bigl(x^i,\;\tilde{y}^{i}_{0},\;1\bigr) \;\stackrel{d}{=}\; Y\bigl(1,\;z^i,\;\widetilde{\widetilde{\Xi}}^i\bigr),
     \]
-    with \(\widetilde{\widetilde{\Xi}}^i\sim P_{\mathrm{Re}}\) i.i.d.\ from the same distribution.  Hence
+    with $\widetilde{\widetilde{\Xi}}^i\sim \mathbb{P}_{\mathrm{Re}}$ i.i.d.\ from the same distribution. Hence
     \[
-    \Delta^{\,i}
+    \Delta^{\,i} = R\!\Bigl(x^i,\;Y\!\bigl(1,\;z^i,\;\widetilde{\widetilde{\Xi}}^i\bigr)\Bigr) \;-\; R\!\Bigl(x^i,\;Y\!\bigl(0,\;z^i,\;\widetilde{\Xi}^i\bigr)\Bigr).
+    \]
+    
+    \textbf{3. Unbiasedness for One Sample.}
+    Consider the expectation $\mathbb{E}[\Delta^i]$ conditioning on the pair's $(x^i,z^i,\xi^i)$ (which define the original sample). By assumption (A1), we write:
+    \[
+    R\!\bigl(x,\;Y(w,z,\xi)\bigr) \;=\; R_{W,Z}(x,\,w,\,z) \;+\; R_{\Xi}(x,\,\xi).
+    \]
+    Thus,
+    \[
+    R\!\Bigl(x,\;Y\!\bigl(1,\;z,\;\widetilde{\widetilde{\Xi}}\bigr)\Bigr) \;-\; R\!\Bigl(x,\;Y\!\bigl(0,\;z,\;\widetilde{\Xi}\bigr)\Bigr)
     =
-    R\!\Bigl(x^i,\;Y\!\bigl(1,\;z^i,\;\widetilde{\widetilde{\Xi}}^i\bigr)\Bigr)
-    \;-\;
-    R\!\Bigl(x^i,\;Y\!\bigl(0,\;z^i,\;\widetilde{\Xi}^i\bigr)\Bigr).
+    \Bigl[R_{W,Z}(x,\,1,\,z) + R_{\Xi}(x,\,\widetilde{\widetilde{\Xi}})\Bigr] - \Bigl[R_{W,Z}(x,\,0,\,z) + R_{\Xi}(x,\,\widetilde{\Xi})\Bigr].
+    \]
+    Taking the expectation over $\widetilde{\Xi}, \widetilde{\widetilde{\Xi}}\sim \mathbb{P}_{\mathrm{Re}}$:
+    \[
+    \mathbb{E}_{\widetilde{\Xi},\widetilde{\widetilde{\Xi}}}\bigl[\Delta^i\bigr]
+    =
+    \Bigl[R_{W,Z}(x,\,1,\,z) - R_{W,Z}(x,\,0,\,z)\Bigr] \;+\; \Bigl[\mathbb{E}\!\bigl[R_{\Xi}(x,\widetilde{\widetilde{\Xi}})\bigr] - \mathbb{E}\!\bigl[R_{\Xi}(x,\widetilde{\Xi})\bigr]\Bigr].
     \]
     
     \bigskip
@@ -504,7 +511,7 @@ Overall, RATE paves the way for more causally rigorous auditing of reward models
     -
     \Bigl[R_{W,Z}(x,\,0,\,z) + R_{\Xi}(x,\,\widetilde{\Xi})\Bigr].
     \]
-    Taking the expectation over \(\widetilde{\Xi}, \widetilde{\widetilde{\Xi}}\sim P_{\mathrm{Re}}\):
+    Taking the expectation over \(\widetilde{\Xi}, \widetilde{\widetilde{\Xi}}\sim \mathbb{P}_{\mathrm{Re}}\):
     \[
     \mathbb{E}_{\widetilde{\Xi},\widetilde{\widetilde{\Xi}}}\bigl[\Delta^i\bigr]
     =
@@ -518,7 +525,7 @@ Overall, RATE paves the way for more causally rigorous auditing of reward models
     \mathbb{E}\!\bigl[R_{\Xi}(x,\widetilde{\Xi})\bigr]
     \Bigr].
     \]
-    Since both \(\widetilde{\Xi}\) and \(\widetilde{\widetilde{\Xi}}\) have the same distribution \(P_{\mathrm{Re}}\), the second bracket is zero. Consequently,
+    Since both \(\widetilde{\Xi}\) and \(\widetilde{\widetilde{\Xi}}\) have the same distribution \(\mathbb{P}_{\mathrm{Re}}\), the second bracket is zero. Consequently,
     \[
     \mathbb{E}\bigl[\Delta^i \,\big|\,(x,z)\bigr]
     =
@@ -550,61 +557,39 @@ Overall, RATE paves the way for more causally rigorous auditing of reward models
     Hence \(\hat{\tau}_{\text{ATT}}\) is an unbiased estimator for \(\text{ATT}\).
     
     \bigskip
-    \textbf{5. \(\sqrt{n_1}\)-Consistency.}
-    Define 
-    \[
-    \delta^i
-    \;=\;
-    R\bigl(x^i,\;\tilde{y}^{i}_{0\to1}\bigr)
-    \;-\;
-    R\bigl(x^i,\;\tilde{y}^{i}_{0}\bigr),
-    \quad
-    \text{for each }i\text{ with }w^i=1.
-    \]
-    These \(\delta^i\) are i.i.d.\ (given \(w^i=1\)), each bounded in magnitude by \(2M\). Thus
-    \[
-    \mathrm{Var}(\delta^i) 
-    \;\le\; (2M)^2 
-    \;=\; 4M^2.
-    \]
-    Hence
-    \[
-    \mathrm{Var}\bigl(\hat{\tau}_{\text{ATT}}\bigr)
-    =
-    \mathrm{Var}\!\Bigl(\frac{1}{n_1}\sum_{i: w^i=1}\delta^i\Bigr)
-    \;\;\le\;\;
-    \frac{4M^2}{n_1}.
-    \]
-    Then by unbiasedness and Chebyshev's inequality, for any $\varepsilon>0$:
-    \[
-    \mathbb{P}\Bigl(\bigl|\hat{\tau}_{\text{ATT}} - \tau_{\text{ATT}}\bigr|\;\ge\;\varepsilon\Bigr)
-    \;\le\;
-    \frac{\mathrm{Var}\!\bigl(\hat{\tau}_{\text{ATT}}\bigr)}{\varepsilon^2}.
-    \]
-    Because the random variables $\{\delta^{ij}\}$ are i.i.d.\ and each $\mathrm{Var}(\delta^{ij})\le4M^2$, the variance of their average decreases as $1/n_1$.  Consequently,
-    \[
-    \mathrm{Var}\bigl(\hat{\tau}_{\text{ATT}}\bigr)\;=\;\mathcal{O}\!\bigl(1/n_1\bigr),
-    \]
-    and hence 
-    \[
-    \sqrt{n_1}\,\bigl(\hat{\tau}_{\text{ATT}} - \tau_{\text{ATT}}\bigr)
-    \;=\;
-    O_{p}(1),
-    \]
-    which establishes $\sqrt{n_1}$-consistency for $\hat{\tau}_{\text{ATT}}$
-    
-    \bigskip
-    \textbf{6. ATT, ATU, and ATE.}
-    A parallel argument covers \(\hat{\tau}_{\text{ATU}}\) (just flipping the role of \(W=0\) and rewriting to \(W=1\) and back to \(W=0\)).  Finally,
-    \[
-    \hat{\tau}_{\text{ATE}}
-    =
-    \frac{n_1}{n_1 + n_0}\,\hat{\tau}_{\text{ATT}}
-    \;+\;
-    \frac{n_0}{n_1 + n_0}\,\hat{\tau}_{\text{ATU}},
-    \]
-    so by the law of total expectation and Slutsky’s theorem,
-    \(\hat{\tau}_{\text{ATE}}\) is unbiased and \(\sqrt{n}\)-consistent.  
+    \textbf{5. $\sqrt{n_1}$-Consistency.}
+Define 
+\[
+\delta^i \;=\; R\bigl(x^i,\;\tilde{y}^{i}_{0\to1}\bigr) \;-\; R\bigl(x^i,\;\tilde{y}^{i}_{0}\bigr), \quad \text{for each }i\text{ with }w^i=1.
+\]
+These $\delta^i$ are i.i.d.\ (given $w^i=1$), each bounded in magnitude by $2M$. Thus
+\[
+\mathrm{Var}(\delta^i) \;\le\; (2M)^2 \;=\; 4M^2.
+\]
+Hence
+\[
+\mathrm{Var}\bigl(\hat{\tau}_{\text{ATT}}\bigr) = \mathrm{Var}\!\Bigl(\frac{1}{n_1}\sum_{i: w^i=1}\delta^i\Bigr) \;\;\le\;\; \frac{4M^2}{n_1}.
+\]
+Then by unbiasedness and Chebyshev's inequality, for any $\varepsilon>0$:
+\[
+\mathbb{P}\Bigl(\bigl|\hat{\tau}_{\text{ATT}} - \tau_{\text{ATT}}\bigr|\;\ge\;\varepsilon\Bigr) \;\le\; \frac{\mathrm{Var}\!\bigl(\hat{\tau}_{\text{ATT}}\bigr)}{\varepsilon^2}.
+\]
+Because the random variables $\{\delta^{i}\}$ are i.i.d.\ and each $\mathrm{Var}(\delta^{i})\le4M^2$, the variance of their average decreases as $1/n_1$. Consequently,
+\[
+\mathrm{Var}\bigl(\hat{\tau}_{\text{ATT}}\bigr)\;=\;\mathcal{O}\!\bigl(1/n_1\bigr),
+\]
+and hence 
+\[
+\sqrt{n_1}\,\bigl(\hat{\tau}_{\text{ATT}} - \tau_{\text{ATT}}\bigr) \;=\; O_{p}(1),
+\]
+which establishes $\sqrt{n_1}$-consistency for $\hat{\tau}_{\text{ATT}}$
+
+\textbf{6. ATT, ATU, and ATE.}
+A parallel argument covers $\hat{\tau}_{\text{ATU}}$ (just flipping the role of $W=0$ and rewriting to $W=1$ and back to $W=0$). Finally,
+\[
+\hat{\tau}_{\text{ATE}} = \frac{n_1}{n_1 + n_0}\,\hat{\tau}_{\text{ATT}} \;+\; \frac{n_0}{n_1 + n_0}\,\hat{\tau}_{\text{ATU}},
+\]
+so by the law of total expectation and Slutsky's theorem, $\hat{\tau}_{\text{ATE}}$ is unbiased and $\sqrt{n}$-consistent.  
 \end{proof}
 
 % reference thesis.bib

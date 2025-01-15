@@ -117,7 +117,7 @@ An obvious approach to see if $W$ influences $R$ is to compare the average rewar
 \]
 However, this fails to isolate the causal effect if $W$ is correlated with other confounding attributes. For example, if $W=1$ responses are systematically longer or more detailed in ways that also raise their reward, we cannot infer whether the reward model truly favors $W$ (versus favoring those other correlated attributes).
 
-\subsection{Causal Treatment Effects}
+\subsection{Treatment Effects}
 To disentangle such confounders, we adopt a causal-inference framework. For each $(x, y)$, suppose there exist two \emph{potential responses}:
 \[
 Y(0), \quad Y(1),
@@ -136,7 +136,7 @@ We also define:
 \]
 In principle, $Y(1)$ and $Y(0)$ are never simultaneously observed. We only see whichever label $W$ the data happened to have. This is the fundamental problem of causal inference \cite{imbens2015causal}.
 
-\subsection{Why Not Classical Backdoor Adjustments?}
+\subsection{Why Not Simple Backdoor Adjustments?}
 \label{sec:why_not_backdoor}
 A common approach to causal inference is to apply \emph{backdoor adjustments} (e.g., regression, matching, inverse propensity weighting) by conditioning on all confounders that causally affect both the treatment and the outcome \cite{cinelli2024crash}. However, in high-dimensional text settings, this approach faces critical barriers:
 
@@ -282,10 +282,10 @@ In this section, we outline how RATE is applied in practice and illustrate its e
 
 \subsection{Implementation Details}
 
-\textbf{LLM-based Rewriting.} We use an LLM (e.g., GPT-4) to generate rewrites in a batch manner. For each sample $(x^i, y^{ij}, w^{ij})$, we:
+\textbf{LLM-Based Rewriting.} We use an LLM (e.g., GPT-4) to generate rewrites in a batch manner. For each sample $(x^i, y^{ij}, w^{ij})$, we:
 \begin{enumerate}
-    \item Prompt the LLM: \emph{``Rewrite this response so that [attribute] = 1 while changing nothing else.''}
-    \item Similarly, prompt: \emph{``Rewrite this response so that [attribute] = 0 while changing nothing else.''}
+    \item For the examples with $w^{ij} = 0$, prompt the LLM: \emph{``Rewrite this response so that [attribute] = 1 while changing nothing else.''}
+    \item Similarly, for the examples with $w^{ij} = 1$, prompt: \emph{``Rewrite this response so that [attribute] = 0 while changing nothing else.''}
     \item For each of these two rewrites, do a second rewrite to flip the attribute back.
 \end{enumerate}
 
@@ -297,6 +297,8 @@ In this section, we outline how RATE is applied in practice and illustrate its e
 \textbf{Handling Edge Cases.} In some datasets, an example might already exhibit a contradictory combination of attributes (e.g., negative text that also has local positivity). We rely on the LLM’s general handling, but do manually inspect a small subset of rewrites to ensure they are not totally off.
 
 \textbf{Computational Cost.} Each rewrite is a forward pass through an LLM. For 25K examples, generating rewrites and rewrites-of-rewrites can cost tens of dollars with current APIs, which is acceptable for research-scale experiments but may be expensive at higher volume. At any rate, the cost is much lower than the cost of collecting human-generated counterfactuals.
+
+Once the rewrites are generated, we pass them through a reward model, yielding the estimates $\hat{\tau}_{\text{ATT}}$, $\hat{\tau}_{\text{ATU}}$, and $\hat{\tau}_{\text{ATE}}$.
 
 \subsection{Real-World Data and Observations}
 
@@ -331,7 +333,7 @@ An interesting extension is to compare two different models, $\pi$ vs. $\pi_0$, 
 \[
 \tilde{R}(x,y) = \log\frac{\pi(y|x)}{\pi_0(y|x)}.
 \]
-This can reveal whether a fine-tuned or otherwise modified model truly changed its behavior on attribute $W$, again controlling for off-target shifts. RATE can isolate just the effect of $W$.
+This can reveal whether a fine-tuned or otherwise modified model truly changed its behavior on attribute $W$, again controlling for off-target shifts. This is particularly useful for evaluating ``steering vectors'' $\lambda$ where $\lambda$ is added to the residual stream of a transformer-based LLM, inducing the distribution $\pi_\lambda$. RATE can help determine whether $\lambda$ truly steers the model in the intended direction.
 
 \paragraph{Limitations.}
 Despite its benefits, RATE relies on:
@@ -359,205 +361,187 @@ Overall, RATE paves the way for more causally rigorous auditing of reward models
 \appendix
 \section{Proof of Main Theorem}
 \label{sec:proofs}
-    \noindent
-    \textbf{Notation and Setup.}  
-    We consider $n$ i.i.d.\ samples $\{(x^i, y^{ij}, w^i)\}_{i=1}^n$, where each $(x^i, y^{ij}, w^i)$ is a realization of the random variables $(X, Y, W)$. Here:
-    \begin{itemize}
-        \item $X$ is a \emph{prompt}, taking values $x$
-        \item $Y$ is a \emph{response}, taking values $y$
-        \item $W \in \{0,1\}$ is a binary attribute, taking values $w$
-    \end{itemize}
-    We also use auxiliary latent variables $(Z, \Xi)$ such that $Y$ can be decomposed into $Y = Y(W, Z, \Xi)$. The variable $Z$ represents any off-target attributes that remain \emph{invariant} when rewriting $Y$, while $\Xi$ represents the off-target attributes that \emph{may} change. For each observed sample $(x^i, y^{ij}, w^i)$, we view $(z^i,\xi^i)$ as the realization of $(Z, \Xi)$.
-    
-    \bigskip
-    
-    \noindent
-    \textbf{Rewrite Operator.}
-    We define a function
-    \[
-    \text{Re}\bigl(x,\;y,\;w_{\text{new}}\bigr)
-    \]
-    that takes an observed prompt \(x\), an observed text \(y\), and forces the text’s attribute to be \(w_{\text{new}}\in\{0,1\}\), attempting to preserve all other aspects (e.g.\ topic, language). The output \(\text{Re}(x,y,w_{\text{new}})\) is a new observed text, say \(\tilde{y}\), that ideally differs from \(y\) \emph{only} in flipping the attribute to \(w_{\text{new}}\).
-    
-    \bigskip
-    
-    \begin{theorem}[Unbiasedness and \(\sqrt{n}\)-Consistency of RATE---Consistent Notation]
-    \label{thm:unbiased_rate_consistent}
-    Let \((X, Y, W)\) be random variables taking values in \((x, y, w)\), and suppose there exist latent variables \((Z, \Xi)\) such that
-    \[
-    Y \;=\; Y\bigl(W,\,Z,\,\Xi\bigr).
-    \]
-    Assume the reward function \(R(X,Y)\) satisfies:
-    
-    \begin{enumerate}
-    \item[\textbf{(A1)}] \textbf{Additive Decomposition}: 
-    \[
-    R\bigl(X,\;Y(W,\,Z,\,\Xi)\bigr)
-    \;=\;
-    R_{W,Z}\bigl(X,\,W,\,Z\bigr)
-    \;+\;
-    R_{\Xi}\bigl(X,\,\Xi\bigr),
-    \]
-    where \(R_{W,Z}\) depends on \((W,Z)\) but not \(\Xi\), and \(R_\Xi\) depends on \(\Xi\) but not \((W,Z)\).
-    
-    \item[\textbf{(A2)}] \textbf{Rewrite Distribution Consistency}: For each observed pair \((x,y)\) with latent \((w,z,\xi)\),  
-    \[
-    \text{Re}\bigl(x,\;y,\;w_{\text{new}}\bigr)
-    \;\;\stackrel{d}{=}\;\;
-    Y\bigl(w_{\text{new}},\,z,\,\widetilde{\Xi}\bigr),
-    \]
-    where \(\widetilde{\Xi}\sim \mathbb{P}_{\mathrm{Re}}\) is drawn independently of \((W,Z)\).  That is, rewriting randomly re-samples the ``mutable'' off-target attributes \(\Xi\) from a distribution \(\mathbb{P}_{\mathrm{Re}}\), but does not depend on the original \(w\) or \(z\).
-    
-    \item[\textbf{(A3)}] \textbf{Boundedness}: There is a universal constant \(M<\infty\) such that \(\bigl|R(x,y)\bigr|\le M\) for all \((x,y)\).
-    \end{enumerate}
-    
-    Define the Rewrite-based Attribute Treatment Estimators \(\hat{\tau}_{\text{ATT}}\), \(\hat{\tau}_{\text{ATU}}\), and \(\hat{\tau}_{\text{ATE}}\) as in \Cref{alg:rate}, using a \emph{double rewrite} strategy. Then each estimator is unbiased for its respective causal estimand (ATT, ATU, ATE) and achieves \(\sqrt{n}\)-consistency.
-    \end{theorem}
-    
-    \begin{proof}[Proof of Theorem~\ref{thm:unbiased_rate_consistent}]
-    We focus on \(\hat{\tau}_{\text{ATT}}\).  The same argument applies to \(\hat{\tau}_{\text{ATU}}\) by symmetry, and \(\hat{\tau}_{\text{ATE}}\) follows by a convex combination.
-    
-    \bigskip
-    \textbf{1. Construction of \(\hat{\tau}_{\text{ATT}}\).}
-    Among the \(n\) samples, let
-    \[
-    \{(x^i, y^{ij}): w^i = 1\}
-    \]
-    be all pairs that \emph{originally} have \(W=1\).  There are \(n_1\) such pairs.  For each such pair, we do:
-    \begin{enumerate}
-    \item Rewrite to force \(W=0\):
-    \[
-    \tilde{y}^{i}_{0} 
-    \;=\; 
-    \text{Re}\!\bigl(x^i,\;y^{ij},\;0\bigr).
-    \]
-    \item Rewrite the result again to force \(W=1\):
-    \[
-    \tilde{y}^{i}_{0\to1}
-    \;=\;
-    \text{Re}\!\bigl(x^i,\;\tilde{y}^{i}_{0},\;1\bigr).
-    \]
-    \item Compare the reward difference:
-    \[
-    \Delta^{\,i}
-    \;=\;
-    R\bigl(x^i,\;\tilde{y}^{i}_{0\to1}\bigr)
-    \;-\;
-    R\bigl(x^i,\;\tilde{y}^{i}_{0}\bigr).
-    \]
-    \end{enumerate}
-    Then:
-    \[
-    \hat{\tau}_{\text{ATT}}
-    \;=\;
-    \frac{1}{n_1}\sum_{i: w^i=1} 
-    \Delta^{\,i}.
-    \]
-    
-    \bigskip
-    \textbf{2. Latent Variable Representation.}
-    Since $y^{ij}$ is a realization of $Y(W,Z,\Xi)$ with $w^i=1$, we have some $(z^i,\xi^i)$ such that
-    \[
-    y^{ij} \;=\; Y\!\bigl(1,\;z^i,\;\xi^i\bigr).
-    \]
-    By assumption (A2),
-    \[
-    \tilde{y}^{i}_{0} \;=\; \text{Re}\!\bigl(x^i,\;y^{ij},\;0\bigr) \;\stackrel{d}{=}\; Y\bigl(0,\;z^i,\;\widetilde{\Xi}^i\bigr),
-    \]
-    where $\widetilde{\Xi}^i \sim \mathbb{P}_{\mathrm{Re}}$. Similarly,
-    \[
-    \tilde{y}^{i}_{0\to1} \;=\; \text{Re}\!\bigl(x^i,\;\tilde{y}^{i}_{0},\;1\bigr) \;\stackrel{d}{=}\; Y\bigl(1,\;z^i,\;\widetilde{\widetilde{\Xi}}^i\bigr),
-    \]
-    with $\widetilde{\widetilde{\Xi}}^i\sim \mathbb{P}_{\mathrm{Re}}$ i.i.d.\ from the same distribution. Hence
-    \[
-    \Delta^{\,i} = R\!\Bigl(x^i,\;Y\!\bigl(1,\;z^i,\;\widetilde{\widetilde{\Xi}}^i\bigr)\Bigr) \;-\; R\!\Bigl(x^i,\;Y\!\bigl(0,\;z^i,\;\widetilde{\Xi}^i\bigr)\Bigr).
-    \]
-    
-    \textbf{3. Unbiasedness for One Sample.}
-    Consider the expectation $\mathbb{E}[\Delta^i]$ conditioning on the pair's $(x^i,z^i,\xi^i)$ (which define the original sample). By assumption (A1), we write:
-    \[
-    R\!\bigl(x,\;Y(w,z,\xi)\bigr) \;=\; R_{W,Z}(x,\,w,\,z) \;+\; R_{\Xi}(x,\,\xi).
-    \]
-    Thus,
-    \[
-    R\!\Bigl(x,\;Y\!\bigl(1,\;z,\;\widetilde{\widetilde{\Xi}}\bigr)\Bigr) \;-\; R\!\Bigl(x,\;Y\!\bigl(0,\;z,\;\widetilde{\Xi}\bigr)\Bigr)
-    =
-    \Bigl[R_{W,Z}(x,\,1,\,z) + R_{\Xi}(x,\,\widetilde{\widetilde{\Xi}})\Bigr] - \Bigl[R_{W,Z}(x,\,0,\,z) + R_{\Xi}(x,\,\widetilde{\Xi})\Bigr].
-    \]
-    Taking the expectation over $\widetilde{\Xi}, \widetilde{\widetilde{\Xi}}\sim \mathbb{P}_{\mathrm{Re}}$:
-    \[
-    \mathbb{E}_{\widetilde{\Xi},\widetilde{\widetilde{\Xi}}}\bigl[\Delta^i\bigr]
-    =
-    \Bigl[R_{W,Z}(x,\,1,\,z) - R_{W,Z}(x,\,0,\,z)\Bigr] \;+\; \Bigl[\mathbb{E}\!\bigl[R_{\Xi}(x,\widetilde{\widetilde{\Xi}})\bigr] - \mathbb{E}\!\bigl[R_{\Xi}(x,\widetilde{\Xi})\bigr]\Bigr].
-    \]
-    
-    \bigskip
-    \textbf{3. Unbiasedness for One Sample.}
-    Consider the expectation \(\mathbb{E}[\Delta^i]\) conditioning on the pair’s \((x^i,z^i,\xi^i)\) (which define the original sample). By assumption (A1), we write:
-    \[
-    R\!\bigl(x,\;Y(w,z,\xi)\bigr)
-    \;=\;
-    R_{W,Z}(x,\,w,\,z)
-    \;+\;
-    R_{\Xi}(x,\,\xi).
-    \]
-    Thus,
-    \[
-    R\!\Bigl(x,\;Y\!\bigl(1,\;z,\;\widetilde{\widetilde{\Xi}}\bigr)\Bigr)
-    \;-\;
-    R\!\Bigl(x,\;Y\!\bigl(0,\;z,\;\widetilde{\Xi}\bigr)\Bigr)
-    =
-    \Bigl[R_{W,Z}(x,\,1,\,z) + R_{\Xi}(x,\,\widetilde{\widetilde{\Xi}})\Bigr]
-    -
-    \Bigl[R_{W,Z}(x,\,0,\,z) + R_{\Xi}(x,\,\widetilde{\Xi})\Bigr].
-    \]
-    Taking the expectation over \(\widetilde{\Xi}, \widetilde{\widetilde{\Xi}}\sim \mathbb{P}_{\mathrm{Re}}\):
-    \[
-    \mathbb{E}_{\widetilde{\Xi},\widetilde{\widetilde{\Xi}}}\bigl[\Delta^i\bigr]
-    =
-    \Bigl[
-    R_{W,Z}(x,\,1,\,z) - R_{W,Z}(x,\,0,\,z)
-    \Bigr]
-    \;+\;
-    \Bigl[
-    \mathbb{E}\!\bigl[R_{\Xi}(x,\widetilde{\widetilde{\Xi}})\bigr]
-    - 
-    \mathbb{E}\!\bigl[R_{\Xi}(x,\widetilde{\Xi})\bigr]
-    \Bigr].
-    \]
-    Since both \(\widetilde{\Xi}\) and \(\widetilde{\widetilde{\Xi}}\) have the same distribution \(\mathbb{P}_{\mathrm{Re}}\), the second bracket is zero. Consequently,
-    \[
-    \mathbb{E}\bigl[\Delta^i \,\big|\,(x,z)\bigr]
-    =
-    R_{W,Z}(x,\,1,\,z) \;-\; R_{W,Z}(x,\,0,\,z)
-    =
-    R\!\bigl(x,\;Y(1,z,\xi)\bigr) \;-\; R\!\bigl(x,\;Y(0,z,\xi)\bigr),
-    \]
-    where \(\xi\) is the original (unobserved) \(\Xi\). This difference precisely matches
-    \[
-    R(x,\,Y(1)) - R(x,\,Y(0))
-    \quad
-    \text{(holding everything else fixed)},
-    \]
-    which defines the per-sample causal contrast from \(W=0\) to \(W=1\). 
-    
-    \bigskip
-    \textbf{4. Summation and \(\hat{\tau}_{\text{ATT}}\).}
-    By linearity of expectation,
-    \[
-    \mathbb{E}\bigl[\hat{\tau}_{\text{ATT}}\bigr]
-    =
-    \frac{1}{n_1}\sum_{i: w^i=1}
-    \mathbb{E}\bigl[\Delta^{\,i}\bigr]
-    =
-    \mathbb{E}\Bigl[
-    R(X,\,Y(1)) - R(X,\,Y(0)) \;\big|\; W=1
-    \Bigr].
-    \]
-    Hence \(\hat{\tau}_{\text{ATT}}\) is an unbiased estimator for \(\text{ATT}\).
-    
-    \bigskip
-    \textbf{5. $\sqrt{n_1}$-Consistency.}
+\noindent
+\textbf{Notation and Setup.}  
+We consider $n$ i.i.d.\ samples $\{(x^i, y^{ij}, w^i)\}_{i=1}^n$, where each $(x^i, y^{ij}, w^i)$ is a realization of the random variables $(X, Y, W)$. Here:
+\begin{itemize}
+    \item $X$ is a \emph{prompt}, taking values $x$
+    \item $Y$ is a \emph{response}, taking values $y$
+    \item $W \in \{0,1\}$ is a binary attribute, taking values $w$
+\end{itemize}
+We also use auxiliary latent variables $(Z, \Xi)$ such that $Y$ can be decomposed into $Y = Y(W, Z, \Xi)$. The variable $Z$ represents any off-target attributes that remain \emph{invariant} when rewriting $Y$, while $\Xi$ represents the off-target attributes that \emph{may} change. For each observed sample $(x^i, y^{ij}, w^i)$, we view $(z^i,\xi^i)$ as the realization of $(Z, \Xi)$.
+
+\bigskip
+
+\noindent
+\textbf{Rewrite Operator.}
+We define a function
+\[
+\text{Re}\bigl(x,\;y,\;w_{\text{new}}\bigr)
+\]
+that takes an observed prompt \(x\), an observed text \(y\), and forces the text’s attribute to be \(w_{\text{new}}\in\{0,1\}\), attempting to preserve all other aspects (e.g.\ topic, language). The output \(\text{Re}(x,y,w_{\text{new}})\) is a new observed text, say \(\tilde{y}\), that ideally differs from \(y\) \emph{only} in flipping the attribute to \(w_{\text{new}}\).
+
+\bigskip
+
+\begin{theorem}[Unbiasedness and \(\sqrt{n}\)-Consistency of RATE---Consistent Notation]
+\label{thm:unbiased_rate_consistent}
+Let \((X, Y, W)\) be random variables taking values in \((x, y, w)\), and suppose there exist latent variables \((Z, \Xi)\) such that
+\[
+Y \;=\; Y\bigl(W,\,Z,\,\Xi\bigr).
+\]
+Assume the reward function \(R(X,Y)\) satisfies:
+
+\begin{enumerate}
+\item[\textbf{(A1)}] \textbf{Additive Decomposition}: 
+\[
+R\bigl(X,\;Y(W,\,Z,\,\Xi)\bigr)
+\;=\;
+R_{W,Z}\bigl(X,\,W,\,Z\bigr)
+\;+\;
+R_{\Xi}\bigl(X,\,\Xi\bigr),
+\]
+where \(R_{W,Z}\) depends on \((W,Z)\) but not \(\Xi\), and \(R_\Xi\) depends on \(\Xi\) but not \((W,Z)\).
+
+\item[\textbf{(A2)}] \textbf{Rewrite Distribution Consistency}: For each observed pair \((x,y)\) with latent \((w,z,\xi)\),  
+\[
+\text{Re}\bigl(x,\;y,\;w_{\text{new}}\bigr)
+\;\;\stackrel{d}{=}\;\;
+Y\bigl(w_{\text{new}},\,z,\,\widetilde{\Xi}\bigr),
+\]
+where \(\widetilde{\Xi}\sim \mathbb{P}_{\mathrm{Re}}\) is drawn independently of \((W,Z)\).  That is, rewriting randomly re-samples the ``mutable'' off-target attributes \(\Xi\) from a distribution \(\mathbb{P}_{\mathrm{Re}}\), but does not depend on the original \(w\) or \(z\).
+
+\item[\textbf{(A3)}] \textbf{Boundedness}: There is a universal constant \(M<\infty\) such that \(\bigl|R(x,y)\bigr|\le M\) for all \((x,y)\).
+\end{enumerate}
+
+Define the Rewrite-based Attribute Treatment Estimators \(\hat{\tau}_{\text{ATT}}\), \(\hat{\tau}_{\text{ATU}}\), and \(\hat{\tau}_{\text{ATE}}\) as in \Cref{alg:rate}, using a \emph{double rewrite} strategy. Then each estimator is unbiased for its respective causal estimand (ATT, ATU, ATE) and achieves \(\sqrt{n}\)-consistency.
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:unbiased_rate_consistent}]
+We focus on \(\hat{\tau}_{\text{ATT}}\).  The same argument applies to \(\hat{\tau}_{\text{ATU}}\) by symmetry, and \(\hat{\tau}_{\text{ATE}}\) follows by a convex combination.
+
+\bigskip
+\textbf{1. Construction of \(\hat{\tau}_{\text{ATT}}\).}
+Among the \(n\) samples, let
+\[
+\{(x^i, y^{ij}): w^i = 1\}
+\]
+be all pairs that \emph{originally} have \(W=1\).  There are \(n_1\) such pairs.  For each such pair, we do:
+\begin{enumerate}
+\item Rewrite to force \(W=0\):
+\[
+\tilde{y}^{i}_{0} 
+\;=\; 
+\text{Re}\!\bigl(x^i,\;y^{ij},\;0\bigr).
+\]
+\item Rewrite the result again to force \(W=1\):
+\[
+\tilde{y}^{i}_{0\to1}
+\;=\;
+\text{Re}\!\bigl(x^i,\;\tilde{y}^{i}_{0},\;1\bigr).
+\]
+\item Compare the reward difference:
+\[
+\Delta^{\,i}
+\;=\;
+R\bigl(x^i,\;\tilde{y}^{i}_{0\to1}\bigr)
+\;-\;
+R\bigl(x^i,\;\tilde{y}^{i}_{0}\bigr).
+\]
+\end{enumerate}
+Then:
+\[
+\hat{\tau}_{\text{ATT}}
+\;=\;
+\frac{1}{n_1}\sum_{i: w^i=1} 
+\Delta^{\,i}.
+\]
+
+\bigskip
+\textbf{2. Latent Variable Representation.}
+Since $y^{ij}$ is a realization of $Y(W,Z,\Xi)$ with $w^i=1$, we have some $(z^i,\xi^i)$ such that
+\[
+y^{ij} \;=\; Y\!\bigl(1,\;z^i,\;\xi^i\bigr).
+\]
+By assumption (A2),
+\[
+\tilde{y}^{i}_{0} \;=\; \text{Re}\!\bigl(x^i,\;y^{ij},\;0\bigr) \;\stackrel{d}{=}\; Y\bigl(0,\;z^i,\;\widetilde{\Xi}^i\bigr),
+\]
+where $\widetilde{\Xi}^i \sim \mathbb{P}_{\mathrm{Re}}$. Similarly,
+\[
+\tilde{y}^{i}_{0\to1} \;=\; \text{Re}\!\bigl(x^i,\;\tilde{y}^{i}_{0},\;1\bigr) \;\stackrel{d}{=}\; Y\bigl(1,\;z^i,\;\widetilde{\widetilde{\Xi}}^i\bigr),
+\]
+with $\widetilde{\widetilde{\Xi}}^i\sim \mathbb{P}_{\mathrm{Re}}$ i.i.d.\ from the same distribution. Hence
+\[
+\Delta^{\,i} = R\!\Bigl(x^i,\;Y\!\bigl(1,\;z^i,\;\widetilde{\widetilde{\Xi}}^i\bigr)\Bigr) \;-\; R\!\Bigl(x^i,\;Y\!\bigl(0,\;z^i,\;\widetilde{\Xi}^i\bigr)\Bigr).
+\]
+
+\bigskip
+\textbf{3. Unbiasedness for One Sample.}
+Consider the expectation \(\mathbb{E}[\Delta^i]\) conditioning on the pair’s \((x^i,z^i,\xi^i)\) (which define the original sample). By assumption (A1), we write:
+\[
+R\!\bigl(x,\;Y(w,z,\xi)\bigr)
+\;=\;
+R_{W,Z}(x,\,w,\,z)
+\;+\;
+R_{\Xi}(x,\,\xi).
+\]
+Thus,
+\[
+R\!\Bigl(x,\;Y\!\bigl(1,\;z,\;\widetilde{\widetilde{\Xi}}\bigr)\Bigr)
+\;-\;
+R\!\Bigl(x,\;Y\!\bigl(0,\;z,\;\widetilde{\Xi}\bigr)\Bigr)
+=
+\Bigl[R_{W,Z}(x,\,1,\,z) + R_{\Xi}(x,\,\widetilde{\widetilde{\Xi}})\Bigr]
+-
+\Bigl[R_{W,Z}(x,\,0,\,z) + R_{\Xi}(x,\,\widetilde{\Xi})\Bigr].
+\]
+Taking the expectation over \(\widetilde{\Xi}, \widetilde{\widetilde{\Xi}}\sim \mathbb{P}_{\mathrm{Re}}\):
+\[
+\mathbb{E}_{\widetilde{\Xi},\widetilde{\widetilde{\Xi}}}\bigl[\Delta^i\bigr]
+=
+\Bigl[
+R_{W,Z}(x,\,1,\,z) - R_{W,Z}(x,\,0,\,z)
+\Bigr]
+\;+\;
+\Bigl[
+\mathbb{E}\!\bigl[R_{\Xi}(x,\widetilde{\widetilde{\Xi}})\bigr]
+- 
+\mathbb{E}\!\bigl[R_{\Xi}(x,\widetilde{\Xi})\bigr]
+\Bigr].
+\]
+Since both \(\widetilde{\Xi}\) and \(\widetilde{\widetilde{\Xi}}\) have the same distribution \(\mathbb{P}_{\mathrm{Re}}\), the second bracket is zero. Consequently,
+\[
+\mathbb{E}\bigl[\Delta^i \,\big|\,(x,z)\bigr]
+=
+R_{W,Z}(x,\,1,\,z) \;-\; R_{W,Z}(x,\,0,\,z)
+=
+R\!\bigl(x,\;Y(1,z,\xi)\bigr) \;-\; R\!\bigl(x,\;Y(0,z,\xi)\bigr),
+\]
+where \(\xi\) is the original (unobserved) \(\Xi\). This difference precisely matches
+\[
+R(x,\,Y(1)) - R(x,\,Y(0))
+\quad
+\text{(holding everything else fixed)},
+\]
+which defines the per-sample causal contrast from \(W=0\) to \(W=1\). 
+
+\bigskip
+\textbf{4. Summation and \(\hat{\tau}_{\text{ATT}}\).}
+By linearity of expectation,
+\[
+\mathbb{E}\bigl[\hat{\tau}_{\text{ATT}}\bigr]
+=
+\frac{1}{n_1}\sum_{i: w^i=1}
+\mathbb{E}\bigl[\Delta^{\,i}\bigr]
+=
+\mathbb{E}\Bigl[
+R(X,\,Y(1)) - R(X,\,Y(0)) \;\big|\; W=1
+\Bigr].
+\]
+Hence \(\hat{\tau}_{\text{ATT}}\) is an unbiased estimator for \(\text{ATT}\).
+
+\bigskip
+\textbf{5. $\sqrt{n_1}$-Consistency.}
 Define 
 \[
 \delta^i \;=\; R\bigl(x^i,\;\tilde{y}^{i}_{0\to1}\bigr) \;-\; R\bigl(x^i,\;\tilde{y}^{i}_{0}\bigr), \quad \text{for each }i\text{ with }w^i=1.

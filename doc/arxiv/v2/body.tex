@@ -219,15 +219,14 @@ Under these assumptions, we have:
 
 \begin{restatable}[Unbiasedness and Consistency]{theorem}{mainthm}
 \label{thm:mainthm}
-Let $R(X,\,Y(W,Z,\xi)) = R_{W,Z}(X,W,Z) + R_{\xi}(X,\xi)$ and
-\(
-\text{Re}\bigl(X, Y(W,Z,\xi)\bigr) \,\stackrel{d}{=}\, Y\bigl(W,Z,\tilde{\xi}\bigr)
-\)
-where
-\(
-\tilde{\xi} \sim \mathbb{P}_{\mathrm{Re}}
-\).
-Assuming $R$ is bounded, the RATE estimators in \Cref{alg:rate} are unbiased and $\sqrt{n}$-consistent estimators of the ATT, ATU, and ATE.
+Let $R(X, Y(W,Z,\xi)) = R_{W, Z}(X, W, Z) + R_{\xi}(X, \xi)$ and $\text{Re}(Y(W, Z, \xi), 1 - W) \equaldist Y(1 - W, Z, \tilde{\xi})$ where $\tilde{\xi} \dist P_\text{Re}(\tilde{\xi})$. Also assume $R(\cdot, \cdot)$ is bounded. Suppose we have a set of prompt-completion pairs $\{x^i, y^{ij}\}$ sampled i.i.d., with $P(W=1) \in (0, 1)$.
+  Then the RATE estimators, defined as:
+  \begin{align*}
+  \widehat{\text{ATT}}_{\text{RATE}} &= \frac{1}{n_1} \sum_{(i, j): w^{ij} = 1} [R(x^i, \text{Re}(\text{Re}(y^{ij}, 0), 1)) - R(x^i, \text{Re}(y^{ij}, 0))] \\
+  \widehat{\text{ATU}}_{\text{RATE}} &= \frac{1}{n_0} \sum_{(i,j): w^{ij} = 0} [R(x^i, \text{Re}(y^{ij}, 1)) - R(x^i, \text{Re}(\text{Re}(y^{ij}, 1), 0))] \\
+  \widehat{\text{ATE}}_{\text{RATE}} &= \frac{n_1}{n_0 + n_1} \widehat{\text{ATT}}_{\text{RATE}} + \frac{n_0}{n_0 + n_1} \widehat{\text{ATU}}_{\text{RATE}}
+\end{align*}
+where $n_1$ and $n_0$ are the number of pairs with observed $W = 1$ and $W = 0$ respectively, are unbiased and $\sqrt{n}$-consistent estimators of the ATT, ATU, and ATE.
 \end{restatable}
 
 See \Cref{sec:proofs} for a complete proof.
@@ -326,219 +325,62 @@ Overall, RATE paves the way for more causally rigorous auditing of reward models
 \appendix
 \section{Proof of Main Theorem}
 \label{sec:proofs}
-\noindent
-\textbf{Notation and Setup.}
-We consider $n$ i.i.d.\ samples $\{(x^i, y^{ij}, w^i)\}_{i=1}^n$, where each $(x^i, y^{ij}, w^i)$ is a realization of the random variables $(X, Y, W)$. Here:
-\begin{itemize}
-    \item $X$ is a \emph{prompt}, taking values $x$
-    \item $Y$ is a \emph{response}, taking values $y$
-    \item $W \in \{0,1\}$ is a binary attribute, taking values $w$
-\end{itemize}
-We also use auxiliary latent variables $(Z, \xi)$ such that $Y$ can be decomposed into $Y = Y(W, Z, \xi)$. The variable $Z$ represents any off-target attributes that remain \emph{invariant} when rewriting $Y$, while $\xi$ represents the off-target attributes that \emph{may} change. For each observed sample $(x^i, y^{ij}, w^i)$, we view $(z^i,v^i)$ as the realization of $(Z, \xi)$.
-
-\bigskip
-
-\noindent
-\textbf{Rewrite Operator.}
-We define a function
-\[
-\text{Re}\bigl(x,\;y,\;w_{\text{new}}\bigr)
-\]
-that takes an observed prompt \(x\), an observed text \(y\), and forces the text’s attribute to be \(w_{\text{new}}\in\{0,1\}\), attempting to preserve all other aspects (e.g.\ topic, language). The output \(\text{Re}(x,y,w_{\text{new}})\) is a new observed text, say \(\tilde{y}\), that ideally differs from \(y\) \emph{only} in flipping the attribute to \(w_{\text{new}}\).
-
-\bigskip
-
 \begin{theorem}[Unbiasedness and \(\sqrt{n}\)-Consistency of RATE---Consistent Notation]
 \label{thm:unbiased_rate_consistent}
-Let \((X, Y, W)\) be random variables taking values in \((x, y, w)\), and suppose there exist latent variables \((Z, \xi)\) such that
-\[
-Y \;=\; Y\bigl(W,\,Z,\,\xi\bigr).
-\]
-Assume the reward function \(R(X,Y)\) satisfies:
-
-\begin{enumerate}
-\item[\textbf{(A1)}] \textbf{Additive Decomposition}:
-\[
-R\bigl(X,\;Y(W,\,Z,\,\xi)\bigr)
-\;=\;
-R_{W,Z}\bigl(X,\,W,\,Z\bigr)
-\;+\;
-R_{\xi}\bigl(X,\,\xi\bigr),
-\]
-where \(R_{W,Z}\) depends on \((W,Z)\) but not \(\xi\), and \(R_\xi\) depends on \(\xi\) but not \((W,Z)\).
-
-\item[\textbf{(A2)}] \textbf{Rewrite Distribution}: For each observed pair \((x,y)\) with latent \((w,z,v)\),
-\[
-\text{Re}\bigl(x,\;y,\;w_{\text{new}}\bigr)
-\;\;\stackrel{d}{=}\;\;
-Y\bigl(w_{\text{new}},\,z,\,\widetilde{\xi}\bigr),
-\]
-where \(\widetilde{\xi}\sim \mathbb{P}_{\mathrm{Re}}\) is drawn independently of \((W,Z)\).  That is, rewriting randomly re-samples the ``mutable'' off-target attributes \(\xi\) from a distribution \(\mathbb{P}_{\mathrm{Re}}\), but does not depend on the original \(w\) or \(z\).
-
-\item[\textbf{(A3)}] \textbf{Boundedness}: There is a universal constant \(M<\infty\) such that \(\bigl|R(x,y)\bigr|\le M\) for all \((x,y)\).
-\end{enumerate}
-
-Define the Rewrite-based Attribute Treatment Estimators \(\widehat{\text{ATT}}_{\text{RATE}}\), \(\widehat{\text{ATU}}_{\text{RATE}}\), and \(\widehat{\text{ATE}}_{\text{RATE}}\) as in \Cref{alg:rate}, using a \emph{double rewrite} strategy. Then each estimator is unbiased for its respective causal estimand (ATT, ATU, ATE) and achieves \(\sqrt{n}\)-consistency.
+Let $R(X, Y(W,Z,\xi)) = R_{W, Z}(X, W, Z) + R_{\xi}(X, \xi)$ and $\text{Re}(Y(W, Z, \xi), 1 - W) \equaldist Y(1 - W, Z, \tilde{\xi})$ where $\tilde{\xi} \dist P_\text{Re}(\tilde{\xi})$. Also assume $R(\cdot, \cdot)$ is bounded. Suppose we have a set of prompt-completion pairs $\{x^i, y^{ij}\}$ sampled i.i.d., with $P(W=1) \in (0, 1)$.
+Then the RATE estimators, defined as:
+\begin{align*}
+\widehat{\text{ATT}}_{\text{RATE}} &= \frac{1}{n_1} \sum_{(i, j): w^{ij} = 1} [R(x^i, \text{Re}(\text{Re}(y^{ij}, 0), 1)) - R(x^i, \text{Re}(y^{ij}, 0))] \\
+\widehat{\text{ATU}}_{\text{RATE}} &= \frac{1}{n_0} \sum_{(i,j): w^{ij} = 0} [R(x^i, \text{Re}(y^{ij}, 1)) - R(x^i, \text{Re}(\text{Re}(y^{ij}, 1), 0))] \\
+\widehat{\text{ATE}}_{\text{RATE}} &= \frac{n_1}{n_0 + n_1} \widehat{\text{ATT}}_{\text{RATE}} + \frac{n_0}{n_0 + n_1} \widehat{\text{ATU}}_{\text{RATE}}
+\end{align*}
+where $n_1$ and $n_0$ are the number of pairs with observed $W = 1$ and $W = 0$ respectively, are unbiased and $\sqrt{n}$-consistent estimators of the ATT, ATU, and ATE.
 \end{theorem}
 
 \begin{proof}[Proof of Theorem~\ref{thm:unbiased_rate_consistent}]
-We focus on \(\widehat{\text{ATT}}_{\text{RATE}}\).  The same argument applies to \(\widehat{\text{ATU}}_{\text{RATE}}\) by symmetry, and \(\widehat{\text{ATE}}_{\text{RATE}}\) follows by a convex combination.
+    First, we'll prove the unbiasedness and $\sqrt{n}$-consistency of $\widehat{\text{ATT}}_{\text{RATE}}$. The argument for $\widehat{\text{ATU}}_{\text{RATE}}$ follows by symmetry. Then, we can use these results to prove the same for $\widehat{\text{ATE}}_{\text{RATE}}$. Throughout, we use $\tilde{\xi}$ and $\tilde{\tilde{\xi}}$ to denote i.i.d. samples from the distribution $P_{\text{Re}}$, where the former comes from the first rewrite and the latter from the rewrite of the rewrite.
 
-\bigskip
-\textbf{1. Construction of \(\widehat{\text{ATT}}_{\text{RATE}}\).}
-Among the \(n\) samples, let
-\[
-\{(x^i, y^{ij}): w^i = 1\}
-\]
-be all pairs that \emph{originally} have \(W=1\).  There are \(n_1\) such pairs.  For each such pair, we do:
-\begin{enumerate}
-\item Rewrite to force \(W=0\):
-\[
-\tilde{y}^{i}_{0}
-\;=\;
-\text{Re}\!\bigl(x^i,\;y^{ij},\;0\bigr).
-\]
-\item Rewrite the result again to force \(W=1\):
-\[
-\tilde{y}^{i}_{0\to1}
-\;=\;
-\text{Re}\!\bigl(x^i,\;\tilde{y}^{i}_{0},\;1\bigr).
-\]
-\item Compare the reward difference:
-\[
-\delta^{\,i}
-\;=\;
-R\bigl(x^i,\;\tilde{y}^{i}_{0\to1}\bigr)
-\;-\;
-R\bigl(x^i,\;\tilde{y}^{i}_{0}\bigr).
-\]
-\end{enumerate}
-Then:
-\[
-\widehat{\text{ATT}}_{\text{RATE}}
-\;=\;
-\frac{1}{n_1}\sum_{i: w^i=1}
-\delta^{\,i}.
-\]
+    \textbf{1. Unbiasedness and $\sqrt{n}$-Consistency of $\widehat{\text{ATT}}_{\text{RATE}}$}
+    Fix a prompt $x$ and response $y$ with $w = 1$, omitting superscripts for convenience. Then by our latent variable model, $y = Y(1, z, v)$ for some realizations $z$ and $v$ of $Z$ and $\xi$. We calculate:
+    \[R(x, \text{Re}(\text{Re}(y, 0), 1)) - R(x, \text{Re}(y, 0))\]
+    which has expected value:
+    \begin{align*}
+    \EE_{\tilde{\xi}, \tilde{\tilde{\xi}} \sim P_{\text{Re}}}[R(x, y(1, z, \tilde{\tilde{\xi}})) - R(x, y(0, z, \tilde{\xi}))]
+    &= \EE_{\tilde{\xi}, \tilde{\tilde{\xi}} \sim P_{\text{Re}}}[R_{W,Z}(x, 1, z) + R_\xi(x, \tilde{\tilde{\xi}})] \\ &- \EE_{\tilde{\xi}, \tilde{\tilde{\xi}} \sim P_{\text{Re}}}[R_{W,Z}(x, 0, z) + R_\xi(x, \tilde{\xi})] \\
+    &= R_{W,Z}(x, 1, z) - R_{W,Z}(x, 0, z) \\
+    &= R_{W,Z}(x, 1, z) - R_{W,Z}(x, 0, z) \\ &+ R_\xi(x, v) - R_\xi(x, v) \\
+    &= R(x, y(1, z, v)) - R(x, y(0, z, v)) \\
+    &= R(x, y(1)) - R(x, y(0))
+    \end{align*}
+    Therefore, as an average over these quantities, we have:
+    \[\EE[\widehat{\text{ATT}}_{\text{RATE}}] = \EE[R(X, Y(1)) - R(X, Y(0)) | W = 1] = \text{ATT}\]
+    For $\sqrt{n}$-consistency, note that $R(\cdot, \cdot)$ is bounded, so its variance is bounded. As the ${x^i, y^{ij}}$ are i.i.d., so are the $R(x^i, y^{ij})$. Thus, $\widehat{\text{ATT}}_{\text{RATE}}$ is an average over $n_1$ i.i.d. random variables with finite variance, implying:
+    \[\sqrt{n_1}(\widehat{\text{ATT}}_{\text{RATE}} - \text{ATT}) = O_p(1)\]
+    Since $\frac{n_1}{n} \xrightarrow{p} P(W=1)$ and $P(W=1) \in (0,1)$, we have $\sqrt{\frac{n}{n_1}} = O_p(1)$, which implies:
+    \[\sqrt{n}(\widehat{\text{ATT}}_{\text{RATE}} - \text{ATT}) = O_p(1)\]
 
-\bigskip
-\textbf{2. Latent Variable Representation.}
-Since $y^{ij}$ is a realization of $Y(W,Z,\xi)$ with $w^i=1$, we have some $(z^i,v^i)$ such that
-\[
-y^{ij} \;=\; Y\!\bigl(1,\;z^i,\;v^i\bigr).
-\]
-By assumption (A2),
-\[
-\tilde{y}^{i}_{0} \;=\; \text{Re}\!\bigl(x^i,\;y^{ij},\;0\bigr) \;\stackrel{d}{=}\; Y\bigl(0,\;z^i,\;\widetilde{\xi}^i\bigr),
-\]
-where $\widetilde{\xi}^i \sim \mathbb{P}_{\mathrm{Re}}$. Similarly,
-\[
-\tilde{y}^{i}_{0\to1} \;=\; \text{Re}\!\bigl(x^i,\;\tilde{y}^{i}_{0},\;1\bigr) \;\stackrel{d}{=}\; Y\bigl(1,\;z^i,\;\widetilde{\widetilde{\xi}}^i\bigr),
-\]
-with $\widetilde{\widetilde{\xi}}^i\sim \mathbb{P}_{\mathrm{Re}}$ i.i.d.\ from the same distribution. Hence
-\[
-\delta^{\,i} = R\!\Bigl(x^i,\;Y\!\bigl(1,\;z^i,\;\widetilde{\widetilde{\xi}}^i\bigr)\Bigr) \;-\; R\!\Bigl(x^i,\;Y\!\bigl(0,\;z^i,\;\widetilde{\xi}^i\bigr)\Bigr).
-\]
+    \textbf{2. Unbiasedness and $\sqrt{n}$-Consistency of $\widehat{\text{ATU}}_{\text{RATE}}$}
+    By the same argument as for ATT and since $P(W=0) \in (0,1)$:
+    \[\EE[\widehat{\text{ATU}}_{\text{RATE}}] = \EE[R(X, Y(1)) - R(X, Y(0)) | W = 0] = \text{ATU}]\]
+    and
+    \[\sqrt{n}(\widehat{\text{ATU}}_{\text{RATE}} - \text{ATU}) = O_p(1)\]
 
-\bigskip
-\textbf{3. Unbiasedness for One Sample.}
-Consider the expectation \(\mathbb{E}[\delta^i]\) conditioning on the pair’s \((x^i,z^i,v^i)\) (which define the original sample). By assumption (A1), we write:
-\[
-R\!\bigl(x,\;Y(w,z,v)\bigr)
-\;=\;
-R_{W,Z}(x,\,w,\,z)
-\;+\;
-R_{\xi}(x,\,v).
-\]
-Thus,
-\[
-R\!\Bigl(x,\;Y\!\bigl(1,\;z,\;\widetilde{\widetilde{\xi}}\bigr)\Bigr)
-\;-\;
-R\!\Bigl(x,\;Y\!\bigl(0,\;z,\;\widetilde{\xi}\bigr)\Bigr)
-=
-\Bigl[R_{W,Z}(x,\,1,\,z) + R_{\xi}(x,\,\widetilde{\widetilde{\xi}})\Bigr]
--
-\Bigl[R_{W,Z}(x,\,0,\,z) + R_{\xi}(x,\,\widetilde{\xi})\Bigr].
-\]
-Taking the expectation over \(\widetilde{\xi}, \widetilde{\widetilde{\xi}}\sim \mathbb{P}_{\mathrm{Re}}\):
-\[
-\mathbb{E}_{\widetilde{\xi},\widetilde{\widetilde{\xi}}}\bigl[\delta^i\bigr]
-=
-\Bigl[
-R_{W,Z}(x,\,1,\,z) - R_{W,Z}(x,\,0,\,z)
-\Bigr]
-\;+\;
-\Bigl[
-\mathbb{E}\!\bigl[R_{\xi}(x,\widetilde{\widetilde{\xi}})\bigr]
--
-\mathbb{E}\!\bigl[R_{\xi}(x,\widetilde{\xi})\bigr]
-\Bigr].
-\]
-Since both \(\widetilde{\xi}\) and \(\widetilde{\widetilde{\xi}}\) have the same distribution \(\mathbb{P}_{\mathrm{Re}}\), the second bracket is zero. Consequently,
-\[
-\mathbb{E}\bigl[\delta^i \,\big|\,(x,z)\bigr]
-=
-R_{W,Z}(x,\,1,\,z) \;-\; R_{W,Z}(x,\,0,\,z)
-=
-R\!\bigl(x,\;Y(1,z,v)\bigr) \;-\; R\!\bigl(x,\;Y(0,z,v)\bigr),
-\]
-where \(v\) is the original (unobserved) \(\xi\). This difference precisely matches
-\[
-R(x,\,Y(1)) - R(x,\,Y(0))
-\quad
-\text{(holding everything else fixed)},
-\]
-which defines the per-sample causal contrast from \(W=0\) to \(W=1\).
-
-\bigskip
-\textbf{4. Summation and \(\widehat{\text{ATT}}_{\text{RATE}}\).}
-By linearity of expectation,
-\[
-\mathbb{E}\bigl[\widehat{\text{ATT}}_{\text{RATE}}\bigr]
-=
-\frac{1}{n_1}\sum_{i: w^i=1}
-\mathbb{E}\bigl[\delta^{\,i}\bigr]
-=
-\mathbb{E}\Bigl[
-R(X,\,Y(1)) - R(X,\,Y(0)) \;\big|\; W=1
-\Bigr].
-\]
-Hence \(\widehat{\text{ATT}}_{\text{RATE}}\) is an unbiased estimator for \(\text{ATT}\).
-
-\bigskip
-\textbf{5. $\sqrt{n_1}$-Consistency.}
-We defined
-\[
-\delta^i \;=\; R\bigl(x^i,\;\tilde{y}^{i}_{0\to1}\bigr) \;-\; R\bigl(x^i,\;\tilde{y}^{i}_{0}\bigr), \quad \text{for each }i\text{ with }w^i=1.
-\]
-The $\delta^i$ are i.i.d.\ (given $w^i=1$), each bounded in magnitude by $2M$. Thus
-\[
-\mathrm{Var}(\delta^i) \;\le\; (2M)^2 \;=\; 4M^2.
-\]
-Hence
-\[
-\mathrm{Var}\bigl(\widehat{\text{ATT}}_{\text{RATE}}\bigr) = \mathrm{Var}\!\Bigl(\frac{1}{n_1}\sum_{i: w^i=1}\delta^i\Bigr) \;\;\le\;\; \frac{4M^2}{n_1}.
-\]
-Then by unbiasedness and Chebyshev's inequality, for any $\varepsilon>0$:
-\[
-\mathbb{P}\Bigl(\bigl|\widehat{\text{ATT}}_{\text{RATE}} - {\text{ATT}}\bigr|\;\ge\;\varepsilon\Bigr) \;\le\; \frac{\mathrm{Var}\!\bigl(\widehat{\text{ATT}}_{\text{RATE}}\bigr)}{\varepsilon^2}.
-\]
-Because the random variables $\{\delta^{i}\}$ are i.i.d.\ and each $\mathrm{Var}(\delta^{i})\le4M^2$, the variance of their average decreases as $1/n_1$. Consequently,
-\[
-\mathrm{Var}\bigl(\widehat{\text{ATT}}_{\text{RATE}}\bigr)\;=\;\mathcal{O}\!\bigl(1/n_1\bigr),
-\]
-and hence
-\[
-\sqrt{n_1}\,\bigl(\widehat{\text{ATT}}_{\text{RATE}} - {\text{ATT}}\bigr) \;=\; O_{p}(1),
-\]
-which establishes $\sqrt{n_1}$-consistency for $\widehat{\text{ATT}}_{\text{RATE}}$
-
-\textbf{6. ATT, ATU, and ATE.}
-A parallel argument covers $\widehat{\text{ATU}}_{\text{RATE}}$ (just flipping the role of $W=0$ and rewriting to $W=1$ and back to $W=0$). Finally,
-\[
-\widehat{\text{ATE}}_{\text{RATE}} = \frac{n_1}{n_1 + n_0}\,\widehat{\text{ATT}}_{\text{RATE}} \;+\; \frac{n_0}{n_1 + n_0}\,\widehat{\text{ATU}}_{\text{RATE}},
-\]
-so by the law of total expectation and Slutsky's theorem, $\widehat{\text{ATE}}_{\text{RATE}}$ is unbiased and $\sqrt{n}$-consistent.
+    \textbf{3. Unbiasedness and $\sqrt{n}$-Consistency of $\widehat{\text{ATE}}_{\text{RATE}}$}
+    The ATE estimator is a weighted average of the ATT and ATU estimators. By the law of total expectation:
+    \begin{align*}
+    \EE[\widehat{\text{ATE}}_{\text{RATE}}] &= \EE[R(X, Y(1)) - R(X, Y(0)) | W = 1] \cdot P(W = 1) \\
+    &+ \EE[R(X, Y(1)) - R(X, Y(0)) | W = 0] \cdot P(W = 0) \\
+    &= \EE[R(X, Y(1)) - R(X, Y(0))] = \text{ATE}
+    \end{align*}
+    For $\sqrt{n}$-consistency, we can write:
+    \begin{align*}
+    \sqrt{n}(\widehat{\text{ATE}}_{\text{RATE}} - \text{ATE}) &= \frac{n_1}{n}\sqrt{n}(\widehat{\text{ATT}}_{\text{RATE}} - \text{ATT}) + \frac{n_0}{n}\sqrt{n}(\widehat{\text{ATU}}_{\text{RATE}} - \text{ATU})
+    \end{align*}
+    Since:
+    \[\frac{n_1}{n} \xrightarrow{p} P(W=1), \frac{n_0}{n} \xrightarrow{p} P(W=0)\]
+    \[\sqrt{n}(\widehat{\text{ATT}}_{\text{RATE}} - \text{ATT}) = O_p(1), \sqrt{n}(\widehat{\text{ATU}}_{\text{RATE}} - \text{ATU}) = O_p(1)\]
+    By Slutsky's theorem:
+    \[\sqrt{n}(\widehat{\text{ATE}}_{\text{RATE}} - \text{ATE}) = O_p(1)\]
 \end{proof}
 
 % reference thesis.bib

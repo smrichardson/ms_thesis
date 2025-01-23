@@ -151,16 +151,16 @@ Reward models are typically implemented in two ways:
   \item \textbf{Contrastive:} $R(x, y_1, y_0)$ takes a prompt $x$ and two responses $y_1, y_0$, returning a scalar indicating which response is better (or by how much).
 \end{enumerate}
 
-Our derivations hold for both, but we focus on the pointwise version to keep notation simple. Let $\{(x^i, y^{ij})\}$ be a dataset of prompt-response pairs, with $R(x^i, y^{ij}) \in \mathbb{R}$.
+Our derivations hold for both, but we focus on the pointwise version to keep notation simple. Let $\{(x^i, y^{i})\}$ be a dataset of prompt-response pairs, with $R(x^i, y^{i}) \in \mathbb{R}$.
 
-We consider a binary attribute $W(x^i, y^{ij}) \in \{0,1\}$ (e.g., ``sentiment is positive'' or ``response is long'') that we hypothesize may affect the reward. For instance, in a user-query dataset, $W$ might indicate whether the response is helpful for that query.
+We consider a binary attribute $W(x^i, y^{i}) \in \{0,1\}$ (e.g., ``sentiment is positive'' or ``response is long'') that we hypothesize may affect the reward. For instance, in a user-query dataset, $W$ might indicate whether the response is helpful for that query.
 
 \subsection{Naive Estimation and Its Pitfall}
 An obvious approach to see if $W$ influences $R$ is to compare the average reward for $W=1$ vs. $W=0$:
 \[
 \hat{\tau}_{\text{naive}} 
-= \frac{1}{n_1}\sum_{i,j: w^{ij}=1} R(x^i, y^{ij})
-- \frac{1}{n_0}\sum_{i,j: w^{ij}=0} R(x^i, y^{ij}).
+= \frac{1}{n_1}\sum_{i,j: w^{i}=1} R(x^i, y^{i})
+- \frac{1}{n_0}\sum_{i,j: w^{i}=0} R(x^i, y^{i}).
 \]
 However, this fails to isolate the causal effect if $W$ is correlated with other confounding attributes. For example, if $W=1$ responses are systematically longer or more detailed in ways that also raise their reward, we cannot infer whether the reward model truly favors $W$ (versus favoring those other correlated attributes).
 
@@ -204,9 +204,9 @@ In contrast, a \emph{rewrite-based} approach such as \textbf{RATE} circumvents t
 \subsection{Rewrite Operations with LLMs}
 To approximate the counterfactual $Y(1)$ for a text that actually had $W=0$, we ask an LLM to \emph{rewrite} $y$ to have $W=1$ while leaving everything else the same. Denote:
 \[
-\text{Re}(x^i, y^{ij}, w_{\text{new}}) \quad\longrightarrow\quad \tilde{y}^{ij},
+\text{Re}(x^i, y^{i}, w_{\text{new}}) \quad\longrightarrow\quad \tilde{y}^{i},
 \]
-where $\tilde{y}^{ij}$ is the LLM-generated rewrite of $y^{ij}$ that attempts to enforce $W(\tilde{y}^{ij}) = w_{\text{new}}$ but otherwise preserve the rest of the text. An example instruction might be:  
+where $\tilde{y}^{i}$ is the LLM-generated rewrite of $y^{i}$ that attempts to enforce $W(\tilde{y}^{ij}) = w_{\text{new}}$ but otherwise preserve the rest of the text. An example instruction might be:  
 \begin{quote}
 ``Rewrite the following text to be more helpful, \textit{without} changing other aspects such as tone, sentiment, or factual content.''  
 \end{quote}
@@ -239,18 +239,18 @@ when the \emph{original} $y$ has $W=1$. Similarly, if $W=0$, we compare $R(\text
   \caption{RATE: Rewrite-based Attribute Treatment Estimators}
   \label{alg:rate}
   \begin{algorithmic}[1]
-  \State \textbf{Input:} Dataset $\{(x^i, y^{ij}, w^{ij})\}$, reward model $R$, rewrite function $\text{Re}$
+  \State \textbf{Input:} Dataset $\{(x^i, y^{i}, w^{i})\}$, reward model $R$, rewrite function $\text{Re}$
   \State \textbf{Return:} Estimates $\widehat{\text{ATT}}_{\text{RATE}}$, $\widehat{\text{ATU}}_{\text{RATE}}$, and $\widehat{\text{ATE}}_{\text{RATE}}$
-  \State \textbf{Compute:} $n_1 = \sum_{i,j} \mathbf{1}[w^{ij}=1], \quad n_0 = \sum_{i,j} \mathbf{1}[w^{ij}=0]$
-  \State \textbf{For all }(i,j): \textbf{obtain rewrites} $\text{Re}(x^i, y^{ij}, 0)$ if $w^{ij = 1}$ and $\text{Re}(x^i, y^{ij}, 1)$ if $w^{ij} = 0$
+  \State \textbf{Compute:} $n_1 = \sum_{i,j} \mathbf{1}[w^{i}=1], \quad n_0 = \sum_{i,j} \mathbf{1}[w^{i}=0]$
+  \State \textbf{For all }(i,j): \textbf{obtain rewrites} $\text{Re}(x^i, y^{i}, 0)$ if $w^{ij = 1}$ and $\text{Re}(x^i, y^{i}, 1)$ if $w^{i} = 0$
   \State \textbf{For all rewrites:} generate a rewrite-of-rewrite in the opposite direction
   \State \textbf{ATT:}
   \[
-    \widehat{\text{ATT}}_{\text{RATE}} = \frac{1}{n_1} \sum_{(i,j)\colon w^{ij}=1} \Bigl[\,R\bigl(x^i, \text{Re}(x^i, \text{Re}(x^i, y^{ij},0),1)\bigr) - R\bigl(x^i,\text{Re}(x^i, y^{ij},0)\bigr)\Bigr].
+    \widehat{\text{ATT}}_{\text{RATE}} = \frac{1}{n_1} \sum_{(i,j)\colon w^{i}=1} \Bigl[\,R\bigl(x^i, \text{Re}(x^i, \text{Re}(x^i, y^{i},0),1)\bigr) - R\bigl(x^i,\text{Re}(x^i, y^{i},0)\bigr)\Bigr].
   \]
   \State \textbf{ATU:}
   \[
-    \widehat{\text{ATU}}_{\text{RATE}} = \frac{1}{n_0} \sum_{(i,j)\colon w^{ij}=0} \Bigl[\,R\bigl(x^i, \text{Re}(x^i, y^{ij},1)\bigr) - R\bigl(x^i,\text{Re}(x^i, \text{Re}(x^i, y^{ij},1),0)\bigr)\Bigr].
+    \widehat{\text{ATU}}_{\text{RATE}} = \frac{1}{n_0} \sum_{(i,j)\colon w^{i}=0} \Bigl[\,R\bigl(x^i, \text{Re}(x^i, y^{i},1)\bigr) - R\bigl(x^i,\text{Re}(x^i, \text{Re}(x^i, y^{i},1),0)\bigr)\Bigr].
   \]
   \State \textbf{ATE: }
   \[
@@ -301,11 +301,11 @@ Under these assumptions, we have:
 
 \begin{restatable}[Unbiasedness and Consistency]{theorem}{mainthm}
 \label{thm:mainthm}
-Let $R(X, Y(W,Z,\xi)) = R_{W, Z}(X, W, Z) + R_{\xi}(X, \xi)$ and $\text{Re}(Y(W, Z, \xi), 1 - W) \equaldist Y(1 - W, Z, \tilde{\xi})$ where $\tilde{\xi} \dist P_\text{Re}(\tilde{\xi})$. Also assume $R(\cdot, \cdot)$ is bounded. Suppose we have a set of prompt-completion pairs $\{x^i, y^{ij}\}$ sampled i.i.d., with $P(W=1) \in (0, 1)$.
+Let $R(X, Y(W,Z,\xi)) = R_{W, Z}(X, W, Z) + R_{\xi}(X, \xi)$ and $\text{Re}(Y(W, Z, \xi), 1 - W) \equaldist Y(1 - W, Z, \tilde{\xi})$ where $\tilde{\xi} \dist P_\text{Re}(\tilde{\xi})$. Also assume $R(\cdot, \cdot)$ is bounded. Suppose we have a set of prompt-completion pairs $\{x^i, y^{i}\}$ sampled i.i.d., with $P(W=1) \in (0, 1)$.
   Then the RATE estimators, defined as:
   \begin{align*}
-  \widehat{\text{ATT}}_{\text{RATE}} &= \frac{1}{n_1} \sum_{(i, j): w^{ij} = 1} [R(x^i, \text{Re}(\text{Re}(y^{ij}, 0), 1)) - R(x^i, \text{Re}(y^{ij}, 0))] \\
-  \widehat{\text{ATU}}_{\text{RATE}} &= \frac{1}{n_0} \sum_{(i,j): w^{ij} = 0} [R(x^i, \text{Re}(y^{ij}, 1)) - R(x^i, \text{Re}(\text{Re}(y^{ij}, 1), 0))] \\
+  \widehat{\text{ATT}}_{\text{RATE}} &= \frac{1}{n_1} \sum_{(i, j): w^{i} = 1} [R(x^i, \text{Re}(\text{Re}(y^{i}, 0), 1)) - R(x^i, \text{Re}(y^{i}, 0))] \\
+  \widehat{\text{ATU}}_{\text{RATE}} &= \frac{1}{n_0} \sum_{(i,j): w^{i} = 0} [R(x^i, \text{Re}(y^{i}, 1)) - R(x^i, \text{Re}(\text{Re}(y^{i}, 1), 0))] \\
   \widehat{\text{ATE}}_{\text{RATE}} &= \frac{n_1}{n_0 + n_1} \widehat{\text{ATT}}_{\text{RATE}} + \frac{n_0}{n_0 + n_1} \widehat{\text{ATU}}_{\text{RATE}}
 \end{align*}
 where $n_1$ and $n_0$ are the number of pairs with observed $W = 1$ and $W = 0$ respectively, are unbiased and $\sqrt{n}$-consistent estimators of the ATT, ATU, and ATE.
@@ -328,10 +328,10 @@ In this section, we outline how RATE is applied in practice and illustrate its e
 
 \subsection{Implementation Details}
 
-\textbf{LLM-Based Rewriting.} We use an LLM (e.g., GPT-4) to generate rewrites in a batch manner. For each sample $(x^i, y^{ij}, w^{ij})$, we:
+\textbf{LLM-Based Rewriting.} We use an LLM (e.g., GPT-4) to generate rewrites in a batch manner. For each sample $(x^i, y^{i}, w^{i})$, we:
 \begin{enumerate}
-    \item For the examples with $w^{ij} = 0$, prompt the LLM: \emph{``Rewrite this response so that [attribute] = 1 while changing nothing else.''}
-    \item Similarly, for the examples with $w^{ij} = 1$, prompt: \emph{``Rewrite this response so that [attribute] = 0 while changing nothing else.''}
+    \item For the examples with $w^{i} = 0$, prompt the LLM: \emph{``Rewrite this response so that [attribute] = 1 while changing nothing else.''}
+    \item Similarly, for the examples with $w^{i} = 1$, prompt: \emph{``Rewrite this response so that [attribute] = 0 while changing nothing else.''}
     \item For each of these two rewrites, do a second rewrite to flip the attribute back.
 \end{enumerate}
 
@@ -409,11 +409,11 @@ Overall, RATE paves the way for more causally rigorous auditing of reward models
 \label{sec:proofs}
 \begin{theorem}[Unbiasedness and \(\sqrt{n}\)-Consistency of RATE---Consistent Notation]
 \label{thm:unbiased_rate_consistent}
-Let $R(X, Y(W,Z,\xi)) = R_{W, Z}(X, W, Z) + R_{\xi}(X, \xi)$ and $\text{Re}(Y(W, Z, \xi), 1 - W) \equaldist Y(1 - W, Z, \tilde{\xi})$ where $\tilde{\xi} \dist P_\text{Re}(\tilde{\xi})$. Also assume $R(\cdot, \cdot)$ is bounded. Suppose we have a set of prompt-completion pairs $\{x^i, y^{ij}\}$ sampled i.i.d., with $P(W=1) \in (0, 1)$.
+Let $R(X, Y(W,Z,\xi)) = R_{W, Z}(X, W, Z) + R_{\xi}(X, \xi)$ and $\text{Re}(Y(W, Z, \xi), 1 - W) \equaldist Y(1 - W, Z, \tilde{\xi})$ where $\tilde{\xi} \dist P_\text{Re}(\tilde{\xi})$. Also assume $R(\cdot, \cdot)$ is bounded. Suppose we have a set of prompt-completion pairs $\{x^i, y^{i}\}$ sampled i.i.d., with $P(W=1) \in (0, 1)$.
 Then the RATE estimators, defined as:
 \begin{align*}
-\widehat{\text{ATT}}_{\text{RATE}} &= \frac{1}{n_1} \sum_{(i, j): w^{ij} = 1} [R(x^i, \text{Re}(\text{Re}(y^{ij}, 0), 1)) - R(x^i, \text{Re}(y^{ij}, 0))] \\
-\widehat{\text{ATU}}_{\text{RATE}} &= \frac{1}{n_0} \sum_{(i,j): w^{ij} = 0} [R(x^i, \text{Re}(y^{ij}, 1)) - R(x^i, \text{Re}(\text{Re}(y^{ij}, 1), 0))] \\
+\widehat{\text{ATT}}_{\text{RATE}} &= \frac{1}{n_1} \sum_{(i, j): w^{i} = 1} [R(x^i, \text{Re}(\text{Re}(y^{i}, 0), 1)) - R(x^i, \text{Re}(y^{i}, 0))] \\
+\widehat{\text{ATU}}_{\text{RATE}} &= \frac{1}{n_0} \sum_{(i,j): w^{i} = 0} [R(x^i, \text{Re}(y^{i}, 1)) - R(x^i, \text{Re}(\text{Re}(y^{i}, 1), 0))] \\
 \widehat{\text{ATE}}_{\text{RATE}} &= \frac{n_1}{n_0 + n_1} \widehat{\text{ATT}}_{\text{RATE}} + \frac{n_0}{n_0 + n_1} \widehat{\text{ATU}}_{\text{RATE}}
 \end{align*}
 where $n_1$ and $n_0$ are the number of pairs with observed $W = 1$ and $W = 0$ respectively, are unbiased and $\sqrt{n}$-consistent estimators of the ATT, ATU, and ATE.
@@ -436,7 +436,7 @@ where $n_1$ and $n_0$ are the number of pairs with observed $W = 1$ and $W = 0$ 
     \end{align*}
     Therefore, as an average over these quantities, we have:
     \[\EE[\widehat{\text{ATT}}_{\text{RATE}}] = \EE[R(X, Y(1)) - R(X, Y(0)) | W = 1] = \text{ATT}\]
-    For $\sqrt{n}$-consistency, note that $R(\cdot, \cdot)$ is bounded, so its variance is bounded. As the ${x^i, y^{ij}}$ are i.i.d., so are the $R(x^i, y^{ij})$. Thus, $\widehat{\text{ATT}}_{\text{RATE}}$ is an average over $n_1$ i.i.d. random variables with finite variance, implying:
+    For $\sqrt{n}$-consistency, note that $R(\cdot, \cdot)$ is bounded, so its variance is bounded. As the ${x^i, y^{i}}$ are i.i.d., so are the $R(x^i, y^{i})$. Thus, $\widehat{\text{ATT}}_{\text{RATE}}$ is an average over $n_1$ i.i.d. random variables with finite variance, implying:
     \[\sqrt{n_1}(\widehat{\text{ATT}}_{\text{RATE}} - \text{ATT}) = O_p(1)\]
     Since $\frac{n_1}{n} \xrightarrow{p} P(W=1)$ and $P(W=1) \in (0,1)$, we have $\sqrt{\frac{n}{n_1}} = O_p(1)$, which implies:
     \[\sqrt{n}(\widehat{\text{ATT}}_{\text{RATE}} - \text{ATT}) = O_p(1)\]

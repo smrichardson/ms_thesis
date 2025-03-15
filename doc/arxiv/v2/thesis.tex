@@ -112,9 +112,8 @@ Ideally, reward models would perfectly capture and measure whatever aspect of th
 \subsection{Statistical Challenges in Text-Model Evaluation}
 Language models introduce unique statistical challenges for causal inference:
 \begin{enumerate}
+    \item \textbf{Spurious Correlations:} Any text attribute of interest (sentiment, politeness, helpfulness, complexity) might be confounded with other attributes in the data, making purely observational methods insufficient.
     \item \textbf{High Dimensionality and Complexity:} Text is extremely high-dimensional and unstructured. Multiple textual attributes may be correlated in ways that are difficult to disentangle.
-    \item \textbf{Spurious Correlations:} Since human annotation is limited and often noisy, the training data may reveal spurious relationships (e.g., length correlates with perceived helpfulness).
-    \item \textbf{Potential for Bias:} Any text attribute of interest (sentiment, politeness, helpfulness, complexity) might be confounded with other attributes in the data, making purely observational methods insufficient.
 \end{enumerate}
 
 \textbf{A Naive Approach.} One might try to isolate the impact of an attribute $W$ by simply partitioning the data into $W=1$ and $W=0$ and comparing mean reward. However, if $W$ is correlated with other features of the text, that naive approach will conflate multiple causal effects, failing to isolate the \emph{direct} effect of $W$.
@@ -144,6 +143,7 @@ Overall, RATE can be viewed as an extension of text-oriented causal inference me
 \section{Problem Setup and Causal Estimands}
 \label{sec:setup}
 
+\subsection{Reward Models}
 Reward models are typically implemented in two ways:
 
 \begin{enumerate}
@@ -151,7 +151,20 @@ Reward models are typically implemented in two ways:
   \item \textbf{Contrastive:} $R(x, y_1, y_0)$ takes a prompt $x$ and two responses $y_1, y_0$, returning a scalar indicating which response is better (or by how much).
 \end{enumerate}
 
-Our derivations hold for both, but we focus on the pointwise version to keep notation simple. Let $\{(x^i, y^{i})\}$ be a dataset of prompt-response pairs, with $R(x^i, y^{i}) \in \mathbb{R}$.
+Our derivations hold for both, but we focus on the pointwise version to keep notation simple. Though the details of how a reward model is implemented are not essential, some background context may be helpful. Typically, an LLM is presented with a prompt $x$ and produces for each prompt a pair of responses $y_1, y_0$. Human raters are then asked to compare the two responses. Without loss of generality we can call $y_1$ the preferred response, and $y_0$ the non-preferred response. The Bradley-Terry model is a common choice for $\text{Pr}(y_1 > y_0)$ where $>$ is the preference relation: 
+
+\begin{equation}
+    \text{Pr}(y_1 > y_0) = \sigma(R^*(x, y_1) - R^*(x, y_0))
+\end{equation}
+where $\sigma$ is the logistic function and $R^*(x, y)$ is the oracle reward function (i.e., some underlying function explaining the human preference). A parametric reward model $R_\theta(x, y)$ is then trained to predict $\text{Pr}(y_1 > y_0)$ by maximum likelihood estimation:
+
+\begin{equation}
+  \hat\theta = \arg \max_\theta \sum_{i=1}^n \log \sigma(R_\theta(x^i, y_1^i) - R_\theta(x^i, y_0^i))
+\end{equation}
+
+
+\subsection{Notation}
+Let $\{(x^i, y^{i})\}$ be a dataset of prompt-response pairs, with $R(x^i, y^{i}) \in \mathbb{R}$.
 
 We consider a binary attribute $W(x^i, y^{i}) \in \{0,1\}$ (e.g., ``sentiment is positive'' or ``response is long'') that we hypothesize may affect the reward. For instance, in a user-query dataset, $W$ might indicate whether the response is helpful for that query.
 
@@ -473,7 +486,7 @@ where $n_1$ and $n_0$ are the number of pairs with observed $W = 1$ and $W = 0$ 
 
 \end{document}
 
-\end{\end{filecontents}}
+\end{filecontents}
 
 \begin{document}
 

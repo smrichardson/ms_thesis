@@ -5,11 +5,13 @@
 \contentsline {subsection}{\numberline {1.4}Structure of this Thesis}{5}{subsection.1.4}%
 \contentsline {section}{\numberline {2}Related Work}{5}{section.2}%
 \contentsline {section}{\numberline {3}Problem Setup and Causal Estimands}{6}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Naive Estimation and Its Pitfall}{6}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Treatment Effects}{6}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Why Not Simple Backdoor Adjustments?}{7}{subsection.3.3}%
-\contentsline {section}{\numberline {4}RATE: Rewrite-based Attribute Treatment Estimators}{7}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Rewrite Operations with LLMs}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {3.1}Reward Models}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Notation}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Naive Estimation and Its Pitfall}{6}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Treatment Effects}{7}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Why Not Simple Backdoor Adjustments?}{7}{subsection.3.5}%
+\contentsline {section}{\numberline {4}RATE: Rewrite-based Attribute Treatment Estimators}{8}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Rewrite Operations with LLMs}{8}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Imperfect Rewrites and the ``Double Rewrite'' Idea}{8}{subsection.4.2}%
 \contentsline {section}{\numberline {5}Theoretical Analysis}{9}{section.5}%
 \contentsline {subsection}{\numberline {5.1}Latent Variable Model and Assumptions}{9}{subsection.5.1}%

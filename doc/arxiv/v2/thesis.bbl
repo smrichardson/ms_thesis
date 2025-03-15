@@ -8,6 +8,11 @@ E.~D. Abraham, K.~D'Oosterlinck, A.~Feder, Y.~Gat, A.~Geiger, C.~Potts,
 \newblock {\em Advances in Neural Information Processing Systems},
   35:17582--17596, 2022.
 
+\bibitem{christiano2017deep}
+P.~F. Christiano, J.~Leike, T.~Brown, M.~Martic, S.~Legg, and D.~Amodei.
+\newblock Deep reinforcement learning from human preferences.
+\newblock {\em Advances in neural information processing systems}, 30, 2017.
+
 \bibitem{cinelli2024crash}
 C.~Cinelli, A.~Forney, and J.~Pearl.
 \newblock A crash course in good and bad controls.
@@ -34,6 +39,11 @@ N.~Lambert, V.~Pyatkin, J.~Morrison, L.~Miranda, B.~Y. Lin, K.~Chandu,
 \bibitem{park2024offsetbias}
 J.~Park, S.~Jwa, M.~Ren, D.~Kim, and S.~Choi.
 \newblock Offsetbias: Leveraging debiased data for tuning evaluators, 2024.
+
+\bibitem{reber2025ratecausalexplainabilityreward}
+D.~Reber, S.~Richardson, T.~Nief, C.~Garbacea, and V.~Veitch.
+\newblock Rate: Causal explainability of reward models with imperfect
+  counterfactuals, 2025.
 
 \bibitem{wu2021polyjuicegeneratingcounterfactualsexplaining}
 T.~Wu, M.~T. Ribeiro, J.~Heer, and D.~S. Weld.

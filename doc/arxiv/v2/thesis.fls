@@ -850,7 +850,6 @@ INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/body.tex
 INPUT /usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx9.tfm
-INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmti9.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmr6.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmmi9.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmmi6.tfm
@@ -862,6 +861,7 @@ INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam1
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam7.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
+INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmti9.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.toc
 INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.toc
@@ -876,10 +876,6 @@ INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmti7.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmti7.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbxti10.tfm
-INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.bbl
-INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.bbl
-INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.bbl
-INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.bbl
 INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.aux
 INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.out
 INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.out

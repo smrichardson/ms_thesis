@@ -84,9 +84,9 @@
 
 \newpage
 \begin{abstract}
-This thesis introduces RATE (Rewrite-based Attribute Treatment Estimators), a novel statistical method for evaluating reward models in language modeling. Reward models are functions that score responses based on their quality for a given prompt, but they often serve as imperfect proxies for actual preferences. A critical concern is whether these models genuinely capture intended attributes (e.g., helpfulness) or merely recognize correlated proxies (e.g., response length).
+Reward models aim to align large language models (LLMs) by approximating human preferences, but interpreting what they actually reward is nontrivial---especially given their black-box nature. The core challenge is \textbf{confounding}: textual attributes of interest (e.g., helpfulness or sentiment) are often correlated with others, such as length or style. As a result, naive comparisons—like differences in average reward across attribute groups—fail to isolate causal effects. Standard causal methods, such as randomized interventions or adjustment for confounders, also break down: we cannot perfectly intervene on individual attributes without affecting others, and we cannot feasibly enumerate or control for all confounding features in text.
 
-Our key contribution is a causal framework that measures the isolated effect of specific attributes on reward values. RATE leverages large language models to generate counterfactual texts that differ only in the target attribute, allowing us to disentangle causal effects from confounding factors. By employing a \emph{double-rewrite} technique, we correct for imperfections in the rewriting process, yielding unbiased and $\sqrt{n}$-consistent estimates of treatment effects. We provide theoretical guarantees and empirical validation of RATE's effectiveness.
+This thesis introduces \textbf{RATE (Rewrite-based Attribute Treatment Estimators)}, a causal inference framework tailored to these challenges. RATE uses large language models to generate approximate interventions and introduces a novel double-rewrite strategy to cancel out unintended, off-target changes introduced during rewriting. Under mild assumptions, we show that RATE yields unbiased, $\sqrt{n}$-consistent estimates of treatment effects (ATE, ATT, ATU), despite relying only on imperfect interventions and black-box access to the reward model. Empirically, RATE uncovers spurious correlations that naive methods overlook, offering a principled and practical approach to interpreting reward models.
 
 \textit{This thesis is based on joint work with David Reber, Todd Nief, Cristina Garbacea, and Victor Veitch. The statistical theory, consistency proofs, and methodological extensions presented here represent my primary contributions to this collaboration.}
 \end{abstract}
@@ -292,14 +292,16 @@ Earlier we motivated the double-rewrite technique by noting that it creates a ``
 
 \begin{assumption}[Rewrite Distribution]
     \label{assump:rewrite_dist}
-    Rewriting $Y(W,Z,\xi)$ to enforce $W=w_{\text{new}}$ yields a distribution over $\xi$ values independent of $(W,Z)$. Formally,
+    Rewriting $Y(W,Z,\xi = )$ to enforce $W=w_{\text{new}}$ replaces $\xi$ with $\tilde{\xi}$ drawn from a distribution independent of $(W,\xi)$. That is,
     \[
-    \text{Re}\bigl(X, Y(W,Z,\xi), w_{\text{new}} \bigr) \;\stackrel{d}{=}\; Y\bigl(w_{\text{new}},Z,\widetilde{\xi}\bigr),
-    \quad\text{where } \widetilde{\xi} \sim \mathbb{P}_{\mathrm{Re}}(\widetilde{\xi}).
+    \text{Re}\bigl(X, Y(W,Z,\xi), w_{\text{new}} \bigr) \;\stackrel{d}{=}\; Y\bigl(w_{\text{new}},Z,\tilde{\xi}\bigr),
+    \quad\text{where } \tilde{\xi} \sim \mathbb{P}_{\mathrm{Re}}(\tilde{\xi}).
     \]
 \end{assumption}
+
+Note that this assumption is not as strong as it may seem. It does not mean that the mutable off-target attributes must remain the same across the rewrite and rewrite-of-rewrite, only that they must be drawn from the same distribution. (In fact, this assumption can be weakened to the assumption that they are drawn from distributions with the same expectation, but we do not pursue this here.)
     
-\noindent We also need to make some assumptions about how the reward model handles these latent variables. In particular, we assume that the reward model lacks any interaction effects between $W$ and $\xi$ or $Z$ and $\xi$.
+We also need to make some assumptions about how the reward model handles these latent variables. In particular, we assume that the reward model lacks any interaction effects between $W$ and $\xi$ or $Z$ and $\xi$.
 
 \begin{assumption}[Additive Reward Decomposition]
 \label{assump:additive}

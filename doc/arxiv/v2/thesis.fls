@@ -816,6 +816,9 @@ INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/cover.tex
 INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/cover.tex
 INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/cover.tex
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map
+INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -832,9 +835,6 @@ INPUT /usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
-INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
-INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/body.tex
 INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/body.tex
@@ -876,6 +876,10 @@ INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmti7.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmti7.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbxti10.tfm
+INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.bbl
+INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.bbl
+INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.bbl
+INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.bbl
 INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.aux
 INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.out
 INPUT /Users/sean/Documents/GitHub/ms_thesis/doc/arxiv/v2/thesis.out
